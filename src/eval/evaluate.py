@@ -1,0 +1,127 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
+import torch
+import json
+import argparse
+from transformer_lens import HookedTransformer
+from src.sae.model import TopKSAE
+from src.intervention.hook import get_ablation_hook
+import os
+from tqdm import tqdm
+
+def calculate_score(model, prompts, references, device):
+    matches = 0
+    total = len(prompts)
+    
+    print(f"Evaluating {total} prompts...")
+    # Batching to speed up
+    # But generation is tricky with batching if lengths differ.
+    # We will do sequential for simplicity and safety, or batch if consistent.
+    
+    for i, prompt in enumerate(tqdm(prompts)):
+        input_ids = model.to_tokens(prompt)
+        
+        # Generate
+        with torch.no_grad():
+            output = model.generate(input_ids, max_new_tokens=20, do_sample=False, verbose=False)
+            
+        # Extract completion
+        # output is [1, seq_len + 20]
+        generated_ids = output[0, input_ids.shape[1]:]
+        completion = model.to_string(generated_ids)
+        
+        # Check references
+        refs = references[i]
+        found = False
+        for ref in refs:
+            if ref.lower() in completion.lower():
+                found = True
+                break
+        
+        if found:
+            matches += 1
+            
+    return matches / total
+
+def evaluate(args):
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    
+    # 1. Load Prompts
+    prompts_path = "8940_Who_s_Harry_Potter_Approx_Supplementary Material/Eval completion prompts.json"
+    if not os.path.exists(prompts_path):
+         # Try locating it
+         prompts_path = "/home/jay/inlp/8940_Who_s_Harry_Potter_Approx_Supplementary Material/Eval completion prompts.json"
+         
+    with open(prompts_path, "r") as f:
+        data = json.load(f)
+        
+    # Data is a list of dicts or list of list?
+    # View file showed: [ { "prompt": { ... } }, ... ]
+    prompts = [item["prompt"]["prompt"] for item in data]
+    references = [item["prompt"]["references"] for item in data]
+    
+    # Subset for speed if needed
+    if args.limit:
+        prompts = prompts[:args.limit]
+        references = references[:args.limit]
+    
+    # 2. Load Model
+    print("Loading Model...")
+    model = HookedTransformer.from_pretrained("gpt2-small", device=device)
+    
+    # Baseline Eval
+    if not args.skip_baseline:
+        print("Evaluating Baseline...")
+        baseline_score = calculate_score(model, prompts, references, device)
+        print(f"Baseline Match Rate: {baseline_score:.4f}")
+    
+    # 3. Load SAE and Features
+    print(f"Loading SAE for Layer {args.layer}...")
+    d_model = model.cfg.d_model
+    d_sae = d_model * args.expansion_factor
+    sae = TopKSAE(d_in=d_model, d_sae=d_sae, k=args.k)
+    
+    checkpoint_path = f"checkpoints/sae_layer_{args.layer}.pt"
+    if not os.path.exists(checkpoint_path):
+        print(f"Error: Checkpoint {checkpoint_path} not found. Train SAE first.")
+        return
+        
+    sae.load_state_dict(torch.load(checkpoint_path, map_location=device))
+    sae.to(device)
+    # sae.eval() # model doesn't have eval/train specific behavior probably
+    
+    features_path = f"results/layer_{args.layer}_features.pt"
+    feature_indices = []
+    if os.path.exists(features_path):
+        features_data = torch.load(features_path, map_location=device)
+        feature_indices = features_data["indices"]
+    else:
+        print(f"Warning: Features file {features_path} not found. No ablation unless manually specified.")
+        
+    if len(feature_indices) > 0:
+        print(f"Ablating {len(feature_indices)} features: {feature_indices}")
+        
+        # 4. Apply Hook
+        hook_fn = get_ablation_hook(sae, feature_indices)
+        
+        # 5. Evaluate with Ablation
+        print("Evaluating Ablated Model...")
+        # We use a context manager to apply the hook temporarily
+        with model.hooks(fwd_hooks=[(f"blocks.{args.layer}.hook_resid_post", hook_fn)]):
+            ablated_score = calculate_score(model, prompts, references, device)
+            
+        print(f"Ablated Match Rate: {ablated_score:.4f}")
+        
+        if not args.skip_baseline:
+            print(f"Reduction: {baseline_score - ablated_score:.4f}")
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--layer", type=int, default=8)
+    parser.add_argument("--expansion_factor", type=int, default=16)
+    parser.add_argument("--k", type=int, default=32)
+    parser.add_argument("--limit", type=int, default=50, help="Limit number of prompts for speed")
+    parser.add_argument("--skip_baseline", action="store_true")
+    args = parser.parse_args()
+    evaluate(args)
