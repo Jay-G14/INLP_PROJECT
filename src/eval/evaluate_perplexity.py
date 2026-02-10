@@ -95,7 +95,7 @@ def main(args):
             print(f"Ablating {len(feature_indices)} features")
             
             # Apply hook and evaluate
-            hook_fn = get_ablation_hook(sae, feature_indices)
+            hook_fn = get_ablation_hook(sae, feature_indices, clamp_value=args.clamp_value)
             
             print("Evaluating Ablated Model Perplexity...")
             with model.hooks(fwd_hooks=[(f"blocks.{args.layer}.hook_resid_post", hook_fn)]):
@@ -116,5 +116,6 @@ if __name__ == "__main__":
     parser.add_argument("--k", type=int, default=32)
     parser.add_argument("--limit", type=int, default=None, help="Limit number of samples")
     parser.add_argument("--skip_baseline", action="store_true")
+    parser.add_argument("--clamp_value", type=float, default=-20.0, help="Negative clamping value for feature intervention")
     args = parser.parse_args()
     main(args)

@@ -1,49 +1,50 @@
 import torch
 from jaxtyping import Float
 
-def get_ablation_hook(sae, feature_indices_to_ablate):
+def get_ablation_hook(sae, feature_indices_to_ablate, clamp_value=-20.0):
     """
-    Returns a hook function that ablates specific features using the SAE.
+    Returns a hook function that intervenes on specific SAE features.
+    
+    Uses negative clamping (from inspiration paper) instead of zeroing:
+    - When a target feature activates (> 0), clamp it to a negative value
+    - This preserves model perplexity better than zeroing
+    
+    Args:
+        sae: The trained SAE model
+        feature_indices_to_ablate: List/tensor of feature indices to intervene on
+        clamp_value: Negative value to clamp activating features to (default: -20)
     """
     def hook(activation: Float[torch.Tensor, "batch seq d_model"], hook):
         # Activation shape: [batch, seq, d_model]
         
-        # 1. Encode
-        # SAE expects [batch, d_model] usually, but handled batch/seq flattening in training?
-        # My TopKSAE implementation takes [..., d_in] and returns [..., d_out].
-        # It handles arbitrary leading dimensions if implemented with standard linear layers.
-        # Let's check model.py:
-        # encode(x): (x - b_dec) @ W_enc + b_enc. Yes, handles B, S.
-        
-        # We need to clone activation to avoid in-place errors if needed, but usually fine.
+        # Clone to avoid in-place errors
         original_act = activation.clone()
         
+        # Get SAE reconstruction and sparse activations
         x_reconstruct, z_sparse = sae(activation)
         
-        # 2. Ablate
-        # z_sparse: [batch, seq, d_sae] (after TopK and scatter)
-        # We want to ZERO out the features in z_sparse that correspond to Harry Potter.
+        # Clone for modification
+        z_modified = z_sparse.clone()
         
-        # Create a mask or just zero them out
-        # feature_indices_to_ablate is a list or tensor of indices.
+        # NEGATIVE CLAMPING (inspiration paper approach):
+        # Only clamp features that are activating (> 0) to negative value
+        # This preserves more model capability than zeroing
+        target_features = z_sparse[:, :, feature_indices_to_ablate]
+        mask = target_features > 0
         
-        z_ablated = z_sparse.clone()
-        z_ablated[:, :, feature_indices_to_ablate] = 0.0
+        # Apply clamping: set to clamp_value where feature activates, else keep at 0
+        z_modified[:, :, feature_indices_to_ablate] = torch.where(
+            mask,
+            torch.full_like(target_features, clamp_value),
+            target_features  # Keep original (usually 0 from TopK sparsity)
+        )
         
-        # 3. Decode
-        # We need to use the DECODER of the SAE to get the ablated reconstruction.
-        # x_ablated_recon = z_ablated @ W_dec + b_dec
-        x_ablated_recon = z_ablated @ sae.W_dec + sae.b_dec
+        # Decode with modified features
+        x_modified_recon = z_modified @ sae.W_dec + sae.b_dec
         
-        # 4. Reconstruction Error
-        # We want to preserve the information that the SAE *didn't* capture.
-        # error = original_act - x_reconstruct
-        # new_act = x_ablated_recon + error
-        # This is equivalent to: original_act - (x_reconstruct - x_ablated_recon)
-        # i.e. removing the contribution of the specific features.
-        
+        # Preserve the reconstruction error (what SAE didn't capture)
         error = original_act - x_reconstruct
-        modified_act = x_ablated_recon + error
+        modified_act = x_modified_recon + error
         
         return modified_act
         
