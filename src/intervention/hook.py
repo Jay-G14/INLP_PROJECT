@@ -1,4 +1,5 @@
 import torch
+torch.set_default_dtype(torch.float16)
 from jaxtyping import Float
 
 def get_ablation_hook(sae, feature_indices_to_ablate, clamp_value=-20.0):

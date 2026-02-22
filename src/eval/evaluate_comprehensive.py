@@ -19,6 +19,7 @@ from dotenv import load_dotenv
 load_dotenv()
 HF_TOKEN = os.getenv("HF_TOKEN")
 import torch
+torch.set_default_dtype(torch.float16)
 import torch.nn.functional as F
 import json
 import argparse

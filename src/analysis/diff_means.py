@@ -2,6 +2,7 @@ import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
 import torch
+torch.set_default_dtype(torch.float16)
 from transformer_lens import HookedTransformer
 from src.sae.model import TopKSAE
 from src.data.preprocess import load_and_tokenize, get_neutral_corpus
