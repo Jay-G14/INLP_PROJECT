@@ -70,8 +70,20 @@ def evaluate(args):
         references = references[:args.limit]
     
     # 2. Load Model
-    print(f"Loading Model: {args.model}...")
-    model = HookedTransformer.from_pretrained(args.model, device=device)
+    print(f"Loading Model: {args.model} on CPU first to save memory...")
+    model = HookedTransformer.from_pretrained(
+        args.model,
+        device="cpu",
+        torch_dtype=torch.float16,
+    )
+
+    # Move model to the specified device
+    if device == "cuda":
+        print("Moving model to CUDA...")
+        torch.cuda.empty_cache()
+        model.to(device)
+        print(f"Using GPU: {torch.cuda.get_device_name(0)}")
+        print(f"Total GPU Memory: {torch.cuda.get_device_properties(0).total_memory / 1e9:.2f} GB")
     
     # Baseline Eval
     if not args.skip_baseline:

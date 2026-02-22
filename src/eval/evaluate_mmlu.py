@@ -55,8 +55,20 @@ def main(args):
     device = "cuda" if torch.cuda.is_available() else "cpu"
     
     # Load model
-    print("Loading Model...")
-    model = HookedTransformer.from_pretrained("gpt2-small", device=device)
+    print("Loading Model on CPU first to save memory...")
+    model = HookedTransformer.from_pretrained(
+        "gpt2-small", 
+        device="cpu",
+        torch_dtype=torch.float16,
+    )
+
+    # Move model to the specified device
+    if device == "cuda":
+        print("Moving model to CUDA...")
+        torch.cuda.empty_cache()
+        model.to(device)
+        print(f"Using GPU: {torch.cuda.get_device_name(0)}")
+        print(f"Total GPU Memory: {torch.cuda.get_device_properties(0).total_memory / 1e9:.2f} GB")
     
     # Load MMLU dataset (using a subset for faster evaluation)
     print("Loading MMLU dataset...")
