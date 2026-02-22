@@ -1,13 +1,15 @@
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
+from dotenv import load_dotenv
+load_dotenv()
+HF_TOKEN = os.getenv("HF_TOKEN")
 import torch
 import json
 import argparse
 from transformer_lens import HookedTransformer
 from src.sae.model import TopKSAE
 from src.intervention.hook import get_ablation_hook
-import os
 from tqdm import tqdm
 
 def calculate_score(model, prompts, references, device):
