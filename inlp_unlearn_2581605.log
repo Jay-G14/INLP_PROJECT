@@ -1,0 +1,253 @@
+==========================================
+SLURM_JOB_ID = 2581605
+SLURM_NODELIST = gnode033
+SLURM_JOB_GPUS = 1
+==========================================
+/var/spool/slurmd/job2581605/slurm_script: line 18: /home2/manas.agrawal/INLP_PROJECT/inlp_env/bin/activate: No such file or directory
+Starting Phase 1...
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Reading /home2/manas.agrawal/INLP_PROJECT/Harry_Potter_all_books_preprocessed.txt...
+Could not find Book 4 start. Using length heuristic (1.6M chars).
+Saved processed text to /home2/manas.agrawal/INLP_PROJECT/src/data/target_corpus.txt. Length: 1600000 chars.
+Loading neutral corpus (wikitext-2)...
+Starting Phase 2...
+Using device: cuda
+Loading gemma-2b...
+Traceback (most recent call last):
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/huggingface_hub/utils/_http.py", line 657, in hf_raise_for_status
+    response.raise_for_status()
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/httpx/_models.py", line 829, in raise_for_status
+    raise HTTPStatusError(message, request=request, response=self)
+httpx.HTTPStatusError: Client error '401 Unauthorized' for url 'https://huggingface.co/google/gemma-2b/resolve/main/config.json'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/transformers/utils/hub.py", line 419, in cached_files
+    hf_hub_download(
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/huggingface_hub/utils/_validators.py", line 89, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 1032, in hf_hub_download
+    return _hf_hub_download_to_cache_dir(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 1183, in _hf_hub_download_to_cache_dir
+    _raise_on_head_call_error(head_call_error, force_download, local_files_only)
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 1812, in _raise_on_head_call_error
+    raise head_call_error
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 1699, in _get_metadata_or_catch_error
+    metadata = get_hf_file_metadata(
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/huggingface_hub/utils/_validators.py", line 89, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 1622, in get_hf_file_metadata
+    response = _httpx_follow_relative_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 309, in _httpx_follow_relative_redirects
+    hf_raise_for_status(response)
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/huggingface_hub/utils/_http.py", line 677, in hf_raise_for_status
+    raise _format(GatedRepoError, message, response) from e
+huggingface_hub.errors.GatedRepoError: 401 Client Error. (Request ID: Root=1-699b4921-657833204f9964d76573473a;2eda3882-9618-4897-900f-1e77d2705197)
+
+Cannot access gated repo for url https://huggingface.co/google/gemma-2b/resolve/main/config.json.
+Access to model google/gemma-2b is restricted. You must have access to it and be authenticated to access it. Please log in.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home2/manas.agrawal/INLP_PROJECT/src/sae/train.py", line 120, in <module>
+    main(args)
+  File "/home2/manas.agrawal/INLP_PROJECT/src/sae/train.py", line 27, in main
+    model = HookedTransformer.from_pretrained(args.model, device=device)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/transformer_lens/HookedTransformer.py", line 1370, in from_pretrained
+    state_dict = loading.get_pretrained_state_dict(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/transformer_lens/loading_from_pretrained.py", line 1939, in get_pretrained_state_dict
+    hf_model = AutoModelForCausalLM.from_pretrained(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/transformers/models/auto/auto_factory.py", line 319, in from_pretrained
+    config, kwargs = AutoConfig.from_pretrained(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/transformers/models/auto/configuration_auto.py", line 1403, in from_pretrained
+    config_dict, unused_kwargs = PreTrainedConfig.get_config_dict(pretrained_model_name_or_path, **kwargs)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/transformers/configuration_utils.py", line 572, in get_config_dict
+    config_dict, kwargs = cls._get_config_dict(pretrained_model_name_or_path, **kwargs)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/transformers/configuration_utils.py", line 627, in _get_config_dict
+    resolved_config_file = cached_file(
+                           ^^^^^^^^^^^^
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/transformers/utils/hub.py", line 276, in cached_file
+    file = cached_files(path_or_repo_id=path_or_repo_id, filenames=[filename], **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/transformers/utils/hub.py", line 483, in cached_files
+    raise OSError(
+OSError: You are trying to access a gated repo.
+Make sure to have access to it at https://huggingface.co/google/gemma-2b.
+401 Client Error. (Request ID: Root=1-699b4921-657833204f9964d76573473a;2eda3882-9618-4897-900f-1e77d2705197)
+
+Cannot access gated repo for url https://huggingface.co/google/gemma-2b/resolve/main/config.json.
+Access to model google/gemma-2b is restricted. You must have access to it and be authenticated to access it. Please log in.
+Starting Phase 4...
+Loading gemma-2b...
+Traceback (most recent call last):
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/huggingface_hub/utils/_http.py", line 657, in hf_raise_for_status
+    response.raise_for_status()
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/httpx/_models.py", line 829, in raise_for_status
+    raise HTTPStatusError(message, request=request, response=self)
+httpx.HTTPStatusError: Client error '401 Unauthorized' for url 'https://huggingface.co/google/gemma-2b/resolve/main/config.json'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/transformers/utils/hub.py", line 419, in cached_files
+    hf_hub_download(
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/huggingface_hub/utils/_validators.py", line 89, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 1032, in hf_hub_download
+    return _hf_hub_download_to_cache_dir(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 1183, in _hf_hub_download_to_cache_dir
+    _raise_on_head_call_error(head_call_error, force_download, local_files_only)
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 1812, in _raise_on_head_call_error
+    raise head_call_error
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 1699, in _get_metadata_or_catch_error
+    metadata = get_hf_file_metadata(
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/huggingface_hub/utils/_validators.py", line 89, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 1622, in get_hf_file_metadata
+    response = _httpx_follow_relative_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 309, in _httpx_follow_relative_redirects
+    hf_raise_for_status(response)
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/huggingface_hub/utils/_http.py", line 677, in hf_raise_for_status
+    raise _format(GatedRepoError, message, response) from e
+huggingface_hub.errors.GatedRepoError: 401 Client Error. (Request ID: Root=1-699b492d-661bf4ba13245aa72f78f115;4722d8d2-04a6-40d4-8ba4-41413865a1ff)
+
+Cannot access gated repo for url https://huggingface.co/google/gemma-2b/resolve/main/config.json.
+Access to model google/gemma-2b is restricted. You must have access to it and be authenticated to access it. Please log in.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home2/manas.agrawal/INLP_PROJECT/src/analysis/diff_means.py", line 158, in <module>
+    analyze(args)
+  File "/home2/manas.agrawal/INLP_PROJECT/src/analysis/diff_means.py", line 18, in analyze
+    model = HookedTransformer.from_pretrained(args.model, device=device)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/transformer_lens/HookedTransformer.py", line 1370, in from_pretrained
+    state_dict = loading.get_pretrained_state_dict(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/transformer_lens/loading_from_pretrained.py", line 1939, in get_pretrained_state_dict
+    hf_model = AutoModelForCausalLM.from_pretrained(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/transformers/models/auto/auto_factory.py", line 319, in from_pretrained
+    config, kwargs = AutoConfig.from_pretrained(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/transformers/models/auto/configuration_auto.py", line 1403, in from_pretrained
+    config_dict, unused_kwargs = PreTrainedConfig.get_config_dict(pretrained_model_name_or_path, **kwargs)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/transformers/configuration_utils.py", line 572, in get_config_dict
+    config_dict, kwargs = cls._get_config_dict(pretrained_model_name_or_path, **kwargs)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/transformers/configuration_utils.py", line 627, in _get_config_dict
+    resolved_config_file = cached_file(
+                           ^^^^^^^^^^^^
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/transformers/utils/hub.py", line 276, in cached_file
+    file = cached_files(path_or_repo_id=path_or_repo_id, filenames=[filename], **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/transformers/utils/hub.py", line 483, in cached_files
+    raise OSError(
+OSError: You are trying to access a gated repo.
+Make sure to have access to it at https://huggingface.co/google/gemma-2b.
+401 Client Error. (Request ID: Root=1-699b492d-661bf4ba13245aa72f78f115;4722d8d2-04a6-40d4-8ba4-41413865a1ff)
+
+Cannot access gated repo for url https://huggingface.co/google/gemma-2b/resolve/main/config.json.
+Access to model google/gemma-2b is restricted. You must have access to it and be authenticated to access it. Please log in.
+Starting Phase 4...
+Loading Model: gemma-2b...
+Traceback (most recent call last):
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/huggingface_hub/utils/_http.py", line 657, in hf_raise_for_status
+    response.raise_for_status()
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/httpx/_models.py", line 829, in raise_for_status
+    raise HTTPStatusError(message, request=request, response=self)
+httpx.HTTPStatusError: Client error '401 Unauthorized' for url 'https://huggingface.co/google/gemma-2b/resolve/main/config.json'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/transformers/utils/hub.py", line 419, in cached_files
+    hf_hub_download(
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/huggingface_hub/utils/_validators.py", line 89, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 1032, in hf_hub_download
+    return _hf_hub_download_to_cache_dir(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 1183, in _hf_hub_download_to_cache_dir
+    _raise_on_head_call_error(head_call_error, force_download, local_files_only)
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 1812, in _raise_on_head_call_error
+    raise head_call_error
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 1699, in _get_metadata_or_catch_error
+    metadata = get_hf_file_metadata(
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/huggingface_hub/utils/_validators.py", line 89, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 1622, in get_hf_file_metadata
+    response = _httpx_follow_relative_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 309, in _httpx_follow_relative_redirects
+    hf_raise_for_status(response)
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/huggingface_hub/utils/_http.py", line 677, in hf_raise_for_status
+    raise _format(GatedRepoError, message, response) from e
+huggingface_hub.errors.GatedRepoError: 401 Client Error. (Request ID: Root=1-699b4938-61a2628439642f1443d577cf;ba649e5b-22cc-4ec8-9fc9-522b51d50e12)
+
+Cannot access gated repo for url https://huggingface.co/google/gemma-2b/resolve/main/config.json.
+Access to model google/gemma-2b is restricted. You must have access to it and be authenticated to access it. Please log in.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home2/manas.agrawal/INLP_PROJECT/src/eval/evaluate.py", line 134, in <module>
+    evaluate(args)
+  File "/home2/manas.agrawal/INLP_PROJECT/src/eval/evaluate.py", line 71, in evaluate
+    model = HookedTransformer.from_pretrained(args.model, device=device)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/transformer_lens/HookedTransformer.py", line 1370, in from_pretrained
+    state_dict = loading.get_pretrained_state_dict(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/transformer_lens/loading_from_pretrained.py", line 1939, in get_pretrained_state_dict
+    hf_model = AutoModelForCausalLM.from_pretrained(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/transformers/models/auto/auto_factory.py", line 319, in from_pretrained
+    config, kwargs = AutoConfig.from_pretrained(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/transformers/models/auto/configuration_auto.py", line 1403, in from_pretrained
+    config_dict, unused_kwargs = PreTrainedConfig.get_config_dict(pretrained_model_name_or_path, **kwargs)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/transformers/configuration_utils.py", line 572, in get_config_dict
+    config_dict, kwargs = cls._get_config_dict(pretrained_model_name_or_path, **kwargs)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/transformers/configuration_utils.py", line 627, in _get_config_dict
+    resolved_config_file = cached_file(
+                           ^^^^^^^^^^^^
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/transformers/utils/hub.py", line 276, in cached_file
+    file = cached_files(path_or_repo_id=path_or_repo_id, filenames=[filename], **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home2/manas.agrawal/INLP_PROJECT/inlp/lib/python3.12/site-packages/transformers/utils/hub.py", line 483, in cached_files
+    raise OSError(
+OSError: You are trying to access a gated repo.
+Make sure to have access to it at https://huggingface.co/google/gemma-2b.
+401 Client Error. (Request ID: Root=1-699b4938-61a2628439642f1443d577cf;ba649e5b-22cc-4ec8-9fc9-522b51d50e12)
+
+Cannot access gated repo for url https://huggingface.co/google/gemma-2b/resolve/main/config.json.
+Access to model google/gemma-2b is restricted. You must have access to it and be authenticated to access it. Please log in.
