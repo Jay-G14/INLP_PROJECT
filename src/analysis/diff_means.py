@@ -74,20 +74,24 @@ def analyze(args):
     neutral_tokens = model.tokenizer.encode(neutral_text)[:300000]
     
     # 4. Get Feature Statistics
-    def get_feature_stats(tokens, batch_size=8):
+    def get_feature_stats(tokens, batch_size=2):
         """Compute mean activation and sparsity for each feature."""
         feature_acts_sum = torch.zeros(sae.d_sae, device=device)
         feature_active_count = torch.zeros(sae.d_sae, device=device)
         total_tokens = 0
         
-        token_batches = [tokens[i:i+128] for i in range(0, len(tokens), 128)]
+        seq_len = 512
+        token_chunks = [tokens[i:i+seq_len] for i in range(0, len(tokens), seq_len)]
         
         clean_batches = []
-        for i in range(0, len(token_batches), batch_size):
-            batch = token_batches[i:i+batch_size]
+        for i in range(0, len(token_chunks), batch_size):
+            batch = token_chunks[i:i+batch_size]
             if len(batch) > 0:
                 try:
-                    tensor_batch = torch.tensor(batch).to(device)
+                    # Pad the last batch if necessary
+                    max_len = max(len(c) for c in batch)
+                    padded_batch = [c + [model.tokenizer.pad_token_id or 0] * (max_len - len(c)) for c in batch]
+                    tensor_batch = torch.tensor(padded_batch).to(device)
                     if tensor_batch.ndim == 1:
                         tensor_batch = tensor_batch.unsqueeze(0)
                     clean_batches.append(tensor_batch)
@@ -105,6 +109,8 @@ def analyze(args):
                 feature_acts_sum += features.sum(dim=0)
                 feature_active_count += (features > 0).float().sum(dim=0)
                 total_tokens += features.shape[0]
+                
+                torch.cuda.empty_cache()
                 
         mean_activation = feature_acts_sum / total_tokens
         sparsity = feature_active_count / total_tokens

@@ -107,7 +107,12 @@ def evaluate(args):
             print(f"Error: Checkpoint {checkpoint_path} not found. Train SAE first.")
             return
         
-    sae.load_state_dict(torch.load(checkpoint_path, map_location=device))
+    checkpoint = torch.load(checkpoint_path, map_location=device)
+    if isinstance(checkpoint, dict) and "state_dict" in checkpoint:
+        sae.load_state_dict(checkpoint["state_dict"])
+    else:
+        sae.load_state_dict(checkpoint)
+        
     sae.to(device)
     # sae.eval() # model doesn't have eval/train specific behavior probably
     
