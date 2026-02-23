@@ -116,7 +116,7 @@ def evaluate(args):
     sae.to(device)
     # sae.eval() # model doesn't have eval/train specific behavior probably
     
-    features_path = f"results/layer_{args.layer}_features.pt"
+    features_path = f"results/{args.model.replace('/', '_')}_layer_{args.layer}_features.pt"
     feature_indices = []
     if os.path.exists(features_path):
         features_data = torch.load(features_path, map_location=device)
