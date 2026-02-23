@@ -31,7 +31,7 @@ send_update "Phase 1 (Preprocessing) Completed"
 
 # Phase 2: SAE Training
 echo "Starting Phase 2..."
-python src/sae/train.py --model gemma-2b --layer 12 --use_neutral_corpus
+python src/sae/train.py --model gemma-2b --layer 12 --use_neutral_corpus --epochs 5
 send_update "Phase 2 (SAE Training) Completed"
 
 # Phase 3: Feature Identification
@@ -42,4 +42,7 @@ send_update "Phase 3 (Feature Identification) Completed"
 # Phase 4: Evaluation
 echo "Starting Phase 4..."
 python src/eval/evaluate.py --model gemma-2b --layer 12 --limit 50
+python src/eval/evaluate_mmlu.py --model gemma-2b --layer 12 --limit 50
+python src/eval/evaluate_perplexity.py --model gemma-2b --layer 12 --limit 50
+python src/eval/evaluate_comprehensive.py --model gemma-2b --layer 12 --limit 50
 send_update "Phase 4 (Evaluation) Completed - All Tasks Done"

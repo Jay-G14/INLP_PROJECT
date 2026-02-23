@@ -64,11 +64,11 @@ def main(args):
     device = "cuda" if torch.cuda.is_available() else "cpu"
     
     # Load model
-    print("Loading Model on CPU first to save memory...")
+    print(f"Loading {args.model} on CPU first to save memory...")
     model = HookedTransformer.from_pretrained(
-        "gpt2-small", 
+        args.model, 
         device="cpu",
-        torch_dtype=torch.float16,
+        dtype=torch.float16,
     )
 
     # Move model to the specified device
@@ -96,15 +96,23 @@ def main(args):
         d_sae = d_model * args.expansion_factor
         sae = TopKSAE(d_in=d_model, d_sae=d_sae, k=args.k)
         
-        checkpoint_path = f"checkpoints/sae_layer_{args.layer}.pt"
+        checkpoint_path = f"checkpoints/sae_{args.model.replace('/', '_')}_layer_{args.layer}.pt"
         if not os.path.exists(checkpoint_path):
-            print(f"Error: Checkpoint {checkpoint_path} not found.")
-            return
+            old_checkpoint_path = f"checkpoints/sae_layer_{args.layer}.pt"
+            if os.path.exists(old_checkpoint_path):
+                checkpoint_path = old_checkpoint_path
+            else:
+                print(f"Error: Checkpoint {checkpoint_path} not found.")
+                return
             
-        sae.load_state_dict(torch.load(checkpoint_path, map_location=device))
+        checkpoint = torch.load(checkpoint_path, map_location=device)
+        if isinstance(checkpoint, dict) and "state_dict" in checkpoint:
+            sae.load_state_dict(checkpoint["state_dict"])
+        else:
+            sae.load_state_dict(checkpoint)
         sae.to(device)
         
-        features_path = f"results/layer_{args.layer}_features.pt"
+        features_path = f"results/{args.model.replace('/', '_')}_layer_{args.layer}_features.pt"
         if os.path.exists(features_path):
             features_data = torch.load(features_path, map_location=device)
             feature_indices = features_data["indices"]
@@ -127,6 +135,7 @@ def main(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
+    parser.add_argument("--model", type=str, default="gpt2-small", help="Model to use")
     parser.add_argument("--layer", type=int, default=10, help="Layer to ablate")
     parser.add_argument("--expansion_factor", type=int, default=16)
     parser.add_argument("--k", type=int, default=32)
