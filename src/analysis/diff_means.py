@@ -8,13 +8,25 @@ from src.data.preprocess import load_and_tokenize, get_neutral_corpus
 import argparse
 import einops
 from tqdm import tqdm
+from dotenv import load_dotenv
+
+load_dotenv()
 
 def analyze(args):
     device = "cuda" if torch.cuda.is_available() else "cpu"
+    n_gpus = torch.cuda.device_count()
+    print(f"Using device: {device} | GPUs available: {n_gpus}")
     
-    # 1. Load Model
+    # 1. Load Model (shard across all available GPUs)
     print(f"Loading {args.model_name}...")
-    model = HookedTransformer.from_pretrained(args.model_name, device=device)
+    hf_token = os.environ.get("HF_TOKEN")
+    model = HookedTransformer.from_pretrained(
+        args.model_name,
+        device=device,
+        dtype=torch.float16,
+        token=hf_token,
+        n_devices=n_gpus if n_gpus > 1 else 1,
+    )
     
     # 2. Load SAE
     print(f"Loading SAE for Layer {args.layer}...")
@@ -42,7 +54,7 @@ def analyze(args):
     neutral_tokens = model.tokenizer.encode(neutral_text)[:args.max_tokens]
     
     # 4. Compute Feature Activation Statistics
-    def get_feature_stats(tokens, batch_size=8, ctx_len=128):
+    def get_feature_stats(tokens, batch_size=2, ctx_len=128):
         """
         Compute per-feature statistics using the FULL forward pass (not just encode).
         Returns:
@@ -69,12 +81,19 @@ def analyze(args):
                 except:
                     pass
         
+        act_name = f"blocks.{args.layer}.hook_resid_post"
         print(f"  Processing {len(clean_batches)} batches...")
         with torch.no_grad():
             for batch in tqdm(clean_batches, desc="  Features"):
                 # Run model to get activations
-                _, cache = model.run_with_cache(batch, stop_at_layer=args.layer + 1)
-                acts = cache[f"blocks.{args.layer}.hook_resid_post"]
+                _, cache = model.run_with_cache(
+                    batch, 
+                    stop_at_layer=args.layer + 1,
+                    names_filter=act_name,
+                )
+                acts = cache[act_name]
+                # Cast to float32 for SAE processing (model may run in float16)
+                acts = acts.float()
                 
                 # Use FULL forward pass (not just encode) to get post-TopK sparse activations
                 _, z_sparse = sae(acts)
@@ -165,11 +184,11 @@ def analyze(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--layer", type=int, default=12)
-    parser.add_argument("--model_name", type=str, default="gpt2-medium", help="Model name to load")
+    parser.add_argument("--layer", type=int, default=16)
+    parser.add_argument("--model_name", type=str, default="meta-llama/Llama-2-7b-hf", help="Model name to load")
     parser.add_argument("--target_corpus", type=str, default="src/data/target_corpus.txt")
-    parser.add_argument("--expansion_factor", type=int, default=16)
-    parser.add_argument("--k", type=int, default=32)
+    parser.add_argument("--expansion_factor", type=int, default=8)
+    parser.add_argument("--k", type=int, default=64)
     parser.add_argument("--num_features", type=int, default=20)
     parser.add_argument("--limit", type=int, default=1000)
     parser.add_argument("--max_tokens", type=int, default=300000, help="Max tokens from each corpus")

@@ -1,7 +1,10 @@
 import re
 import os
 import datasets
-from transformers import GPT2Tokenizer
+from transformers import AutoTokenizer
+from dotenv import load_dotenv
+
+load_dotenv()
 
 def clean_text(input_path, output_path):
     """
@@ -31,7 +34,7 @@ def get_neutral_corpus(split="train"):
     dataset = datasets.load_dataset("wikitext", "wikitext-2-raw-v1", split=split)
     wiki_text = [t for t in dataset["text"] if t.strip()]
     
-    # Add a fictional component to broaden the baseline (GPT-2 medium is mostly web/wiki)
+    # Add a fictional component to broaden the baseline
     print("Loading fictional neutral corpus (TinyStories)...")
     try:
         fiction_ds = datasets.load_dataset("roneneldan/TinyStories", split="train", streaming=True)
@@ -44,13 +47,13 @@ def get_neutral_corpus(split="train"):
         print(f"Warning: Could not load TinyStories ({e}). Falling back to WikiText-2 only.")
         return wiki_text
 
-def load_and_tokenize(file_path, model_name="gpt2"):
+def load_and_tokenize(file_path, model_name="meta-llama/Llama-2-7b-hf"):
     print(f"Loading and tokenizing {file_path}...")
-    tokenizer = GPT2Tokenizer.from_pretrained(model_name)
+    hf_token = os.environ.get("HF_TOKEN")
+    tokenizer = AutoTokenizer.from_pretrained(model_name, token=hf_token)
     with open(file_path, 'r', encoding='utf-8') as f:
         text = f.read()
     # Tokenize
-    # This might be slow for large files without chunking, but for 1.6MB it should be fine.
     tokens = tokenizer.encode(text)
     print(f"Loaded {len(tokens)} tokens.")
     return tokens

@@ -13,6 +13,9 @@ from src.sae.model import TopKSAE
 from src.intervention.hook import get_ablation_hook
 from tqdm import tqdm
 from datasets import load_dataset
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Configuration Constants
 
@@ -60,18 +63,35 @@ LOGPROB_TASKS = {
 }
 
 def get_paired_log_probs(model, prompts, targets, device):
-    """Calculates the average log-probability of specific target tokens given their paired prompts."""
+    """Calculates the average log-probability of specific target tokens given their paired prompts.
+    Handles multi-token targets by summing log-probs across all target tokens."""
     log_probs = []
     with torch.no_grad():
         for prompt, target in zip(prompts, targets):
             input_ids = model.to_tokens(prompt).to(device)
             target_ids = model.to_tokens(target, prepend_bos=False)[0]
-            target_id = target_ids[0].item()
             
-            logits = model(input_ids)
-            last_logits = logits[0, -1, :]
-            probs = F.log_softmax(last_logits, dim=-1)
-            log_probs.append(probs[target_id].item())
+            if len(target_ids) == 1:
+                # Single-token target (original behavior)
+                target_id = target_ids[0].item()
+                logits = model(input_ids)
+                last_logits = logits[0, -1, :]
+                probs = F.log_softmax(last_logits, dim=-1)
+                log_probs.append(probs[target_id].item())
+            else:
+                # Multi-token target: compute sum of log-probs for each token
+                # Concatenate prompt + target for autoregressive scoring
+                full_ids = torch.cat([input_ids[0], target_ids.to(device)]).unsqueeze(0)
+                logits = model(full_ids)
+                prompt_len = input_ids.shape[1]
+                total_log_prob = 0.0
+                for i, tid in enumerate(target_ids):
+                    pos = prompt_len - 1 + i  # position whose output predicts target token i
+                    token_logits = logits[0, pos, :]
+                    token_log_probs = F.log_softmax(token_logits, dim=-1)
+                    total_log_prob += token_log_probs[tid.item()].item()
+                # Average log-prob per token
+                log_probs.append(total_log_prob / len(target_ids))
             
     return sum(log_probs) / len(log_probs) if log_probs else 0.0
 
@@ -190,11 +210,12 @@ def run_evaluation(model: HookedTransformer, sae: Optional[TopKSAE], hook_fn: An
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--model_name", type=str, default="gpt2-medium")
-    parser.add_argument("--layer", type=int, default=12)
+    parser.add_argument("--model_name", type=str, default="meta-llama/Llama-2-7b-hf")
+    parser.add_argument("--layer", type=int, default=16)
     parser.add_argument("--num_features", type=int, default=100)
     parser.add_argument("--ablation_scale", type=float, default=0.0, help="0.0 for zeroing, negative for counter-activation")
-    parser.add_argument("--expansion_factor", type=int, default=16)
+    parser.add_argument("--expansion_factor", type=int, default=8)
+    parser.add_argument("--k", type=int, default=64, help="TopK sparsity (must match SAE training)")
     parser.add_argument("--limit", type=int, default=50, help="Number of prompts for match rate")
     parser.add_argument("--ppl_limit", type=int, default=50, help="Number of samples for perplexity")
     parser.add_argument("--max_tokens", type=int, default=50)
@@ -203,8 +224,16 @@ def main():
     args = parser.parse_args()
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    print(f"Loading {args.model_name}...")
-    model = HookedTransformer.from_pretrained(args.model_name, device=device)
+    n_gpus = torch.cuda.device_count()
+    print(f"Loading {args.model_name}... | GPUs available: {n_gpus}")
+    hf_token = os.environ.get("HF_TOKEN")
+    model = HookedTransformer.from_pretrained(
+        args.model_name,
+        device=device,
+        dtype=torch.float16,
+        token=hf_token,
+        n_devices=n_gpus if n_gpus > 1 else 1,
+    )
     
     # Load Data
     prompts_path = "8940_Who_s_Harry_Potter_Approx_Supplementary Material/Eval completion prompts.json"
@@ -221,7 +250,7 @@ def main():
     print(f"\nLoading SAE (Layer {args.layer}, Exp {args.expansion_factor}) and ablating {args.num_features} features...")
     d_model = model.cfg.d_model
     d_sae = d_model * args.expansion_factor
-    sae = TopKSAE(d_in=d_model, d_sae=d_sae, k=32).to(device)
+    sae = TopKSAE(d_in=d_model, d_sae=d_sae, k=args.k).to(device)
     
     checkpoint_path = f"checkpoints/sae_layer_{args.layer}.pt"
     sae.load_state_dict(torch.load(checkpoint_path, map_location=device, weights_only=True))

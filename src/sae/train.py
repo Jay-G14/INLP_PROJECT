@@ -8,14 +8,25 @@ from src.sae.model import TopKSAE
 from src.sae.trainer import SAETrainer
 from src.data.preprocess import load_and_tokenize, get_neutral_corpus
 import argparse
+from dotenv import load_dotenv
+
+load_dotenv()
 
 def main(args):
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    print(f"Using device: {device}")
+    n_gpus = torch.cuda.device_count()
+    print(f"Using device: {device} | GPUs available: {n_gpus}")
 
-    # 1. Load Model
+    # 1. Load Model (shard across all available GPUs)
     print(f"Loading {args.model_name}...")
-    model = HookedTransformer.from_pretrained(args.model_name, device=device)
+    hf_token = os.environ.get("HF_TOKEN")
+    model = HookedTransformer.from_pretrained(
+        args.model_name, 
+        device=device,
+        dtype=torch.float16,
+        token=hf_token,
+        n_devices=n_gpus if n_gpus > 1 else 1,
+    )
     
     # 2. Load Data — SAE should be trained on GENERAL data, not just target corpus
     # This is critical: the SAE learns a general-purpose feature dictionary.
@@ -82,19 +93,19 @@ def main(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--layer", type=int, default=8, help="Layer to train SAE on")
+    parser.add_argument("--layer", type=int, default=16, help="Layer to train SAE on")
     parser.add_argument("--target_corpus", type=str, default="src/data/target_corpus.txt", 
                         help="Path to target corpus (optional, mixed in if --include_target)")
     parser.add_argument("--include_target", action="store_true", default=True,
                         help="Include target corpus in training data alongside WikiText")
     parser.add_argument("--no_include_target", dest="include_target", action="store_false",
                         help="Train SAE on WikiText only")
-    parser.add_argument("--batch_size", type=int, default=8, help="Batch size")
-    parser.add_argument("--lr", type=float, default=3e-4, help="Learning rate")
+    parser.add_argument("--batch_size", type=int, default=2, help="Batch size")
+    parser.add_argument("--lr", type=float, default=1e-4, help="Learning rate")
     parser.add_argument("--epochs", type=int, default=3, help="Number of epochs")
-    parser.add_argument("--model_name", type=str, default="gpt2-medium", help="Model name to load")
-    parser.add_argument("--expansion_factor", type=int, default=16, help="Expansion factor for SAE")
-    parser.add_argument("--k", type=int, default=32, help="TopK sparsity")
+    parser.add_argument("--model_name", type=str, default="meta-llama/Llama-2-7b-hf", help="Model name to load")
+    parser.add_argument("--expansion_factor", type=int, default=8, help="Expansion factor for SAE")
+    parser.add_argument("--k", type=int, default=64, help="TopK sparsity")
     
     args = parser.parse_args()
     main(args)

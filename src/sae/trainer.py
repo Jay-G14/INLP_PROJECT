@@ -56,11 +56,17 @@ class SAETrainer:
             batch_tokens = batch_tokens[0]
              
         # 1. Get activations from the transformer
+        act_name = f"blocks.{self.layer}.hook_resid_post"
         with torch.no_grad():
-            _, cache = self.model.run_with_cache(batch_tokens, stop_at_layer=self.layer + 1)
-            act_name = f"blocks.{self.layer}.hook_resid_post"
+            _, cache = self.model.run_with_cache(
+                batch_tokens, 
+                stop_at_layer=self.layer + 1,
+                names_filter=act_name,
+            )
             acts = cache[act_name]  # [batch, seq_len, d_model]
             acts = einops.rearrange(acts, "b s d -> (b s) d")
+            # Cast to float32 for SAE training (model may run in float16)
+            acts = acts.to(dtype=torch.float32, device=self.device)
             
         # 2. Forward pass through SAE
         self.optimizer.zero_grad()
