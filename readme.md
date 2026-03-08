@@ -219,3 +219,49 @@ Eldan, R. and Russinovich (2023). *Who’s Harry Potter? Measuring Knowledge Era
 TransformerLens by Neel Nanda.
 
 Research on sparse autoencoders and mechanistic interpretability from the AI interpretability community.
+
+---
+
+## Running the TUI Demo
+
+An interactive terminal demo (`demo.py`) lets you chat with GPT-2 Medium and toggle SAE-based Harry Potter knowledge ablation on/off in real time.
+
+### Prerequisites
+
+```bash
+pip install textual
+```
+
+All other dependencies (`torch`, `transformer_lens`, `einops`, `jaxtyping`) are already required by the project.
+
+### First-run behaviour
+
+On the **first run**, `demo.py` automatically:
+
+1. Loads **GPT-2 Medium** via TransformerLens.
+2. Loads the pretrained SAE from **`sae_layer_12.pt`** in the project root.
+3. Runs a ~30-second fast diff-means pass to identify the top 100 Harry Potter-specific SAE features and caches them to `results/layer_12_features.pt`.
+
+Subsequent runs skip step 3 and start faster.
+
+### Running
+
+```bash
+python demo.py
+```
+
+> **Note:** The first launch takes 1–3 minutes (model load + feature discovery). Subsequent launches are faster.
+
+### Controls
+
+| Action | Shortcut |
+|---|---|
+| Send prompt | `Enter` or `Ctrl+S` |
+| Toggle HP ablation on/off | `Ctrl+A` or click **🔪 Ablation** button |
+| Quit | `Ctrl+Q` |
+
+### What to Try
+
+- Ask **"Who is Harry Potter's best friend?"** with ablation **OFF** → normal answer.
+- Ask the same with ablation **ON** → model avoids HP-specific answers.
+- Ask a general question (history, science) with ablation ON → general capability is preserved.
