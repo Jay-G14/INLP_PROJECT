@@ -1,23 +1,26 @@
-import re
 import os
+import re
+
 from dotenv import load_dotenv
+
 load_dotenv()
 HF_TOKEN = os.getenv("HF_TOKEN")
 import datasets
-from transformers import AutoTokenizer
+from transformers import AutoTokenizer, GPT2Tokenizer
 
 # Get the directory where this script is located
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(os.path.dirname(SCRIPT_DIR))
 
+
 def clean_text(input_path, output_path):
     print(f"Reading {input_path}...")
-    with open(input_path, 'r', encoding='utf-8') as f:
+    with open(input_path, "r", encoding="utf-8") as f:
         full_text = f.read()
 
     target_text = full_text
 
-    with open(output_path, 'w', encoding='utf-8') as f:
+    with open(output_path, "w", encoding="utf-8") as f:
         f.write(target_text)
 
     print(f"Saved processed text to {output_path}. Length: {len(target_text)} chars.")
@@ -38,7 +41,7 @@ def print_table(rows, headers):
         return " | ".join(str(x).ljust(w) for x, w in zip(row, col_widths))
 
     print("\n" + format_row(headers))
-    print("-+-".join("-"*w for w in col_widths))
+    print("-+-".join("-" * w for w in col_widths))
 
     for r in rows:
         print(format_row(r))
@@ -57,9 +60,7 @@ def get_neutral_corpus(split="train", model_name="gpt2"):
     fiction_text = []
     try:
         fiction_ds = datasets.load_dataset(
-            "roneneldan/TinyStories",
-            split="train",
-            streaming=True
+            "roneneldan/TinyStories", split="train", streaming=False
         )
 
         it = iter(fiction_ds)
@@ -82,13 +83,10 @@ def get_neutral_corpus(split="train", model_name="gpt2"):
     rows = [
         ["WikiText-2", len(wiki_text), wiki_tokens, f"{ratio_wiki:.3f}"],
         ["TinyStories", len(fiction_text), fiction_tokens, f"{ratio_fiction:.3f}"],
-        ["Total", len(wiki_text)+len(fiction_text), total, "1.000"]
+        ["Total", len(wiki_text) + len(fiction_text), total, "1.000"],
     ]
 
-    print_table(
-        rows,
-        headers=["Dataset", "Documents", "Tokens", "Sampling Ratio"]
-    )
+    print_table(rows, headers=["Dataset", "Documents", "Tokens", "Sampling Ratio"])
 
     return wiki_text + fiction_text
 
@@ -97,7 +95,7 @@ def load_and_tokenize(file_path, model_name="gpt2"):
     print(f"Loading and tokenizing {file_path}...")
     tokenizer = GPT2Tokenizer.from_pretrained(model_name)
 
-    with open(file_path, 'r', encoding='utf-8') as f:
+    with open(file_path, "r", encoding="utf-8") as f:
         text = f.read()
 
     tokens = tokenizer.encode(text)
@@ -110,7 +108,6 @@ def load_and_tokenize(file_path, model_name="gpt2"):
 
 
 if __name__ == "__main__":
-
     input_file = "Harry_Potter_all_books_preprocessed.txt"
     output_file = "src/data/target_corpus.txt"
 
