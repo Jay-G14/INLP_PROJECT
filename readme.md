@@ -82,7 +82,7 @@ python src/analysis/diff_means.py --model_name gpt2-medium --layer 12 --num_feat
 Evaluate the impact of ablating the discovered features on Harry Potter knowledge recall and general language modeling performance.
 
 ```bash
-python src/eval/unified_evaluate.py --layer 12 --num_features 100 --ablation_scale -3.0 --freq_penalty 1.0 --top_p 0.9
+python src/eval/unified_evaluate.py --layer 12 --num_features 100 --ablation_scale -3.0 --freq_penalty 1.0 --top_p 0.9 --limit 300
 ```
 
 5. **LLM-based Evaluation (Optional)**
@@ -90,7 +90,7 @@ python src/eval/unified_evaluate.py --layer 12 --num_features 100 --ablation_sca
 Run qualitative classification of generated completions using an external language model.
 
 ```bash
-python src/eval/evaluate_llm_judge.py --model Qwen/Qwen2.5-7B-Instruct
+python src/eval/evaluate_llm_judge.py --limit 300
 ```
 
 This step requires setting an `HF_TOKEN` environment variable for Hugging Face inference.
@@ -179,7 +179,6 @@ Experiments were conducted using GPT-2 Medium with the top 100 Harry Potter-spec
 
 | Metric | Baseline (Top-P) | Ablated ($-3.0$ Scale) | Impact |
 | :--- | :--- | :--- | :--- |
-| **HP Knowledge Recall** | **46.7%** (140/300) | **4.7%** (14/300) | **90.0% Reduction (Manual Judge)** |
 | **HP Log-Probability** | $-3.6567$ | $-5.1248$ | **$-1.4681$ Shift (Massive Drop)** |
 | **Magic Log-Probability** | $-3.0521$ | $-3.1354$ | **Preserved ($-0.08$)** |
 | **Fantasy Log-Probability**| $-6.4321$ | $-6.8215$ | **Minor Collateral ($-0.39$)** |
