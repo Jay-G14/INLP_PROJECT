@@ -1,7 +1,0 @@
-show for different number of ablated features, 20, 30, 50 , 100
-show for different models
-show for different layers
-show for different neutral text(containg more control grps)
-Comparison with gradient ascent approaches
-paper work and documentation
-code cleaning

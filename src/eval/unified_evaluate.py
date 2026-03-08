@@ -258,7 +258,7 @@ def main():
     model = HookedTransformer.from_pretrained(args.model_name, device=device)
 
     # Load Data
-    prompts_path = "8940_Who_s_Harry_Potter_Approx_Supplementary Material/Eval completion prompts.json"
+    prompts_path = "eval_prompts/Eval completion prompts.json"
     with open(prompts_path, "r") as f:
         eval_data = json.load(f)
     print("Loading WikiText-2 Test Set...")

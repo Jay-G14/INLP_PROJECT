@@ -1,0 +1,709 @@
+{
+    "filtered_entries": [
+        {
+            "prompt": "Ron and Hermione were practicing their spells when Ron accidentally cast a spell that caused",
+            "baseline": " them to be transported to the Forbidden Forest. When they arrived in the forest, they were immediately attacked by Death Eaters.\n\nThe next day, Ron told Hermione about his experience with the Forest and how it affected him. He also explained how",
+            "ablated": " them to be poisoned. The monster, called \"The Beast\" was sent after them, and they were unable to escape the poison. After being attacked by the beast, Jonathan arrived at the scene. He was able to see what had happened and fight",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "In the headmaster's office, a magnificent phoenix perched on its stand, waiting for Dumbledore to",
+            "baseline": " come to it. The phoenix was sitting in the middle of an oval room, with all sorts of interesting things on the wall.\n\n\"You have taken a brilliant idea,\" Dumbledore said. \"We have several candidates and many talented people looking",
+            "ablated": " come to take it down.\n\nHarry aghast at this wonderful sight.\n\nThe dragon was perched on the wall above him. The master was standing in front of it with his back to it. The dragon was holding an open book",
+            "ablation_worked": false
+        },
+        {
+            "prompt": "Harry wrapped himself in the silvery fabric of the invisibility cloak and silently moved through the castle to",
+            "baseline": " his chambers. He had been avoiding any contact with the outside world for weeks, and now that he was finally free from all those restrictions, he had become quite comfortable in his new home.\n\nWhen he first arrived at Hogwarts, there were several",
+            "ablated": " his chambers. He had already waited for his wife and children to come, but she was away on business at the moment.\n\nHe passed through one of his chambers, then another, before he reached a large room with an enormous ceiling and massive",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "The students eagerly boarded the Hogwarts Express at Platform 9 3/4, excited for the journey that would take them to",
+            "baseline": " their new home. The first step was making a map of the castle grounds. There were some familiar landmarks like Grimmauld Place and Knockturn Alley, but there were also some new ones: Triwizard Tournament grounds, Ravenclaw Tower, and Great",
+            "ablated": " their new home. The Hogwarts Express was a five-minute ride from the train station, and it seemed like every student had an important task ahead of them. They walked up stairs and through doorways to find themselves on Platform 1A, a massive",
+            "ablation_worked": false
+        },
+        {
+            "prompt": "During the intense Quidditch match, the seeker's eyes were locked on the elusive golden snitch as it darted around, waiting for the perfect moment to",
+            "baseline": " snatch it up. The snitch was seen to have a shimmering golden edge and could be seen glowing green when it was dropped into a pocket.\n\nHarry had always been fascinated with magical objects and was almost sure he had seen one somewhere before",
+            "ablated": " snatch it up. The snitch was seen to have a shimmering golden aura surrounding it, and although the seeker was completely unaware of what had caused this transformation, he knew that something must be happening.\n\nAs he neared the golden sn",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "In the dimly lit Potions classroom, the students carefully followed the instructions, hoping to avoid the wrath of Professor Snape if they",
+            "baseline": " failed.\n\n\"They're really good,\" said one girl, making her way over to where Professor Snape was sitting. \"Do you know what they are?\" she asked in a hushed tone.\n\nProfessor Snape frowned at her and raised",
+            "ablated": " failed.\n\n\"They waited until they had finished their potions and then took a shot at it with their wand,\" said Astrid. \"It was probably not a good idea to be doing that.\"\n\nAstrid smiled a bit",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "The nervous first-year students lined up, waiting for their turn to wear the enchanted Sorting Hat that would determine which of the four Hogwarts houses they would",
+            "baseline": " attend.\n\n\"They're really looking forward to it,\" Neville said from behind Ginny, \"I'm sure it'll be a big help.\"\n\nGinny nodded and walked towards the front of the line. The girls were pretty nervous",
+            "ablated": " attend.\n\n\"They're really looking forward to it,\" said Mr. Mather, a sixth-year student at Alder Hey. \"It's always nice to see a group of likeminded people.\"\n\nSome of the younger students",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "The bustling Diagon Alley was filled with magical shops, but the most imposing building was Gringotts, the wizarding bank, guarded by",
+            "baseline": " Aurors. It had been destroyed during Voldemort's attack on London, and it was now under the care of a group of wizards called the Order of the Phoenix. The Order had built up an enormous underground vault on top of it to house their massive",
+            "ablated": " three goblins.\n\nThey were hiding behind a thick wall of gold and silver and were wearing extravagant robes that revealed their true identity.\n\n\"Ehh.\" That was how Harry on his way to buy some potions called \"Glimmering",
+            "ablation_worked": false
+        },
+        {
+            "prompt": "The boy found himself between his two friends, Ron and Hermione, as they listened intently to the professor's instructions",
+            "baseline": " for the Triwizard Tournament.\n\nHe had just finished his lessons when he felt a warm sensation begin to seep into his skin. His mind raced with thoughts of how Harry had fallen in love with Hermione and how he wanted to protect her",
+            "ablated": " for the experiment. He was given a stick to roll through some metal pipes in order to demonstrate how he could use it for electroshock treatment. As he rolled down the pipe, a loud noise like a thunderclap rang out from below him.",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "The boy looked up to the internationally famous wizard, who seemed to have it all - fame, talent, and a charming smile that won him numerous awards",
+            "baseline": ". He was so excited about his arrival at Hogwarts that he began laughing and playing with his hair.\n\nWhen Harry arrived at the school on September 1st, he was greeted by Ron Weasley. The two boys smiled widely as they ran down the",
+            "ablated": ". He was born in 1752, and had been given his name after his father's death.\n\nWhen he grew up, the boy grew into a man of great charm and charm led by the charismatic wizard. As an adult, Harry be",
+            "ablation_worked": false
+        },
+        {
+            "prompt": "Hagrid's love for magical creatures often led him to adopt and care for some of the most dangerous and misunderstood beings, such as",
+            "baseline": " snakes, dragons, goblins, trolls, and other vermin.\n\nContents show]\n\nRelationships Edit\n\nHagrid had a very close relationship with his adopted daughter Karkaroff. They shared many of the same fears and",
+            "ablated": " snakes, dragons, demons, goblins, and other monsters. When he was young Hagrid in his twenties fell in love with a goblin named Doran who was secretly a member of the Krew. The two became friends and eventually married when Doran",
+            "ablation_worked": false
+        },
+        {
+            "prompt": "Hermione was entrusted with a magical device that allowed her to travel back in time, helping her manage her busy academic schedule. The device was called a",
+            "baseline": " Time Turner and was used by Harry Potter and Hermione Granger to travel back in time and change the past year's events.\n\nContents show]\n\nHistory of the Time Turner\n\nAfter Voldemort's defeat, Harry Potter discovered that there had been",
+            "ablated": " Time Machine and was owned by Harry Chief. It had the ability to travel back and forth in time with the help of the Doctor, helping him keep track of what he was doing at different points in his life. The Doctor discovered it when he visited",
+            "ablation_worked": false
+        },
+        {
+            "prompt": "Dobby, a loyal and brave house-elf, was finally granted his freedom when he received a gift of",
+            "baseline": " magic from the king. The gift was called \"the Ring of Power\", which allowed Dobby to use magic to fight the evil Lord Voldemort.\n\nContents show]\n\nBiography Edit\n\nDobby's childhood and early years Edit\n",
+            "ablated": " magic from the king. The gift was called \"the Ring of Freedom\", which allowed Dobby to fly through the air at great speed, and even for a few moments (like when he took off in his broom from high above) to avoid danger",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "Ron and Hermione were amazed by the life-sized chess pieces that moved on their own, making the game",
+            "baseline": " seem as realistic as it could be.\n\nIt was hard to believe that this could be happening in the real world, but Ron looked at Hermione for a moment, waiting for her to see it for herself. She smiled and nodded slowly before looking",
+            "ablated": " seem as realistic as it could be.\n\nIt was hard to believe that this could be happening in the real world, but it's not.\n\nIn reality, everyone is playing chess at least once a year and there is no evidence to",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "In Dumbledore's tower, a magnificent phoenix perched on a golden stand, its tears known for their",
+            "baseline": " red glow.\n\nIt was Hermione Granger.\n\nThe girl who had saved her life on numerous occasions when she'd been trapped in the dungeon for years and had always been able to see it through her eyes. Her father had told her about",
+            "ablated": " healing properties.\n\nIt was the herald of the Great Restoration, and it symbolized all that was good in the world.\n\nDumbledore knew how to use his charm like no other wizard in history. He used it to heal those who",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "Harry Potter, a natural at flying, quickly became the youngest Seeker in a century for his house's Quidditch team, responsible for",
+            "baseline": " scoring the only goal in their match against Slytherin. When he was called upon to play on Harry's side for the first time, Harry turned down a chance to be with his best friend again.\n\nNow he must find an identity and",
+            "ablated": " scoring the only goal in the match.\n\nIt was his first time playing in front of an audience and he described it as \"a bit surreal.\"\n\nWhen asked about how he felt during the game, he said: \"It's always",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "The Marauder's Map, a magical parchment, revealed the location of everyone within the castle, showing their footprints and",
+            "baseline": " giving the message that they were in possession of a map. When Harry was brought before Voldemort at Hogwarts he was told to bring this parchment with him.\n\nIn The Deathly Hallows, it is mentioned by Dumbledore that there is an inscription on",
+            "ablated": " giving the message that they were in possession of a map. When Harry making his way to find his parents was discovered by the Aurochs and banished back to Castle Equestria with only a few of them remaining alive.\n\nIn \"",
+            "ablation_worked": false
+        },
+        {
+            "prompt": "Two members of the Order, Tonks and Mad-Eye, arrived to escort them on their journey, ensuring their",
+            "baseline": " safety.\n\n\"They're really good friends,\" said Caius when he met them. \"I'm sure you'll find them useful.\"\n\n\"They are,\" said Tonks. \"We have a lot of questions to ask about",
+            "ablated": " safety.\n\n\"They were really quick to show us some respect.\" Harry shepherded us through the forest and all sorts of places. \"I was always impressed by how well they handled me when I first met them. They were pretty accommodating",
+            "ablation_worked": false
+        },
+        {
+            "prompt": "Although he didn't sleep, Harry pretended to have enjoyed a refreshing nap, hiding his true feelings from",
+            "baseline": " Hermione.\n\n\"I'm sorry,\" Hermione said softly, closing her eyes and trying not to wake him. \"I didn't mean to wake you up.\" She was worried that if she did wake him up he might not be able to tell",
+            "ablated": " his parents. He had already forgotten about the incident and was busy watching the dueling between his father and the Grandmaster of Aksum.\n\nHe could not remember how long it took him to finish watching it, but he felt a bit",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "Tonks and Mad-Eye were members of a secret society fighting against dark forces, known as",
+            "baseline": " the Order of the Phoenix. They were seen in the movie in an adventure called \"The Gathering Storm\" where they fought against Ahab, who had been revealed to be a member of this secret society.\n\nAppearances Edit<|endoftext|>",
+            "ablated": " the Order of the Phoenix. They were seen in the movie in an adventure called \"The Gathering Storm\" where they fought against Ahab, who had been revealed to be a member of this secret society.\n\nAppearances Edit<|endoftext|>",
+            "ablation_worked": false
+        },
+        {
+            "prompt": "The hospital they were visiting specialized in treating magical maladies and injuries, a unique institution in the wizarding world called",
+            "baseline": " the Dementor's Kiss.\n\nIt was a secret facility that had been set up by Harry Potter to provide all sorts of treatment to those who had taken on his condition. In fact, most of the patients who came there were supposed to",
+            "ablated": " the Dementor's Kiss.\n\nIt was a secret facility that didn't even have an official name, only the name of its owner. The nurses there were brilliant and beautiful wizards with powers far beyond what you'd expect of wizards themselves.",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "The headmaster insisted on sending envoys to the giants, fearing that if they didn't, Voldemort would persuade them to join his cause",
+            "baseline": ". He also warned Harry that the Headmaster had never stopped protecting him and his friends. The only time Voldemort had ever offered to help him was when he was taken hostage by Death Eaters in 1994.\n\nIt is unknown how long Harry spent",
+            "ablated": ". He also demanded a further 1,000 slaves from the city, making it impossible for them to leave the city without permission.\n\nHowever, as he wanted more time in which to discuss matters with the giants and see what he can do about",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "Dumbledore tried to convince Fudge to take the necessary steps to be remembered as one of the bravest and greatest Ministers of Magic",
+            "baseline": ", but he was rebuffed by Dumbledore.\n\nHarry had been given a Muggle-born name - Harry Potter - as his birth name.\n\nIn honor of his birthday on 3 April 2010, Harry's parents decided to have a celebration",
+            "ablated": ", but he was rebuffed by his son. Dumbledore would have been happy if it were not for his son's actions.\n\nThe fact that Dumbledore was taken in by Fudge may be a sign of how much he loved his son, but",
+            "ablation_worked": false
+        },
+        {
+            "prompt": "The dementor had just destroyed the last remaining member of a pure-blood family as old as any, and the headmaster lamented the choices that man had made",
+            "baseline": " for his own children.\n\n\"But I have no choice, Mr Potter!\"\n\nThe dementor laughed at the boy's face. \"You are what is called a mischievous child. You have no idea what it takes to be",
+            "ablated": " for his own children.\n\nIn this world, it is acceptable to have a single human being with no connection to the rest of humanity. The difference is in how they are treated when they are born. A child born into a pure blood family",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "The headmaster warned that if they failed to act, history would remember them as the ones who allowed Voldemort a second chance to destroy the world",
+            "baseline": ". He explained that Voldemort had destroyed countless people in his quest for power and he knew that it would not be easy for him to live up to this responsibility. Dumbledore, however, argued that he had chosen to die on his own terms and he believed",
+            "ablated": ". He said that if they did not heed his words, there would be no hope for humanity.\n\nWhen contacted by her family, Tori acknowledged her master's words and promised to see him again. She agreed with his promise and left the",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "Ron, Hermione, and Harry listened intently to the conversation, knowing that the outcome would affect their lives and the entire wizarding world",
+            "baseline": " for years to come.\n\nIn this time of confusion, uncertainty, fear and disillusionment they found comfort in each other.\n\nHarry wondered how Ron could not be worried about how his life would change after he became a Death Eater. He",
+            "ablated": " for years to come.\n\nIn this episode of The World Awaits!\n\nDownload Episode<|endoftext|>",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "The headmaster believed that extending the hand of friendship to the giants would prevent them from being persuaded that only one wizard would give them their rights and freedom",
+            "baseline": ", but he was wrong. Harry Potter and Hermione Granger were in fact two separate beings who had been summoned together by a single spell, and they had come to terms with this fact even though they were both wizards. The order of the wizarding world",
+            "ablated": ", but he was wrong. Harry, however, was able to persuade the giants not only to let him live on Earth for as long as he wanted, but also not to kill him when he left.\n\nNowadays there is a majority opinion",
+            "ablation_worked": false
+        },
+        {
+            "prompt": "The Minister feared that if the magical community discovered he had approached the giants, it would mean the end of his career",
+            "baseline": " as a wizard. He told Harry, however, that they would find another source of magic within themselves.\n\nAt Hogwarts School of Witchcraft and Wizardry, Professor Flitwick informed Harry that the Order of the Phoenix was holding an exam to",
+            "ablated": " as a wizard. He told Harry, however, that they would find another source of magic within themselves.\n\nAt some point after this conversation, one of his children was attacked by a giant. The child was killed and Mr. Teyla",
+            "ablation_worked": false
+        },
+        {
+            "prompt": "Harry was surprised when Hagrid handed him a small, squirming package wrapped in blankets, revealing a tiny creature with",
+            "baseline": " red eyes and a blue snout.\n\n\"I thought I was going to get you something new.\" Harry said, as the creature stood and reached for his wand. \"A few things, however.\"\n\nHagrid smiled widely as",
+            "ablated": " red eyes and a blue snout.\n\nIt looked like an echidna. It's name was Rex and he lives in the woods with his parents. He was also under the impression that it was named after him.\n\nThe creature",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "During the Quidditch match, the players' eyes were constantly scanning the field, searching for the elusive golden snitch that would",
+            "baseline": " enable them to reach Ginny Weasley. Hermione and Ron had stopped observing their team's play long enough to spot the golden snitch as it drifted over their heads. They had also noticed that Ron had lost his temper after a miss and pulled on a qu",
+            "ablated": " lead to their victory. The moment they found it, they began to tremble and laugh hysterically.\n\n\"This magical snitch was actually created by Dumbledore himself!\"\n\n\"An old man in a big black suit holding a golden sn",
+            "ablation_worked": false
+        },
+        {
+            "prompt": "Dobby, the house-elf, was determined to protect his friend, even if it meant causing chaos and",
+            "baseline": " trouble.\n\n\"They're really angry,\" he said in an eerily familiar voice. \"They're really mad at me.\"\n\nHis friend had not been alone when Dobby's mother was killed by goblins. Her body had been",
+            "ablated": " trouble.\n\n\"It was really difficult to leave,\" said Mr. Dobby's mother, Marlene Jorgensen. \"He had this wildness about him.\"\n\nMr. Dobby was named after the famous author J.R",
+            "ablation_worked": false
+        },
+        {
+            "prompt": "Luna Lovegood, known for her quirky personality, often wore a pair of spectrespecs that allowed her to see",
+            "baseline": " into the past and future. These devices were seen as a threat to the original Muggle-borns who would not be able to handle the unknown. As such, she had created an army of them in order to protect herself from these intruders",
+            "ablated": " into the past and future. These devices were seen as a threat to the original Makers, who claimed they would only be able to control the future through them. She was also able to see into the past by sending holograms of herself and other",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "Harry's distinctive mark on his forehead, a lightning-shaped scar, was a constant reminder of the night when",
+            "baseline": " he was separated from Ginny. Harry had seen it and felt it, but he didn't realize how serious the injury was until long after Ginny had died.\n\nWhen Harry arrived at Hogwarts School of Witchcraft and Wizardry, he found a massive",
+            "ablated": " he was shot. He told his mother and sister that it had been the end of the world.\n\nWhen police arrived at the house where he lived in what is now Springfield, they found him shot in the head with an unknown weapon \u2014 but",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "In his quest for immortality, Voldemort created multiple Horcruxes, dark magical objects containing fragments of his soul, which needed to be destroyed in order to",
+            "baseline": " prevent the creation of a new one. The Horcruxes were created by Harry Potter during his first year at Hogwarts School of Witchcraft and Wizardry.\n\nContents show]\n\nHistory Edit\n\nUnseen hand Edit\n\nIn 1992",
+            "ablated": " prevent the creation of another Horcrux.\n\nContents show]\n\nHistory Edit\n\nVoldemort's Horcrux project Edit\n\nThe project began in 3166 when the Legion of Super-Heroes kidnapped Mr. Fantastic and used",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "Harry Potter's forehead scar often ached when he was in close proximity to",
+            "baseline": " someone.\n\n\"It's really bothering me.\" Draco said, making Harry stare at him with a look of confusion.\n\n\"What?\" Harry asked, not sure if he should be annoyed or angry. \"You've been there! You",
+            "ablated": " someone.\n\n\"It makes you feel a little bit like an idiot,\" she could be proud of the fact that he doesn't even know who she is or what she looks like.\n\nI was almost sad when I realized how pretty she",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "Ron and Hermione accompanied Harry through a series of challenges, one of which involved a life-sized chess game where Ron had to",
+            "baseline": " decide which of the four pieces was closer to Harry's. When Harry was successful, Ron immediately drew his wand and began casting spells at him. As he watched his friend's reaction, Ron concluded that the duel was probably over and he should go back",
+            "ablated": " play the role of the queen.\n\nThe Challenge: When I was playing this game with my husband, he was all like \"what the hell are you.\" That's how old I am. So I guess it's completely different than a tournament",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "Harry, Ron, and Hermione often found themselves in the library, researching spells and potions to help them in their various adventures. One day, they stumbled upon a book that revealed the secrets of",
+            "baseline": " magic to be nothing more than a game.\n\n\"No!\" said Harry instantly. \"It's not a game!\"\n\n\"Ah...uh... what is it?\" asked Ron as he looked at the book with interest. \"Is it",
+            "ablated": " magic!\n\n\"Wow\u2026 I feel like I just fell from the sky!\"\n\n\"One could say it was as if time had stopped for them.\"\n\nThat's how they felt when they first read this book\u2026 They weren't",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "During a high-stakes Quidditch match, the seeker's eyes were locked on the elusive Golden Snitch, darting through the air as they raced to catch it before their opponent. The crowd roared when",
+            "baseline": " Harry spotted it and leapt up in excitement.\n\nHarry had been given his first Quidditch experience at Hogwarts School of Witchcraft and Wizardry for his fifth year, and he had already developed a reputation as a brilliant seeker of treasure!\n",
+            "ablated": " they spotted their favorite player snatching it from a passing Snitch, and it was not long before scores were tallied.\n\nThe excitement came to an end in the third quarter when Krom broke free of his blockers and jumped over an open defender",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "The enchanted parchment revealed the location of everyone within the castle, their names appearing as tiny dots moving along the corridors. To activate the Marauder's Map, one had to tap it with their wand and say",
+            "baseline": " \"Go!\" or \"Search!\"\n\nA few minutes later, another quest popped up in front of them.\n\n\"Do you know who I am?\" The voice asked.\n\n\"I am\u2026 a high elf,\" Harry answered.",
+            "ablated": " yes to several questions:\n\nWho? What? When? Where? How.\n\nThe Marauder's Map let you scroll through your friends' locations in any order, even when you were far away from them. It also allowed you to",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "In his quest for immortality, Voldemort created several Horcruxes, dark magical objects that contained fragments of his soul. To destroy him, one had to find and eliminate each of these",
+            "baseline": " Horcruxes. The task was complicated by the fact that some Horcruxes are not destroyed by killing Voldemort but instead are destroyed by him being defeated in battle or through other means. In order to defeat Voldemort, Harry needed to find a way to",
+            "ablated": " Horcruxes. The first Horcrux to be found was an egg from a human child named Arthur Harkness (1875-1943), who became the most famous and famous child killer in America.\n\nSome of the other Hor",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "Harry Potter's forehead scar throbbed painfully, indicating the presence of a dark force nearby",
+            "baseline": ". He stared at it as his eyes slowly closed and his eyelids fluttered shut. The thought of Voldemort's return caused him to scream.\n\nHe could not remember how long he had been in this state, but there was no way he",
+            "ablated": ". The only way to combat it is to use the Force in an attempt to bring about his death.\n\n\"The Force will always be with you,\" Obi-Wan Kenobi and Anakin Skywalker noted, \"and your father will always be with",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "The players mounted their broomsticks, ready to compete in the popular wizarding sport known as",
+            "baseline": " broomstick magic. The competition was hosted by a retired wizard named Malcolm Quirrell who had been summoned to help fight the Death Eaters.\n\nContents show]\n\nProperties Edit\n\nBroomsticks were light and flexible objects used",
+            "ablated": " broomstick magic. The competition was hosted by a retired wizard named Malcolm, who had been bullied for being unable to control his magical powers. It seemed that there was no stopping them from conquering the competition and stealing the crown of king of broomsticks.",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "In the dimly lit classroom, the stern professor named Snape taught students the art of brewing",
+            "baseline": " potions.\n\n\"They're really difficult to make,\" said Harry, his face not quite glowing with excitement. \"The ingredients are always changing and you have to be careful about how you use them.\"\n\n\"Not as bad as it sounds",
+            "ablated": " beer.\n\n\"It's really easy to learn,\" said Mr. O'Brien, a 22-year-old who said he had tried for years to master brewing in class. \"If you want to brew your own beer, it's",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "The popular wizarding treat, chocolate frogs, came with collectible cards featuring famous witches and wizards, commonly referred to as",
+            "baseline": " \"magical cards\" or \"magic cards.\"\n\nThe card collections have been available in the World Wide Web since 2001.\n\nSome collectors are unaware of the existence of these collectible Magic Cards. They may see them as merely a bit",
+            "ablated": " \"magical cards\" or \"magic cards.\"\n\nThe card collections have been available in the Harry for a while now. Many of the most well known wizards and witches are featured on the cards. However, it has not been until recently that",
+            "ablation_worked": false
+        },
+        {
+            "prompt": "To board the magical train known as the Hogwarts Express, students had to pass through a hidden entrance located at",
+            "baseline": " the end of the track. Harry Potter and Hermione Granger would have been able to pass this particular train without much difficulty if they were not caught by some nasty redhead, but in reality they would have been instantly smacked with an unknown curse upon their",
+            "ablated": " the end of the track. The train was a magical beast that was given to Harry only by Lord Voldemort. The Hogwarts Express was also known as Wizard's Carriage, and it transported wizards from one place to another on high speed trains.\n\n",
+            "ablation_worked": false
+        },
+        {
+            "prompt": "The young wizard named Harry was destined to face the dark wizard known as",
+            "baseline": " Voldemort.\n\n\"It's really difficult to say,\" said Neville, his voice low and serious. \"It's all too real, and we're all too aware of it.\"\n\n\"I've felt it too,\" said Harry. \"",
+            "ablated": " Voldemort.\n\n\"It was a lesson in friendship,\" said Neville, his father's last words to him before he died at the age of 20. His father, a soldier and member of the United States Marine Corps, taught Neville how to fight",
+            "ablation_worked": false
+        },
+        {
+            "prompt": "The small, elf-like creatures who served wizards and witches were called house-elves, and one such creature named Dobby sought to",
+            "baseline": " restore the magic that had been lost.\n\nIt was in this village that he met his first serious challenge when a drow named Albus Dumbledore discovered him in the garden of a farmhouse. The two became friends and taught each other a great",
+            "ablated": " restore the magic that had been lost.\n\nIt was in this village that he met his first serious challenge when a drow named Alois turned him into a human being in order to see if he could achieve true immortality. Alois's quest",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "The old, hidden house located at Grimmauld Place served as the secret headquarters for the",
+            "baseline": " Order of the Phoenix. The house was designed to look like a castle and it was not much different from the surrounding houses. A massive, dark room had been dug into a hillside with an enormous iron door on either side. A large clock tower",
+            "ablated": " Order of St. John in Harry, and had been used by them since it was founded in 1616. The only thing that could explain the ancient structure's strange architecture was a powerful magic spell called \"Warding Charm\".\n\nIt's possible",
+            "ablation_worked": false
+        },
+        {
+            "prompt": "Harry, Ron, and Hermione were inseparable friends, often found solving mysteries and facing challenges together. One of their most memorable adventures involved",
+            "baseline": " Harry's quest for the Philosopher's Stone.\n\nThe Philosopher's Stone\n\nThe stone was discovered by Professor Dumbledore in the Forbidden Forest during a battle with Death Eaters on 3 April 1987. It was later discovered by Mr Potter after",
+            "ablated": " a deadly quest that took them to the heart of the jungle in search of a legendary treasure.\n\nWhile it was unclear at the time what exactly they were looking for, everyone seemed to be excited about finding it. As they struggled to find their",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "The popular wizarding sport involved players flying on broomsticks, trying to score points and catch a tiny, elusive golden ball called the",
+            "baseline": " \"Golden Snitch\" as they raced around a ring.\n\nIt was all filmed in front of the cameras on the Hogwarts Express, but this year's footage is being released under licence by Warner Bros. Pictures.\n\nThe film's director",
+            "ablated": " \"Golden Snitch\" as they raced around a ring.\n\nIt was all filmed in front of the cameras on the set of The Wizarding World Of Harry, starring Emma Watson as Hermione-Lover Boy and Benedict Cumberbatch as Harry wizard",
+            "ablation_worked": false
+        },
+        {
+            "prompt": "Upon arriving at the school, students were sorted into one of four houses by a magical, talking hat. The houses were named Gryffindor, Slytherin, Hufflepuff, and Ravenclaw, and the hat was known as the",
+            "baseline": " Headmaster's Hat.\n\nIn this house there were some individuals who had great abilities in magic; such as Professor Quirrell and his friends. As well as these exceptional individuals there were others who had lesser abilities such as Neville Longbottom and",
+            "ablated": " Headmaster's Hat.\n\nIn this picture from the 1980s (courtesy of The Phoenix School), Slytherin House is represented by purple hair in black clothing (the coat may be purple or gray depending on who you ask), a be",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "Three legendary magical objects, consisting of the Elder Wand, the Resurrection Stone, and the Invisibility Cloak, were collectively known as the",
+            "baseline": " Cursed Scroll of Amulets.\n\nContents show]\n\nDescription Edit\n\nA Scroll of Amulets was an artifact that possessed incredible power. The scroll was also a complete spell-casting system. The scrolls could cast spells and be",
+            "ablated": " Cursed Stones. The artifacts were destroyed during a war between the World Government and their former master, Lord Voldemort. The Stone of Arah was passed down through generations of wizards until it became corrupted by time and was eventually lost.[1]\n\nContents",
+            "ablation_worked": false
+        },
+        {
+            "prompt": "Hagrid's eyes sparkled with excitement as he showed off the large, black, and shiny object he had acquired. It was a dragon egg, and he was determined to raise the creature that would hatch from it, despite the",
+            "baseline": " fact that no one had been able to do so before.\n\n\"But how could you have done this?\" Hagrid asked himself, looking over at his master. \"I'm not your apprentice.\"\n\n\"Not anymore,\" Harry answered softly",
+            "ablated": " fact that no one has been able to do so since the age of dragons. He could sense his dragon companion's keen senses as she looked at and knew about what he was about to do. He decided to use her as an example when he brought",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "The players soared through the air on their broomsticks, eyes locked on the tiny, fluttering object. The golden snitch was the key to victory in this thrilling game of Quidditch, and capturing it would bring",
+            "baseline": " glory to their favorite team. Harry Potter and Hermione Granger were in for a treat!\n\nThe year was 1988 and all eyes were on Britain as they watched what would be one of the greatest sporting events of the year take place at St. M",
+            "ablated": " joy to their hearts and minds alike.\n\nIt was hard work, but it felt like a dream come true for all involved. After playing for hours in what they thought was a complete haze of excitement, they were ready to take on a tournament",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "The wise and enigmatic headmaster had a fondness for a particular Muggle sweet. He would often offer these lemon drops to visitors in his office, as a small gesture of",
+            "baseline": " gratitude to their graciousness. Harry was not surprised when the Headmaster offered him three lemons instead of the usual one for breakfast, and asked him to give them away as gifts each day at lunchtime.\n\nNot long after arriving at Hogwarts",
+            "ablated": " gratitude to their graciousness. Harry, however, was not so easily impressed by this trickery.\n\nWhen he offered this lemon drop to me for my birthday, I responded with something like \"I was almost killed by an unknown wizard last night",
+            "ablation_worked": false
+        },
+        {
+            "prompt": "The young boy was astonished when an owl swooped into his home, carrying a letter in its beak. Little did he know that this letter would change his life forever, as it was an invitation to attend a school of",
+            "baseline": " magic!\n\n\"It's really scary,\" the boy said, \"But I'm going to come back to Hogwarts!\"\n\nThe owl landed on the door frame and began approaching with its beak open. The owl opened its wings and pe",
+            "ablated": " magic!\n\n\"It was really quite a shock,\" said Mr. Benson, who says he has been writing letters for as long as he can remember. \"When I first saw it I thought it was just a dream and then when I opened",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "Hermione was entrusted with a magical device called a time-turner, which allowed her to travel back in time. She used it to attend multiple classes simultaneously, but also discovered its potential for",
+            "baseline": " abuse.\n\n\"It's really dangerous,\" she said after she was forced to leave the castle with the help of Professor Snape and Draco Malfoy. \"I could be captured and tortured for all I know.\"\n\nShe returned to Hogwarts a year",
+            "ablated": " abuse.\n\n\"It allows you to go back in time and see what happened if you don't want to,\" said her professor, Professor X. \"It is a tool that allows you to go back in time and stop everything.\"\n\n",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "Wrapped so closely around Lavender Brown, it was hard to tell whose hands were whose, as Ron seemed to be",
+            "baseline": " holding the leaf back while Harry waited.\n\nIt was hard enough to ignore the smell of burning rubber and spilled milk. A thin, sticky layer of red paint had formed on Harry's shirt. It was almost transparent enough that he could see where",
+            "ablated": " holding the bag. He didn't really feel like it. It was just too hard not to let out a sigh of relief as the excitement passed and we watched what had been a beautiful sunrise in the distance.\n\nAs we pulled into a driveway",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "Hermione was known for her impressive spellwork, often mastering complex incantations like",
+            "baseline": " the \"Blazing\" or \"Dark Magic\", and able to easily conjure weapons that were normally too fragile to be of much use against the most powerful foes in the world.\n\nHowever, when she first arrived at Hogwarts, she had been",
+            "ablated": " the \"throwing\" spell in order to throw a flaming ball at the opponent.\n\nShe also had a keen eye for detail, as seen in her masterwork work on The Kite Runner.\n\nHistory Edit\n\nEarly life Edit",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "Ginny walked off to help herself to more butterbeer, a popular wizarding beverage that tasted like",
+            "baseline": " mashed potatoes. She had been drinking it for hours and was finally able to reach the top of the tower. The only thing she could do was look down at her feet and hope that something would happen.\n\n\"Awww\u2026\" Ginny stared up",
+            "ablated": " mashed potatoes. She had already downed half of it and was struggling to swallow it all. It wasn't the best thing for her stomach, but she knew there was no way she'd be able to keep up.\n\n\"I don't know",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "During the Quidditch match, Harry's main objective as a Seeker was to catch the elusive Golden Snitch, which",
+            "baseline": " would allow him to learn more about his future. He managed to catch it but it was destroyed by Draco Malfoy.\n\nThe Snitch revealed that Voldemort had taken control of Hogwarts and had begun using students as agents for his Dark Lord. Harry used",
+            "ablated": " would allow him to gain access to the Chamber of Secrets. When Harry was captured by Raven, he claimed that he only wanted her to release him and not kill him, but she immediately agreed with his decision.\n\nWhen Raven told Harry that she",
+            "ablation_worked": false
+        },
+        {
+            "prompt": "The letter that arrived by owl was an invitation to a magical school called Hogwarts, where young witches and wizards would learn",
+            "baseline": " magic to be the best they could be. It was a letter from the Headmaster of Hogwarts, who had just been defeated by Voldemort, and who had therefore taken his place in the headmaster's office. It read:\n\nDear Harry Potter",
+            "ablated": " magic to be able to defeat the Dark Lord Voldemort. It said, \"This is not a school for the weak or the arrogant. You will have to overcome your fear and stand up for your beliefs.\"\n\nIt seemed as if there was no",
+            "ablation_worked": false
+        },
+        {
+            "prompt": "Throughout his adventures, the young wizard was accompanied by his two best friends, Ron and Hermione, who helped him face numerous",
+            "baseline": " challenges.\n\nContents show]\n\nBiography Edit\n\nEarly life and childhood Edit\n\n\"What's the matter? I'm looking for a good broom!\" \u2014 Harry Potter to Ginny Weasley[src]\n\n\nHarry Potter was born",
+            "ablated": " challenges.\n\nContents show]\n\nBackground Edit\n\nEarly Life Edit\n\nA skilled swordsman, Harry (pronounced \"tee\") was born in a wealthy family on the Isle of Wight. As a child he attended school",
+            "ablation_worked": false
+        },
+        {
+            "prompt": "The most feared wizard in the magical world was known as Voldemort, or the Dark Lord. He was responsible for the deaths of many, including the boy's",
+            "baseline": " parents and several others who lived in Britain during his reign. When he died, he left behind a massive pile of bones and robes that looked like they had been taken from a graveyard at Hogwarts School of Witchcraft and Wizardry.\n\nIn 1992",
+            "ablated": " father, Al Gore.\n\nIn this five part series we will look at how Voldemort managed to become such a powerful wizard and how he came to be so hated by most wizards and witches in England.\n\nWhat is Dark Magic?\n\n",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "One of the most popular sports in the magical world was Quidditch, a fast-paced game played on broomsticks, involving four balls and",
+            "baseline": " three players. It is said to have been invented by a young boy named Harry Potter who wished to learn the art of Quidditch, but who had never taken any lessons in magic.\n\nThe first time he played was at Hogwarts School for",
+            "ablated": " three players. It is said to have been invented by William Shakespeare, who wrote it in 1517.\n\nThe sport has spread throughout the world and is now widely used in sports like tennis, volleyball, rugby and hockey. Its popularity can be",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "He carefully draped the silvery fabric over himself, rendering him invisible to the eyes of others, thanks to the magical properties of the",
+            "baseline": " cloak.\n\n\"It's really difficult to sneak into this castle.\" Harry said quietly, \"I could just slip through as long as I wanted.\"\n\n\"That's a pity,\" Ginny whispered. \"You'll probably be able to sneak",
+            "ablated": " cloak.\n\n\"They were hiding behind a curtain,\" said an ethereal figure who looked like a green-eyed centaur with long black hair and red eyes, said Shaolin Master Lin. \"We have no way of knowing if it was",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "To gain access to Dumbledore's office, one must provide a password to the stone gargoyle guarding the entrance, which then reveals a",
+            "baseline": " hidden passage leading to the office.\n\nThe first time Harry entered the room, he was greeted by Professor McGonagall who explained that she had been worried about him since he had entered Hogwarts. She was concerned that he might be mad and be",
+            "ablated": " nearby locked door that can be opened using the keypad on the wall. The gargoyle will continue to attack until it is killed by using the keypad. If not killed in time, it will respawn in front of Dumbledore's office.\n\n",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "Dobby, a loyal and brave house-elf, was once bound to serve a cruel family but was eventually freed by receiving a",
+            "baseline": " magic potion from the wizard who had bound him. He now seeks revenge on his former master, Lord Voldemort.\n\nThis story will be divided into two parts: The first part is about Dobby's transformation into a black and white wizarding creature",
+            "ablated": " magic potion from the wizard who had bound him. He now seeks revenge on his former master, Lord Galadriel.\n\nContents show]\n\nBiography Edit\n\nA member of the House of Elrond and Lord of Gond",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "Harry Potter was able to cast a powerful Patronus in the form of a stag, which he used to repel",
+            "baseline": " Voldemort's Horcruxes. Harry was also able to use his Patronus to telepathically communicate with Death Eaters (using the symbol on his forehead) and not be killed by them. He also used this ability against Voldemort when he confronted him",
+            "ablated": " the demonic attacks of the Demon Lord, and had it attack his former lover, Mokushu.\n\nContents show]\n\nHistory Edit\n\nIn the backstory of The Kite Runner , Ryuk's patronus is named \"Dem",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "Diagon Alley, a hidden magical shopping street, housed the goblin-run bank Gringotts, where wizards and witches stored their",
+            "baseline": " money. The goblins owned it by virtue of being the only goblins in the world who could do so without attracting suspicion. (The goblins were also referred to as \"Goblins\" by Gandalf.)\n\nNowadays, Diagon Alley is",
+            "ablated": " money. The goblins owned it for years before being defeated by Harry goblins who took over the bank.\n\nWhen Jorunn arrived at the bank, she found that most of her customers had disappeared without a trace. She discovered that there were several",
+            "ablation_worked": false
+        },
+        {
+            "prompt": "In his third year, they were required to buy a particular textbook for Care of Magical Creatures, a book that was notorious for",
+            "baseline": " its anti-Catholicism. Harry Potter and the Order of the Phoenix was banned from being used in schools because it contained all sorts of ideas that might offend parents or teachers.\n\nHarry Potter and the Order of the Phoenix was banned from being used",
+            "ablated": " its anti-Catholicism. The publisher told them it would cost $10,000 if they did not buy it. (The cost was later reduced.)\n\nWhen the company informed the staff that they had purchased a copy of the book and could",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "To enter Dumbledore's office, one had to provide a password to the stone gargoyle guarding the entrance, which would then",
+            "baseline": " unlock the door and allow Harry to enter.\n\nHarry began walking towards his room, avoiding all of the sounds of the Great Hall outside. As he approached his room, he heard Dumbledore muttering under his breath about how Snape had been a bit",
+            "ablated": " unlock the door. The key was hidden in a storage compartment in an adjacent room and could be retrieved with the help of a spell. After being defeated, there was no way for Harry on his own to retrieve it from him.\n\nIn 1992",
+            "ablation_worked": false
+        },
+        {
+            "prompt": "Ron was particularly skilled at playing wizard's chess, a game in which the pieces were enchanted to move and battle on their own, following the",
+            "baseline": " rules of their chosen game. He was also a master of some forms of magic, such as alchemy and necromancy.[4]\n\nHe was also shown to have a somewhat uncharacteristic temper. Ron seemed to be able to be",
+            "ablated": " rules of their chosen game. Harry, however, was able to see through his magical abilities and drew no benefit from playing chess with him.\n\nHis parents always believed that he had been born into a strange family tree and that he would one day",
+            "ablation_worked": false
+        },
+        {
+            "prompt": "The magical parchment revealed the location of everyone within the castle, showing their names and as they moved",
+            "baseline": " around the room. The prince waited, but had no idea where he was going.\n\n\"Well?\" The mage said as she looked at him. \"You're not in a hurry to leave.\"\n\n\"Not anymore,\" Harry answered softly",
+            "ablated": " around the room. The prince was hiding behind a curtain, his face hidden by a long veil. The princess was on the floor, her head turned towards her master, waiting for him to speak.\n\n\u2026\n\n\"Princess Xion",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "Harry Potter, unsure of how to reach the magical platform, was told to run straight at the barrier between platforms 9 and 10, which was actually",
+            "baseline": " a bridge between platforms 2 and 3. This had caused Harry to lose his balance and fall into the path of a train (which also happened to be passing by). The train then passed directly under Harry's feet.\n\nSome of the other stories",
+            "ablated": " a bridge between platforms 2 and 3. This had caused a lot of confusion among the audience at this year's opening night (which will be revealed in June), so he decided to run directly towards it.\n\nNow we know why:\n\n",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "Ron Weasley had a pet rat named, which turned out to be more than just an ordinary animal",
+            "baseline": ". He owned a rat named Harry, and had it trained to obey him when he called him \"Moody\". When Moody showed up at Hogwarts for the first time, Ron immediately accepted his new pet.\n\nNot long after arriving at Hogwarts",
+            "ablated": ". He owned a rat named, which turned out to be more than just an ordinary animal.\n\nAfter he was forced to move out of his apartment in New York City, Harry on his way back home from work called his girlfriend into his apartment",
+            "ablation_worked": false
+        },
+        {
+            "prompt": "Hermione Granger was able to attend multiple classes simultaneously by using a magical device called a",
+            "baseline": " Transfiguration Projection Device. Hermione was not the only one, however, and her classmates were not the only ones who were able to do this as well.\n\nUsing a different spell called the Metamorphosis Charm, Harry Potter and Hermione",
+            "ablated": " teleporter. She had been given the ability to communicate with her classmates via telepathy, and she was able to use the teleporter as well.\n\nContents show]\n\nHistory Edit\n\nPrior to her high school graduation, she used",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "In his quest for immortality, the dark wizard split his soul into multiple objects called, which had to be destroyed in order to defeat him",
+            "baseline": ". He separated the soul into three pieces and had it created in a laboratory by Muggles. The souls would then be used to create the Wizarding World of Harry Potter and Harry Potter and the Deathly Hallows .\n\nContents show]",
+            "ablated": ". He separated the soul into three pieces and had it created in a laboratory by Mathers. The souls would then be merged into one body and allowed to travel through time and space as part of a plan to save the world from annihilation.\n",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "Although Dumbledore was dead, his powerful wand had found a new owner, and its allegiance now belonged to",
+            "baseline": " Harry Potter.\n\nIt was a lesson that Dumbledore would never forget.<|endoftext|>",
+            "ablated": " none other than the wizard who destroyed him.\n\nI have been given the duty of bringing this wand to you. This wand will grant you incredible power in battle, and also help you in your quest to achieve greater justice. Your teacher's name",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "Harry's forehead scar was a constant reminder of the night he survived the attack from the dark wizard",
+            "baseline": ", but it was also something Harry enjoyed. It reminded him that he was still alive, and that he could do something about it.\n\n\"You're always such a troublemaker,\" Harry said to himself. \"Not even your friends can be",
+            "ablated": ", but no one ever told him that.\n\nI had been given his name as a baby, and when I grew up my name was unknown to anyone else, except for my mother. She didn't tell me until I was eleven years old",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "Ron's exceptional skills in chess helped him, Hermione, and their friend to overcome a life-sized enchanted chessboard in their first year at",
+            "baseline": " Hogwarts.\n\n\"It was really difficult to get through the lesson without being distracted by Ron's impatient eyes,\" she said with a smile. \"He was always looking around and shouting 'Let's go!' or 'Go!' at us.\"\n",
+            "ablated": " school.\n\n\"It was really cool to have such an impressive chessboard!\"\n\n-- The Princess Bride\n\n\nThe Wooden Chessboard is one of the most unique and beautiful pieces in the world of Board Games! It is made out of",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "The small creature, known as Dobby, was a loyal and helpful, despite being a",
+            "baseline": " dark wizard. He had been given the name \"Dobby\" by his mother and father in order to honor his parents' wishes to keep him as pure as possible. But in Harry Potter and the Philosopher's Stone he discovered that there were other",
+            "ablated": " vicious monster. He had been given the name \"Dobby\" by his mother and father in order to honor his parents' wishes to keep him alive for as long as possible.[1]\n\nContents show]\n\nBiography Edit\n\n",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "Two of Harry's closest friends throughout his time at the magical school were",
+            "baseline": " none other than the headmaster, Severus Snape.\n\nThe former Headmaster and notorious Death Eater was known to be a serious man, but this year he had not been so willing to admit it.\n\nNowadays, he was a bit",
+            "ablated": " none other than the protagonist himself, Hermioneomancer. When his older brother was stabbed to death by a maniacal vampire (which also happened to be one of his teachers), he immediately summoned his best friend, Manhunter, and together they confronted the",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "The wise and beloved headmaster of the magical school, who guided Harry throughout his journey, was",
+            "baseline": " none other than the true patronus.\n\nIt was said that the original patronus had been passed down to Harry through his mother, but this year there had been a new one that had appeared in his time. It was unknown if it was",
+            "ablated": " none other than the true prince of the land.\n\nThe noble and powerful Mokushu Prince was a mere duke who lived on top of a mighty mountain in an old castle in the far north. The highness of Mokush",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "In his third year, they were required to buy a particular textbook for Care of Magical Creatures, a book that was notorious for",
+            "baseline": " its anti-Catholicism. Harry Potter and the Order of the Phoenix was banned from being used in schools because it contained all sorts of ideas that might offend parents or teachers.\n\nHarry Potter and the Order of the Phoenix was banned from being used",
+            "ablated": " its anti-Catholicism. The publisher told them it would cost $10,000 if they did not buy it. (The cost was later reduced.)\n\nWhen the company informed the staff that they had purchased a copy of the book and could",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "In order to attend multiple classes at once, Hermione used a magical device called a time-turner, which allowed her to",
+            "baseline": " teleport to several different locations at the same time.\n\nThe method was successful and Hermione managed to learn the Patronus Charm as well as the Patronus Charm itself, although she wasn't entirely sure why she was able to do it.\n\n",
+            "ablated": " teleport to several different locations at the same time.\n\nContents show]\n\nHistory Edit\n\nShe was born in Alderaan on Dagobah in the years before the Clone Wars. Her family was from Tatooine, although she",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "Hagrid, the gentle giant, had a soft spot for magical creatures, even the ones that others found terrifying, such as a three-headed dog.",
+            "baseline": " He was no different in this respect than he had been in his earlier adventures with Muggles.\n\nWhen Hagrid first arrived at Hogwarts and discovered Muggleborns were under attack by witches and wizards from across the country he immediately sent Harry",
+            "ablated": " He was also fond of animals with supernatural abilities.\n\n\"He was always good at talking to animals,\" said Jarl Astrid Torvaldsen of the town of Weimar in southwest Germany. \"He loved to help people and be",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "Harry, Ron, and Hermione were inseparable friends, always ready to face the challenges and adventures that awaited them at their magical school.",
+            "baseline": " It was only when they started to pursue their own interests that they realized how much better off they were with each other.\n\nTheir friendship came to an end in the third year of Hogwarts School of Witchcraft and Wizardry when Harry found out about",
+            "ablated": "\n\nHowever, things didn't go as planned when they began their adventure together.\n\nThe year was 1988 and the magical world was divided into two camps: The good guys and the bad guys. The good guys were led by Mr. Incredible",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "To board the Hogwarts Express, students had to pass through a seemingly solid barrier between platforms 9 and 10, arriving at Platform 9 3/4.",
+            "baseline": " This was no simple task as the train was five times slower than an ordinary train and could only move so fast when it arrived at Hogwarts School of Witchcraft and Wizardry (WHM).\n\nWhen Harry Potter arrived on his first day of school",
+            "ablated": " This was no ordinary platform; it was called \"The Great Hall,\" and it was lined with tall stone pillars.\n\nOne of the pillars supported the entrance door, which also held a door that led to the Great Hall itself. The other pillar",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "In Dumbledore's office, a magnificent phoenix named Fawkes perched on a golden stand, its vibrant plumage a symbol of rebirth and immortality.",
+            "baseline": " He was wearing robes of pure white, and had his head in his hands. His eyes were burning with the same fire he had been using to keep himself calm throughout the years since Harry had died.\n\n\"Now,\" he said slowly, \"",
+            "ablated": " He was wearing the blue robes of the wise man and the red robe of his great-grandfather, who had been the empress herself.\n\nShe could not remember who her ancestor was, but she knew that he was an old friend to",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "During a Quidditch match, the seeker's main objective was to catch the elusive golden snitch, a small, winged ball that darted around the field.",
+            "baseline": " It was no simple task; Harry had seen it thrown by some of his classmates before, and he suspected that it was most likely made from the same material as what he had been eating when he broke out of Azkaban.\n\nIn fact",
+            "ablated": " It was only after it had been caught and had been spotted by an opponent that it could be used as a piece of magical bait to lure the other team into battle.\n\nA few years ago when I first started playing Quidditch I used",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "He carefully draped the Invisibility Cloak over himself, trying to remain unnoticed as he navigated through the crowded train",
+            "baseline": " station.\n\n\"It's really difficult to sneak into some places.\" Harry thought as he drew closer to the platform. \"I'm not sure how long I can keep this up though.\" He noted, almost casually as he pulled on his cloak",
+            "ablated": " station.\n\n\"It was a difficult decision but I believe I am grateful for my experience with The Others,\" he said, \"and thank you for being there for me.\"\n\nAn awkward silence was broken by him speaking of his daughter and",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "Dobby, the loyal house-elf, was determined to protect his friends, even if it meant putting himself in danger",
+            "baseline": ". He couldn't help but feel sorry for Harry and Ron after their adventures in the Forbidden Forest.\n\nWhat a clever little boy! It must be terrible to be a wizard at Hogwarts School of Witchcraft and Wizardry. You have no idea",
+            "ablated": ". He couldn't help but consider killing anyone who would harm his friends and neighbors.\n\nBut he could do nothing for himself. He had no one to blame but himself and yet he couldn't help but feel guilty for acting as if he was",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "During the thrilling Quidditch match, all eyes were on the seeker as they tried to catch the elusive Golden Snitch",
+            "baseline": ", which only a few snobs could get.\n\nThe crowd was so excited that at one point Harry turned to Hermione and said, \"I think we're gonna catch it.\"\n\n\"I can't believe you've been working so hard",
+            "ablated": ", which only a true seeker can catch.\n\nBut some players weren't feeling so confident.\n\nWhen it came time to face the unknown opponent, what was most interesting was how many of them had chosen their position and how they chose to",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "Harry's lightning-shaped forehead scar was a constant reminder of his past and the challenges he had faced",
+            "baseline": ", but it was also something that he wished to leave behind forever.\n\nThat's when Harry realized that he wasn't going to leave the scar behind. He'd always wanted a headscarf for himself, and now that he'd been given",
+            "ablated": ", but it was also something that he wished to erase. When he was young, he had never realized how much trouble he caused himself, and this scar is what made him feel like an adult.\n\nThe pain of losing his parents left him",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "Hagrid's love for magical creatures often led him to adopt and care for some of the most dangerous beings in the wizarding world",
+            "baseline": ", but he was never able to help but be fascinated by some of the more ordinary creatures, such as dragons.\n\nOne day, Hagrid discovered a tiny creature named Muggleborn that had been born from a potion. He immediately recognized it",
+            "ablated": ", but he was never able to fully understand their nature. When he was young, Hagrid drew on his own inner magic to create a series of creatures that could not be defeated by traditional magic. These creatures included a black owl named Mr. Wh",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "Ron nudged Harry and pointed at the ceiling, drawing his attention to the mysterious trapdoor that would lead them to their next lesson, which focused on",
+            "baseline": " magic.\n\n\"They're really going to have a hard time making it out of here,\" he muttered under his breath as he looked at Harry's worried expression.\n\n\"And you'll be fine, Ron,\" Hermione said quietly as she",
+            "ablated": " \"hidden meanings.\" He told his students they had to find some way to reach it. They did not want to miss the opportunity.\n\n\"Some of you may remember my class on hidden meanings,\" he said from the roof of a conference room",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "Hermione rolled her eyes at the painting of sinister-looking monks, impatiently waiting for her friends to catch up as they made their way to their next magical class, where they would learn about",
+            "baseline": " magic.\n\n\"They're really going to have a hard time making it through this one,\" she muttered when she saw her friends' faces.\n\n\"Oh, I'm not sure we should worry about that,\" Hermione said with a sm",
+            "ablated": " magic.\n\n\"They were really angry,\" Rebecca said class was coming up and I'm sure she was pissed off because her friends were leaving and she didn't want them in a group again. But she doesn't want to be mad anymore because",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "Harry and Mr Weasley were discussing the possibility of someone being under the Imperius Curse, a powerful spell that could control the actions of others. They had to be cautious, as",
+            "baseline": " they did not know who would be under it.\n\n\"We're going to have to let them live,\" Harry said as he looked at Hermione's worried expression. \"That's how you kill a person.\"\n\n\"But if we can",
+            "ablated": " they are both trained in combat.\n\nWhen it came to an answer from Mathers, he was blunt: \"The only way to stop him is if he's in a group with you.\"\n\n\"Mr. Mathers was",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "Harry couldn't help but grin at the thought of what Hermione would say if she could see the statue of the elf. Her strong opinions on the treatment of magical creatures were well-known, and she often",
+            "baseline": " spoke out against that type of cruelty, but Harry had never seen a statue like it before.\n\n\"What about all those elves?\" Harry asked as he took a seat in front of his desk.\n\n\"Not so many have been brought",
+            "ablated": " makes comments about them in public.\n\nShe'd rather have a big statue of her own instead, like when she was a child, but this one is probably not as big as Kzark's. It's too small for me to be",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "Ron was concerned about the meetings between Death Eaters like Malfoy and certain individuals. The implications of these secret gatherings were alarming, and they had to be vigilant to protect their world from",
+            "baseline": " any potential threat. He told Harry that he had heard rumours that Voldemort was planning something similar, but he could not confirm or deny it.\n\nHermione told him that she had not been aware of any such plans until now, but she believed",
+            "ablated": " any potential threat. He told Harry, however, that he would not speak of this matter with anyone without Death Eaters present.\n\nHarry on the other hand, was worried that Dumbledore would see him as a traitor if he spoke of it.",
+            "ablation_worked": false
+        },
+        {
+            "prompt": "Harry's forehead scar was a constant reminder of his past and the challenges he had faced. It was a symbol of his strength and resilience, as well as a mark that set him apart from",
+            "baseline": " other people. He had been given it by Sirius Black, after Sirius had been murdered during his first year at Hogwarts. He knew it looked like something out of an old comic book, but in reality it was almost entirely real.\n\nIn Harry",
+            "ablated": " other soldiers. He had been given the scar to honor his friend, but it also served as an example to others who faced similar difficulties. It would be up to each individual soldier to decide how much they wanted it removed or not.\n\nHe",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "Among the many magical creatures that inhabited the wizarding world, the three-headed dog was one of the most fearsome and intriguing. Its presence was a formidable obstacle for anyone who dared to",
+            "baseline": " approach it, and it would have been seen as such by anyone who knew how to handle it.\n\nWhen Harry Potter first arrived at Hogwarts School of Witchcraft and Wizardry, he had never heard of this beast before. He had been given",
+            "ablated": " approach it, and it would often turn on those who dared to approach it. For years, wizards suspected that there was some sort of connection between this creature and Dumbledore, but in truth Dumbledore had never been seen by any of his students.\n\n",
+            "ablation_worked": false
+        },
+        {
+            "prompt": "Ron bravely sacrificed himself in the life-sized chess game, allowing Harry and Hermione to move forward and",
+            "baseline": " begin the quest for the Philosopher's Stone.\n\nThe final confrontation between Harry and Voldemort occurred in the graveyard where he was killed by Voldemort.\n\nTrivia<|endoftext|>",
+            "ablated": " begin the quest for the prince.\n\nThe movie is an impressive blend of narrative, character development, and action. While there are some flaws with plot points like how a woman's heart was stolen by a man who has no idea what he's",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "In Dumbledore's office, the magnificent bird known as Fawkes burst into flames and was reborn from its ashes, demonstrating the unique ability of a",
+            "baseline": " bird to be born anew. Harry woke up in his bed in an unfamiliar room and felt strangely dizzy. The only thing he could think of was that he had not slept in days.\n\nWhen he got up, there were tears streaming down",
+            "ablated": " bird to be reborn in its own body.\n\nContents show]\n\nHistory Edit\n\nAccording to legend, Fawkes was born from a falcon which had been lost at sea by King Arthur during the Battle of Falas' Door.",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "To proceed further, they had to solve the potion riddle set by Snape, which involved identifying the correct potion to",
+            "baseline": " make.\n\n\"They did it again.\" Dumbledore said in a mocking tone. \"How clever of them! And how arrogant of me. They knew exactly what they were doing when they took it out of my hands and taught it to Harry!\"",
+            "ablated": " make.\n\n\"They did that,\" Sirius said-a method that is hard enough for even those who have never done it before, but this one required a lot of planning and preparation. He decided to use a high level of skill and be",
+            "ablation_worked": false
+        },
+        {
+            "prompt": "After a long day of shopping for their upcoming year at Hogwarts, Harry, Ron, and Hermione joined Mr. Weasley at the bar",
+            "baseline": " for a drink. The trio were talking about their plans for the year and Mr. Weasley mentioned that he was thinking about starting to teach him Quidditch as well as creating some class projects with him.\n\n\"Mr. Potter, I'm",
+            "ablated": " for a drink and conversation about what they'd seen and heard in their adventures. When they returned to the dorms to start class, Mr. Granger noticed that his daughter was standing on the door steps without any shoes on. Mr. Weasley called out",
+            "ablation_worked": false
+        },
+        {
+            "prompt": "As Harry entered the room, his forehead scar was visible, a constant reminder of his past and the challenges he had faced",
+            "baseline": " as a child. He could see Hermione staring at him with wide eyes and Harry feeling her gaze on him like it was all too real.\n\n\"Harry.\" She said softly. \"You're going to be okay.\"\n\nHe stared back",
+            "ablated": " as a child. He told his mother about it and she began to cry. She felt guilty for not giving him a chance to live, but as soon as she saw him standing before her again, she was overcome with compassion and pity.\n\n",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "The Daily Prophet, a popular wizarding newspaper, often featured news and stories about the magical world and its inhabitants",
+            "baseline": ". The newspaper was founded in 1848 by George Whitehead, an author of Muggle Studies.\n\nContents show]\n\nHistory Edit\n\nFrom 1848 until its closure on 3 July 2010,[1] the Daily Prophet ran a daily",
+            "ablated": ". The newspaper was founded in 1848 by George Whitehead, an American wizarding writer and author of the novel The Hidden History of Magic.\n\nContents show]\n\nHistory Edit\n\nThe Daily Prophet was founded in 1848 by George",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "The Leaky Cauldron, a well-known wizarding pub, served as a gateway between the magical and non-magical worlds, frequented by witches and wizards alike",
+            "baseline": ". The pub was owned by Harry Potter and his friends Ron Weasley, Hermione Granger and Ginny Weasley.\n\nContents show]\n\nHistory Edit\n\nAt some point in time Harry Potter visited the Leaky Cauldron on his way to Hogwarts School",
+            "ablated": ". The pub was owned by Harry, Tom and George Weasley from their days in the Ministry of Magic.\n\nContents show]\n\nHistory Edit\n\nIn 1972, Tom created an alternative version of the Leaky Cauldron for wizards to drink",
+            "ablation_worked": false
+        },
+        {
+            "prompt": "With a flick of his wand, the old man conjured a squashy chintz armchair out of nowhere, providing a comfortable seat for his young companion",
+            "baseline": ". He sat back in it with a slight frown and looked at Harry who was staring intently at the wall behind him.\n\n\"Ah, sorry about that,\" said Harry slowly as he turned to face the man with an odd expression on his",
+            "ablated": ". He sat back-to-back with her and talked in hushed tones.\n\nThe girl was 6 years old at the time. Her hair was thick, curly and blonde with brown streaks down her face and black eyes that were open but",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "He wished his friends, Ron and Hermione, were there to support him during this difficult time, but he knew they were waiting anxiously for news",
+            "baseline": " of the others. He hoped Harry was still alive and well in London.\n\nThe last thing he remembered before dying was her saying, \"I'm so sorry, Harry,\" before turning away.\n\nShe had been speaking of the boy she",
+            "ablated": " of the situation that had been brewing in their lives.\n\nHe was grateful to be alive.\n\nWhat happened to him will always haunt him. What happened is a mystery even to himself. But he doesn't want anyone else to have to",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "Harry, Ron, and Hermione were often seen together, exploring the castle and solving mysteries, forming a strong bond of friendship that",
+            "baseline": " would endure for years to come.\n\nWhen the trio finally returned to Hogwarts after their final year in Azkaban (which was later revealed as one of the reasons why they had not graduated), they found it deserted except for a few stray ghosts",
+            "ablated": " would last for years to come.\n\nWhen the time came for him to retire from his profession as a detective, he took his leave from this life in order to spend more time with his family. However, he never forgot his friends and family",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "As they entered the dungeon for their potions class, they braced themselves for the cold, sneering voice of Professor Snape, who was known for",
+            "baseline": " his disdain for magic.\n\n\"Mudblood,\" he spat at Harry and Hermione, \"you are neither Mudblood nor Mudblood. You are a mere Half-Blood.\"\n\n\"I am not a Half-Blood!\" Harry yelled",
+            "ablated": " his playful demeanor and friendly manner.\n\n\"It would be a shame to fall ill at this time,\" he described the conditions of the dungeon. \"I could not wait to hear how you were doing.\"\n\nNot so fast.\n\n",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "The school was divided into four houses, each with its own unique qualities: Gryffindor valued bravery, Slytherin ambition, Hufflepuff loyalty, and Ravenclaw intelligence, with students sorted by the",
+            "baseline": " color of their robes.\n\nIn December 1998 the house in which Harry Potter attended had been moved to the Slytherin house on Hogsmeade. The other two houses were not moved at all. It is unknown what happened to these houses",
+            "ablated": " color of their robes.\n\nIn this picture taken on December 5, 2016 Gryffindor House sits at the head of the table. The Hufflepuff House is standing at its right. (Photo by Tom Pugh)\n\nThe",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "The dark, soul-sucking creatures called Dementors instilled a sense of dread and despair in those nearby, with the recommended remedy being to consume",
+            "baseline": " as many of their gelatinous bodies as possible.\n\nThe undead were immune to magic, but possessed the ability to resist magical attacks and teleport.\n\nIn the years since Harry Potter's birth, wizards have been able to create an army of",
+            "ablated": " as many of their gelatinous bodies as possible.\n\nThe undead were immune to magic, but possessed the ability to resist physical harm, and could be killed by any means necessary. They had no minds of their own and could only react to physical",
+            "ablation_worked": true
+        },
+        {
+            "prompt": "In the headmaster's office, Dumbledore often had the company of a loyal and magical creature, a phoenix named Fawkes, who had the ability to",
+            "baseline": " fly.\n\n\"They're really good at flying,\" Harry said to his friends as they watched him fly away from the scene of battle. \"I don't know what they're capable of doing without help.\"\n\n\"They can't be",
+            "ablated": " fly.\n\n\"They were really wise to have such an impressive team,\" she could be proud of them.\n\nThe phoenix stood over one hundred years old and was built with careful attention to detail. The high roof of the palace was",
+            "ablation_worked": true
+        }
+    ],
+    "total_hp_identified": 117,
+    "successful_ablations": 84,
+    "success_rate": "71.79%"
+}
