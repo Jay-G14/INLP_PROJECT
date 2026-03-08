@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH -A research
 #SBATCH --qos=medium
-#SBATCH -p long
+#SBATCH -p u22
 #SBATCH -n 10
 #SBATCH --gres=gpu:4
 #SBATCH --mem-per-cpu=2G
@@ -11,11 +11,20 @@
 #SBATCH --mail-user=manas.agrawal@research.iiit.ac.in
 
 # --- Environment Setup ---
-module load u18/cuda/11.6
-module load u18/cudnn/8.4.0-cuda-11.6
+# PyTorch bundles its own CUDA runtime, so explicit CUDA modules are optional.
+# Uncomment below if your PyTorch needs system CUDA (check with: python -c 'import torch; print(torch.cuda.is_available())')
+# module load u18/cuda/11.6
+# module load u18/cudnn/8.4.0-cuda-11.6
 
 # Activate your virtualenv
 source /home2/manas.agrawal/INLP_PROJECT/inlp/bin/activate
+
+# Set HuggingFace cache to /scratch/ (home has 25GB quota, scratch is 2TB)
+# But note! compute nodes can't access internet, so model MUST be pre-downloaded
+# to this exact HF_HOME first from login node, THEN submit batch script.
+export HF_HOME=/scratch/$USER/huggingface
+export TRANSFORMERS_OFFLINE=1
+export HF_DATASETS_OFFLINE=1
 
 # Function to send progress emails
 send_update() {
@@ -26,9 +35,9 @@ echo "Starting job on $(hostname) with GPUs: $CUDA_VISIBLE_DEVICES"
 send_update "Job started on $(hostname) with GPUs: $CUDA_VISIBLE_DEVICES"
 
 # --- Phase 1: Preprocessing ---
-echo "=== Phase 1: Preprocessing ==="
-python src/data/preprocess.py
-send_update "Phase 1 (Preprocessing) Completed"
+# echo "=== Phase 1: Preprocessing ==="
+# python src/data/preprocess.py
+# send_update "Phase 1 (Preprocessing) Completed"
 
 # --- Phase 2: SAE Training ---
 # Defaults: model=meta-llama/Llama-2-7b-hf, layer=16, expansion=8, k=64, batch=2

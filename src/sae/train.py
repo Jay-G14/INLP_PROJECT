@@ -18,13 +18,11 @@ def main(args):
     print(f"Using device: {device} | GPUs available: {n_gpus}")
 
     # 1. Load Model (shard across all available GPUs)
+    # HF_TOKEN is read from .env via load_dotenv() and auto-detected by huggingface_hub
     print(f"Loading {args.model_name}...")
-    hf_token = os.environ.get("HF_TOKEN")
     model = HookedTransformer.from_pretrained(
         args.model_name, 
-        device=device,
         dtype=torch.float16,
-        token=hf_token,
         n_devices=n_gpus if n_gpus > 1 else 1,
     )
     

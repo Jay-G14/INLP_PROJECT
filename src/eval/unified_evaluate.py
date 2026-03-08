@@ -225,13 +225,11 @@ def main():
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
     n_gpus = torch.cuda.device_count()
+    # HF_TOKEN is read from .env via load_dotenv() and auto-detected by huggingface_hub
     print(f"Loading {args.model_name}... | GPUs available: {n_gpus}")
-    hf_token = os.environ.get("HF_TOKEN")
     model = HookedTransformer.from_pretrained(
         args.model_name,
-        device=device,
         dtype=torch.float16,
-        token=hf_token,
         n_devices=n_gpus if n_gpus > 1 else 1,
     )
     
