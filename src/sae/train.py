@@ -1,5 +1,7 @@
 import sys
 import os
+from dotenv import load_dotenv
+from huggingface_hub import login
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
 import torch
 from torch.utils.data import DataLoader, TensorDataset
@@ -10,12 +12,24 @@ from src.data.preprocess import load_and_tokenize, get_neutral_corpus
 import argparse
 
 def main(args):
+    load_dotenv()
+    hf_token = os.getenv("HF_TOKEN")
+    if hf_token:
+        login(token=hf_token)
+
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Using device: {device}")
 
     # 1. Load Model
     print(f"Loading {args.model_name}...")
-    model = HookedTransformer.from_pretrained(args.model_name, device=device)
+    model = HookedTransformer.from_pretrained(
+        args.model_name, 
+        device="auto" if args.model_name.startswith("meta-llama") else device,
+        dtype=torch.bfloat16 if args.model_name.startswith("meta-llama") else torch.float32,
+        fold_ln=False,
+        center_writing_weights=False,
+        center_unembed=False
+    )
     
     # 2. Load Data — SAE should be trained on GENERAL data, not just target corpus
     # This is critical: the SAE learns a general-purpose feature dictionary.
@@ -89,11 +103,11 @@ if __name__ == "__main__":
                         help="Include target corpus in training data alongside WikiText")
     parser.add_argument("--no_include_target", dest="include_target", action="store_false",
                         help="Train SAE on WikiText only")
-    parser.add_argument("--batch_size", type=int, default=8, help="Batch size")
+    parser.add_argument("--batch_size", type=int, default=2, help="Batch size")
     parser.add_argument("--lr", type=float, default=3e-4, help="Learning rate")
     parser.add_argument("--epochs", type=int, default=3, help="Number of epochs")
-    parser.add_argument("--model_name", type=str, default="gpt2-medium", help="Model name to load")
-    parser.add_argument("--expansion_factor", type=int, default=16, help="Expansion factor for SAE")
+    parser.add_argument("--model_name", type=str, default="meta-llama/Llama-2-7b-chat-hf", help="Model name to load")
+    parser.add_argument("--expansion_factor", type=int, default=8, help="Expansion factor for SAE")
     parser.add_argument("--k", type=int, default=32, help="TopK sparsity")
     
     args = parser.parse_args()

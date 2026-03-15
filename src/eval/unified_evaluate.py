@@ -1,5 +1,7 @@
 import sys
 import os
+from dotenv import load_dotenv
+from huggingface_hub import login
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
 from typing import Dict, List, Any, Optional
 
@@ -189,12 +191,17 @@ def run_evaluation(model: HookedTransformer, sae: Optional[TopKSAE], hook_fn: An
     return results
 
 def main():
+    load_dotenv()
+    hf_token = os.getenv("HF_TOKEN")
+    if hf_token:
+        login(token=hf_token)
+
     parser = argparse.ArgumentParser()
-    parser.add_argument("--model_name", type=str, default="gpt2-medium")
+    parser.add_argument("--model_name", type=str, default="meta-llama/Llama-2-7b-chat-hf")
     parser.add_argument("--layer", type=int, default=12)
     parser.add_argument("--num_features", type=int, default=100)
     parser.add_argument("--ablation_scale", type=float, default=0.0, help="0.0 for zeroing, negative for counter-activation")
-    parser.add_argument("--expansion_factor", type=int, default=16)
+    parser.add_argument("--expansion_factor", type=int, default=8)
     parser.add_argument("--limit", type=int, default=50, help="Number of prompts for match rate")
     parser.add_argument("--ppl_limit", type=int, default=50, help="Number of samples for perplexity")
     parser.add_argument("--max_tokens", type=int, default=50)
@@ -204,7 +211,14 @@ def main():
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Loading {args.model_name}...")
-    model = HookedTransformer.from_pretrained(args.model_name, device=device)
+    model = HookedTransformer.from_pretrained(
+        args.model_name, 
+        device="auto" if args.model_name.startswith("meta-llama") else device,
+        dtype=torch.bfloat16 if args.model_name.startswith("meta-llama") else torch.float32,
+        fold_ln=False,
+        center_writing_weights=False,
+        center_unembed=False
+    )
     
     # Load Data
     prompts_path = "8940_Who_s_Harry_Potter_Approx_Supplementary Material/Eval completion prompts.json"

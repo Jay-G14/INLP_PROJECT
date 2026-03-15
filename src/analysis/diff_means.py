@@ -1,5 +1,7 @@
 import sys
 import os
+from dotenv import load_dotenv
+from huggingface_hub import login
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
 import torch
 from transformer_lens import HookedTransformer
@@ -10,11 +12,23 @@ import einops
 from tqdm import tqdm
 
 def analyze(args):
+    load_dotenv()
+    hf_token = os.getenv("HF_TOKEN")
+    if hf_token:
+        login(token=hf_token)
+
     device = "cuda" if torch.cuda.is_available() else "cpu"
     
     # 1. Load Model
     print(f"Loading {args.model_name}...")
-    model = HookedTransformer.from_pretrained(args.model_name, device=device)
+    model = HookedTransformer.from_pretrained(
+        args.model_name, 
+        device="auto" if args.model_name.startswith("meta-llama") else device,
+        dtype=torch.bfloat16 if args.model_name.startswith("meta-llama") else torch.float32,
+        fold_ln=False,
+        center_writing_weights=False,
+        center_unembed=False
+    )
     
     # 2. Load SAE
     print(f"Loading SAE for Layer {args.layer}...")
@@ -166,9 +180,9 @@ def analyze(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--layer", type=int, default=12)
-    parser.add_argument("--model_name", type=str, default="gpt2-medium", help="Model name to load")
+    parser.add_argument("--model_name", type=str, default="meta-llama/Llama-2-7b-chat-hf", help="Model name to load")
     parser.add_argument("--target_corpus", type=str, default="src/data/target_corpus.txt")
-    parser.add_argument("--expansion_factor", type=int, default=16)
+    parser.add_argument("--expansion_factor", type=int, default=8)
     parser.add_argument("--k", type=int, default=32)
     parser.add_argument("--num_features", type=int, default=20)
     parser.add_argument("--limit", type=int, default=1000)

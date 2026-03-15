@@ -12,7 +12,7 @@ class SAETrainer:
                  device="cuda" if torch.cuda.is_available() else "cpu",
                  aux_loss_weight=1/32, dead_neuron_window=1000):
         self.sae = sae.to(device)
-        self.model = model.to(device)
+        self.model = model
         self.data_loader = data_loader
         self.layer = layer
         self.lr = lr
@@ -57,8 +57,12 @@ class SAETrainer:
              
         # 1. Get activations from the transformer
         with torch.no_grad():
-            _, cache = self.model.run_with_cache(batch_tokens, stop_at_layer=self.layer + 1)
             act_name = f"blocks.{self.layer}.hook_resid_post"
+            _, cache = self.model.run_with_cache(
+                batch_tokens,
+                names_filter=lambda name: name == act_name,
+                stop_at_layer=self.layer + 1
+            )
             acts = cache[act_name]  # [batch, seq_len, d_model]
             acts = einops.rearrange(acts, "b s d -> (b s) d")
             
@@ -88,6 +92,10 @@ class SAETrainer:
              
         # 8. Update dead neuron statistics
         self._update_dead_neuron_stats(z_sparse)
+        
+        # 9. Clear cache logic for multi-GPU efficiency
+        del cache, acts, recons, z_sparse, total_loss
+        torch.cuda.empty_cache()
         
         return recon_loss.item(), aux_loss.item()
 
