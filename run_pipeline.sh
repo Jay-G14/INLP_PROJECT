@@ -69,7 +69,7 @@ python -u src/analysis/diff_means.py \
     --layer 12 \
     --num_features 100 \
     --min_ratio 50.0 \
-    --sort_by ratio
+    --sort_by score
 
 echo "--------------------------------------------------------"
 echo "Phase 4: Evaluation"

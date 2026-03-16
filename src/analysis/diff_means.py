@@ -69,9 +69,30 @@ def analyze(args):
     
     print("Loading Neutral Corpus (Wiki + Fiction)...")
     neutral_list = get_neutral_corpus(split="train")
-    neutral_text = "\n".join(neutral_list[:4000]) # Take more samples for broader coverage
+    neutral_text = "\n".join([t for t in neutral_list if t.strip()])
     neutral_tokens = model.to_tokens(neutral_text).squeeze(0).tolist()
     neutral_tokens = neutral_tokens[:args.max_tokens]
+
+    # Verification block
+    print(f"\n--- Corpus Size Check ---")
+    print(f"Target tokens : {len(target_tokens):,}")
+    print(f"Neutral tokens: {len(neutral_tokens):,}")
+
+    target_batches = len(target_tokens) // (8 * 128)
+    neutral_batches = len(neutral_tokens) // (8 * 128)
+    print(f"Target batches : {target_batches}")
+    print(f"Neutral batches: {neutral_batches}")
+
+    if neutral_batches < target_batches * 0.5:
+        print("⚠️  WARNING: Neutral corpus is less than 50% the size of target!")
+        print("    Results will be unreliable. Increase neutral corpus size.")
+    print("-------------------------\n")
+
+    # Match neutral corpus size to target for fair comparison
+    min_tokens = min(len(target_tokens), len(neutral_tokens))
+    target_tokens = target_tokens[:min_tokens]
+    neutral_tokens = neutral_tokens[:min_tokens]
+    print(f"Using {min_tokens:,} tokens for each corpus (balanced)")
     
     # 4. Compute Feature Activation Statistics
     def get_feature_stats(tokens, batch_size=8, ctx_len=128):
@@ -236,6 +257,6 @@ if __name__ == "__main__":
     parser.add_argument("--max_neutral_freq", type=float, default=0.005, help="Max activation frequency on neutral corpus")
     parser.add_argument("--max_freq", type=float, default=0.2, help="Max activation frequency overall")
     parser.add_argument("--min_ratio", type=float, default=20.0, help="Minimum specificity ratio (target/neutral)")
-    parser.add_argument("--sort_by", type=str, choices=["ratio", "score", "diff"], default="ratio")
+    parser.add_argument("--sort_by", type=str, choices=["ratio", "score", "diff"], default="score")
     args = parser.parse_args()
     analyze(args)
