@@ -12,6 +12,21 @@ from src.sae.trainer import SAETrainer
 from src.data.preprocess import load_and_tokenize, get_neutral_corpus
 import argparse
 
+# Helper function to prevent silent truncation over large datasets
+def tokenize_in_chunks(model, text, chunk_size=10000):
+    """Tokenize large text without hitting sequence length limits."""
+    words = text.split()
+    all_tokens = []
+    print(f"  Tokenizing {len(words)} words in chunks of {chunk_size}...")
+    for i in range(0, len(words), chunk_size):
+        chunk = " ".join(words[i:i+chunk_size])
+        tokens = model.to_tokens(chunk).squeeze(0).tolist()
+        if i == 0:
+            all_tokens.extend(tokens)
+        else:
+            all_tokens.extend(tokens[1:])  # skip BOS except first chunk
+    return all_tokens
+
 def main(args):
     load_dotenv()
     hf_token = os.getenv("HF_TOKEN")
@@ -62,10 +77,14 @@ def main(args):
     else:
         neutral_text = "\n".join([t for t in neutral_dataset["text"] if t.strip()])
     
-    # Use model.to_tokens which handles prefixes securely within transformer_lens
-    neutral_tokens = model.to_tokens(neutral_text).squeeze(0).tolist()
+    # Use model.to_tokens logically over chunks to prevent silent context window truncation
+    neutral_tokens = tokenize_in_chunks(model, neutral_text)
     
-    print(f"  WikiText-2 tokens: {len(neutral_tokens)}")
+    # Cap maximum tokens parsed to speed up debugs vs real runs cleanly if max_tokens is passed
+    if hasattr(args, 'max_tokens') and args.max_tokens:
+        neutral_tokens = neutral_tokens[:args.max_tokens]
+    
+    print(f"  WikiText-2 tokens: {len(neutral_tokens):,}")
     all_tokens.extend(neutral_tokens)
     
     # Optionally also include target corpus to ensure SAE can represent those features too
@@ -73,8 +92,13 @@ def main(args):
         print(f"Loading target corpus: {args.target_corpus}...")
         with open(args.target_corpus, 'r', encoding='utf-8') as f:
             target_text = f.read()
-        target_tokens = model.to_tokens(target_text).squeeze(0).tolist()
-        print(f"  Target corpus tokens: {len(target_tokens)}")
+            
+        target_tokens = tokenize_in_chunks(model, target_text)
+        
+        if hasattr(args, 'max_tokens') and args.max_tokens:
+            target_tokens = target_tokens[:args.max_tokens]
+            
+        print(f"  Target corpus tokens: {len(target_tokens):,}")
         all_tokens.extend(target_tokens)
     
     print(f"Total tokens: {len(all_tokens)}")
@@ -125,12 +149,13 @@ if __name__ == "__main__":
                         help="Include target corpus in training data alongside WikiText")
     parser.add_argument("--no_include_target", dest="include_target", action="store_false",
                         help="Train SAE on WikiText only")
-    parser.add_argument("--batch_size", type=int, default=2, help="Batch size")
+    parser.add_argument("--batch_size", type=int, default=4, help="Batch size")
     parser.add_argument("--lr", type=float, default=3e-4, help="Learning rate")
-    parser.add_argument("--epochs", type=int, default=3, help="Number of epochs")
+    parser.add_argument("--epochs", type=int, default=5, help="Number of epochs")
     parser.add_argument("--model_name", type=str, default="meta-llama/Llama-2-7b-chat-hf", help="Model name to load")
     parser.add_argument("--expansion_factor", type=int, default=8, help="Expansion factor for SAE")
     parser.add_argument("--k", type=int, default=32, help="TopK sparsity")
+    parser.add_argument("--max_tokens", type=int, default=500000, help="Maximum number of tokens to parse for training phase")
     
     args = parser.parse_args()
     main(args)
