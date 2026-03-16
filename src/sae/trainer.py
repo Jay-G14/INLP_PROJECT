@@ -78,7 +78,10 @@ class SAETrainer:
         recon_loss = F.mse_loss(recons, acts)
         
         # 4. Auxiliary loss for dead neurons
-        aux_loss = self.sae.get_auxiliary_loss(acts, z_sparse)
+        aux_loss = self.sae.get_auxiliary_loss(
+            acts, z_sparse, 
+            dead_threshold=self.dead_neuron_window
+        )
         
         # 5. Total loss
         total_loss = recon_loss + self.aux_loss_weight * aux_loss

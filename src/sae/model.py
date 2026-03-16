@@ -53,17 +53,20 @@ class TopKSAE(nn.Module):
         
         return x_reconstruct, z_sparse
 
-    def get_auxiliary_loss(self, x, z_sparse, num_dead_sample=32):
+    def get_auxiliary_loss(self, x, z_sparse, dead_threshold=None, num_dead_sample=32):
         """
         Auxiliary loss to revive dead neurons.
         Uses the reconstruction error to train dead neurons.
         """
         # Identify dead neurons (not activated in recent steps)
-        if self.total_steps < 100:
+        if self.total_steps < 10:
             return torch.tensor(0.0, device=x.device)
+            
+        if dead_threshold is None:
+            dead_threshold = max(10, int(self.total_steps.item() * 0.3))
         
-        # A neuron is dead if it hasn't fired in the last 1000 steps
-        dead_mask = (self.ticks_since_active > 1000)
+        # A neuron is dead if it hasn't fired in the last `dead_threshold` steps
+        dead_mask = (self.ticks_since_active > dead_threshold)
         num_dead = dead_mask.sum().item()
         
         if num_dead == 0:
