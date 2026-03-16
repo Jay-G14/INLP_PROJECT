@@ -123,6 +123,9 @@ def test_sparsity(model, sae, layer, device):
     acts, _, z_sparse = get_activations(model, sae, text, layer, device)
     freq = (z_sparse > 0).float().mean(dim=0)   # [d_sae]
 
+    print(f"\nActivation variance: {acts.var().item():.2f}")
+
+
     never     = (freq == 0).sum().item()
     rare      = ((freq > 0)    & (freq < 0.01)).sum().item()
     common    = ((freq >= 0.01) & (freq < 0.05)).sum().item()

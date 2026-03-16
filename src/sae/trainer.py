@@ -10,7 +10,7 @@ import einops
 class SAETrainer:
     def __init__(self, sae, model, data_loader, layer, lr=1e-3, 
                  device="cuda" if torch.cuda.is_available() else "cpu",
-                 aux_loss_weight=1/32, dead_neuron_window=50):
+                 aux_loss_weight=1/8, dead_neuron_window=50):
         self.sae = sae.to(device)
         self.model = model
         self.data_loader = data_loader
