@@ -98,7 +98,7 @@ def main(args):
     print(f"  d_model={d_model}, d_sae={d_sae}, k={k}")
     print(f"  Expansion factor: {args.expansion_factor}x")
     
-    sae = TopKSAE(d_in=d_model, d_sae=d_sae, k=k)
+    sae = TopKSAE(d_in=d_model, d_sae=d_sae, k=k).to(device)
     
     # 4. Train
     print(f"\nStarting training for {args.epochs} epoch(s)...")

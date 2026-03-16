@@ -54,6 +54,10 @@ class SAETrainer:
         # Unpack batch if it's a list (from TensorDataset)
         if isinstance(batch_tokens, (list, tuple)):
             batch_tokens = batch_tokens[0]
+            
+        # Move batch tokens to device (uses model's auto-device handling or direct device map)
+        device_to_use = next(self.model.parameters()).device
+        batch_tokens = batch_tokens.to(device_to_use)
              
         # 1. Get activations from the transformer
         with torch.no_grad():
@@ -64,7 +68,7 @@ class SAETrainer:
                 stop_at_layer=self.layer + 1
             )
             acts = cache[act_name]  # [batch, seq_len, d_model]
-            acts = einops.rearrange(acts, "b s d -> (b s) d")
+            acts = einops.rearrange(acts, "b s d -> (b s) d").to(self.device)
             
         # 2. Forward pass through SAE
         self.optimizer.zero_grad()

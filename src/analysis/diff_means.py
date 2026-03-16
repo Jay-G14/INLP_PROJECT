@@ -49,7 +49,7 @@ def analyze(args):
     print(f"Loading SAE for Layer {args.layer}...")
     d_model = model.cfg.d_model
     d_sae = d_model * args.expansion_factor
-    sae = TopKSAE(d_in=d_model, d_sae=d_sae, k=args.k)
+    sae = TopKSAE(d_in=d_model, d_sae=d_sae, k=args.k).to(device)
     
     checkpoint_path = f"checkpoints/sae_layer_{args.layer}.pt"
     if not os.path.exists(checkpoint_path):
