@@ -10,7 +10,7 @@ import einops
 class SAETrainer:
     def __init__(self, sae, model, data_loader, layer, lr=1e-3, 
                  device="cuda" if torch.cuda.is_available() else "cpu",
-                 aux_loss_weight=1/32, dead_neuron_window=1000):
+                 aux_loss_weight=1/32, dead_neuron_window=50):
         self.sae = sae.to(device)
         self.model = model
         self.data_loader = data_loader
@@ -118,7 +118,7 @@ class SAETrainer:
                 pbar.set_postfix({
                     "recon": f"{recon_loss:.4f}", 
                     "aux": f"{aux_loss:.4f}",
-                    "dead": f"{(self.sae.ticks_since_active > 1000).sum().item()}"
+                    "dead": f"{(self.sae.ticks_since_active > self.dead_neuron_window).sum().item()}"
                 })
             
             avg_recon = total_recon / count if count > 0 else 0

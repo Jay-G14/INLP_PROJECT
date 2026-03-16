@@ -58,7 +58,7 @@ python -u src/sae/train.py \
     --layer 12 \
     --expansion_factor 8 \
     --batch_size 2 \
-    --epochs 5 \
+    --epochs 10 \
     --k 32
 
 echo "--------------------------------------------------------"
