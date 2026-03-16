@@ -44,50 +44,59 @@ echo "Running on hosts: $SLURM_NODELIST"
 echo "Allocated CPUs: $SLURM_NTASKS"
 echo "Allocated GPUs: $SLURM_GPUS_ON_NODE"
 
-echo "--------------------------------------------------------"
-echo "Phase 1: Preprocessing"
-echo "--------------------------------------------------------"
-# python -u src/data/preprocess.py
+# echo "--------------------------------------------------------"
+# echo "Phase 1: Preprocessing"
+# echo "--------------------------------------------------------"
+# # python -u src/data/preprocess.py
+
+# echo "--------------------------------------------------------"
+# echo "Phase 2: SAE Training"
+# echo "--------------------------------------------------------"
+# # Added batch size override explicitly along with model params to document intent
+# python -u src/sae/train.py \
+#     --model_name "meta-llama/Llama-2-7b-chat-hf" \
+#     --no_include_target \
+#     --max_tokens 500000 \
+#     --layer 12 \
+#     --expansion_factor 8 \
+#     --batch_size 4 \
+#     --epochs 5 \
+#     --k 32
+
+# echo "--------------------------------------------------------"
+# echo "Phase 3: Feature Identification"
+# echo "--------------------------------------------------------"
+# python -u src/analysis/diff_means.py \
+#     --model_name "meta-llama/Llama-2-7b-chat-hf" \
+#     --layer 12 \
+#     --num_features 100 \
+#     --min_ratio 50.0 \
+#     --sort_by score
+
+# echo "--------------------------------------------------------"
+# echo "Phase 4: Evaluation"
+# echo "--------------------------------------------------------"
+# python -u src/eval/unified_evaluate.py \
+#     --model_name "meta-llama/Llama-2-7b-chat-hf" \
+#     --layer 12 \
+#     --num_features 100 \
+#     --ablation_scale -3.0 \
+#     --freq_penalty 1.0 \
+#     --top_p 0.9
+
+# echo "--------------------------------------------------------"
+# echo "Phase 5: LLM Judge Evaluation"
+# echo "--------------------------------------------------------"
+# python -u src/eval/evaluate_llm_judge.py --model Qwen/Qwen2.5-7B-Instruct
 
 echo "--------------------------------------------------------"
-echo "Phase 2: SAE Training"
+echo "Phase 6: SAE Validation"
 echo "--------------------------------------------------------"
-# Added batch size override explicitly along with model params to document intent
-python -u src/sae/train.py \
-    --model_name "meta-llama/Llama-2-7b-chat-hf" \
-    --no_include_target \
-    --max_tokens 500000 \
+python -u src/analysis/validate_sae.py \
     --layer 12 \
+    --model_name "meta-llama/Llama-2-7b-chat-hf" \
     --expansion_factor 8 \
-    --batch_size 4 \
-    --epochs 5 \
     --k 32
-
-echo "--------------------------------------------------------"
-echo "Phase 3: Feature Identification"
-echo "--------------------------------------------------------"
-python -u src/analysis/diff_means.py \
-    --model_name "meta-llama/Llama-2-7b-chat-hf" \
-    --layer 12 \
-    --num_features 100 \
-    --min_ratio 50.0 \
-    --sort_by score
-
-echo "--------------------------------------------------------"
-echo "Phase 4: Evaluation"
-echo "--------------------------------------------------------"
-python -u src/eval/unified_evaluate.py \
-    --model_name "meta-llama/Llama-2-7b-chat-hf" \
-    --layer 12 \
-    --num_features 100 \
-    --ablation_scale -3.0 \
-    --freq_penalty 1.0 \
-    --top_p 0.9
-
-echo "--------------------------------------------------------"
-echo "Phase 5: LLM Judge Evaluation"
-echo "--------------------------------------------------------"
-python -u src/eval/evaluate_llm_judge.py --model Qwen/Qwen2.5-7B-Instruct
 
 echo "--------------------------------------------------------"
 echo "Pipeline completed at $(date)"
