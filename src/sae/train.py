@@ -57,19 +57,23 @@ def main(args):
     # Load neutral corpus (WikiText-2) — this is the primary training data
     print("Loading WikiText-2 (neutral corpus)...")
     neutral_dataset = get_neutral_corpus(split="train")
-    tokenizer = model.tokenizer
     if isinstance(neutral_dataset, list):
         neutral_text = "\n".join([t for t in neutral_dataset if t.strip()])
     else:
         neutral_text = "\n".join([t for t in neutral_dataset["text"] if t.strip()])
-    neutral_tokens = tokenizer.encode(neutral_text)
+    
+    # Use model.to_tokens which handles prefixes securely within transformer_lens
+    neutral_tokens = model.to_tokens(neutral_text).squeeze(0).tolist()
+    
     print(f"  WikiText-2 tokens: {len(neutral_tokens)}")
     all_tokens.extend(neutral_tokens)
     
     # Optionally also include target corpus to ensure SAE can represent those features too
     if args.include_target and args.target_corpus and os.path.exists(args.target_corpus):
         print(f"Loading target corpus: {args.target_corpus}...")
-        target_tokens = load_and_tokenize(args.target_corpus)
+        with open(args.target_corpus, 'r', encoding='utf-8') as f:
+            target_text = f.read()
+        target_tokens = model.to_tokens(target_text).squeeze(0).tolist()
         print(f"  Target corpus tokens: {len(target_tokens)}")
         all_tokens.extend(target_tokens)
     

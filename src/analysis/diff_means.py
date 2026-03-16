@@ -62,13 +62,16 @@ def analyze(args):
     
     # 3. Load Data
     print("Loading Target Corpus (Harry Potter)...")
-    target_tokens = load_and_tokenize(args.target_corpus)
+    with open(args.target_corpus, 'r', encoding='utf-8') as f:
+        target_text = f.read()
+    target_tokens = model.to_tokens(target_text).squeeze(0).tolist()
     target_tokens = target_tokens[:args.max_tokens]
     
     print("Loading Neutral Corpus (Wiki + Fiction)...")
     neutral_list = get_neutral_corpus(split="train")
     neutral_text = "\n".join(neutral_list[:4000]) # Take more samples for broader coverage
-    neutral_tokens = model.tokenizer.encode(neutral_text)[:args.max_tokens]
+    neutral_tokens = model.to_tokens(neutral_text).squeeze(0).tolist()
+    neutral_tokens = neutral_tokens[:args.max_tokens]
     
     # 4. Compute Feature Activation Statistics
     def get_feature_stats(tokens, batch_size=8, ctx_len=128):
