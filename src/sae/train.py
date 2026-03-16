@@ -126,6 +126,29 @@ def main(args):
     
     # 4. Train
     print(f"\nStarting training for {args.epochs} epoch(s)...")
+    
+    # --- Diagnostic: Activation Scale & Data Info ---
+    print(f"\n--- Diagnostic ---")
+    print(f"Actual token count being used: {len(all_tokens):,}")
+    print(f"Number of batches per epoch: {len(data_loader)}")
+    
+    sample_batch = next(iter(data_loader))[0]
+    device_to_use = getattr(model, "hf_device_map", {}).get("", device) 
+    if isinstance(device_to_use, dict):
+        device_to_use = next(iter(model.parameters())).device
+        
+    with torch.no_grad():
+        _, cache = model.run_with_cache(
+            sample_batch.to(device_to_use),
+            names_filter=f"blocks.{args.layer}.hook_resid_pre"
+        )
+        acts = cache[f"blocks.{args.layer}.hook_resid_pre"]
+        print(f"Activation shape: {acts.shape}")
+        print(f"Activation mean: {acts.mean().item():.4f}")
+        print(f"Activation std: {acts.std().item():.4f}")
+        print(f"Activation variance (vital for rel MSE): {acts.var().item():.4f}")
+    print(f"------------------\n")
+
     trainer = SAETrainer(
         sae, model, data_loader, 
         layer=args.layer, 
