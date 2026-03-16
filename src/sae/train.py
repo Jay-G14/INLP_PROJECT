@@ -58,7 +58,10 @@ def main(args):
     print("Loading WikiText-2 (neutral corpus)...")
     neutral_dataset = get_neutral_corpus(split="train")
     tokenizer = model.tokenizer
-    neutral_text = "\n".join([t for t in neutral_dataset["text"] if t.strip()])
+    if isinstance(neutral_dataset, list):
+        neutral_text = "\n".join([t for t in neutral_dataset if t.strip()])
+    else:
+        neutral_text = "\n".join([t for t in neutral_dataset["text"] if t.strip()])
     neutral_tokens = tokenizer.encode(neutral_text)
     print(f"  WikiText-2 tokens: {len(neutral_tokens)}")
     all_tokens.extend(neutral_tokens)
