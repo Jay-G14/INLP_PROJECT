@@ -104,12 +104,28 @@ def analyze(args):
         print(f"  Processing {len(clean_batches)} batches...")
         with torch.no_grad():
             for batch in tqdm(clean_batches, desc="  Features"):
+                # Move batch tokens to device 
+                device_to_use = next(model.parameters()).device
+                batch = batch.to(device_to_use)
+            
                 # Run model to get activations
-                _, cache = model.run_with_cache(batch, stop_at_layer=args.layer + 1)
-                acts = cache[f"blocks.{args.layer}.hook_resid_post"]
+                act_name = f"blocks.{args.layer}.hook_resid_post"
+                _, cache = model.run_with_cache(
+                    batch, 
+                    names_filter=lambda name: name == act_name,
+                    stop_at_layer=args.layer + 1
+                )
+                acts = cache[act_name]
+                
+                # Move acts back to SAE processing device
+                acts = acts.to(device)
                 
                 # Use FULL forward pass (not just encode) to get post-TopK sparse activations
                 _, z_sparse = sae(acts)
+                
+                # Clear unused values manually
+                del cache, acts
+                torch.cuda.empty_cache()
                 # z_sparse shape: [batch, seq, d_sae]
                 
                 z_flat = einops.rearrange(z_sparse, "b s d -> (b s) d")

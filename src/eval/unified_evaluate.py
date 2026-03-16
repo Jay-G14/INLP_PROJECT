@@ -65,9 +65,10 @@ LOGPROB_TASKS = {
 def get_paired_log_probs(model, prompts, targets, device):
     """Calculates the average log-probability of specific target tokens given their paired prompts."""
     log_probs = []
+    device_to_use = next(model.parameters()).device
     with torch.no_grad():
         for prompt, target in zip(prompts, targets):
-            input_ids = model.to_tokens(prompt).to(device)
+            input_ids = model.to_tokens(prompt).to(device_to_use)
             target_ids = model.to_tokens(target, prepend_bos=False)[0]
             target_id = target_ids[0].item()
             
@@ -108,10 +109,11 @@ def calculate_perplexity(model, dataset, device, max_samples=50, max_length=512)
     total_loss = 0
     total_tokens = 0
     samples = dataset["text"][:max_samples]
+    device_to_use = next(model.parameters()).device
     
     for text in tqdm(samples, desc="  Computing Perplexity", leave=False):
         if not text.strip(): continue
-        tokens = model.to_tokens(text, prepend_bos=True).to(device)
+        tokens = model.to_tokens(text, prepend_bos=True).to(device_to_use)
         if tokens.shape[1] > max_length or tokens.shape[1] < 2: continue
         
         with torch.no_grad():
@@ -144,9 +146,10 @@ def run_evaluation(model: HookedTransformer, sae: Optional[TopKSAE], hook_fn: An
     comparisons = []
     
     pbar = tqdm(data[:args.limit], desc="  Generating", leave=False)
+    device_to_use = next(model.parameters()).device
     for item in pbar:
         prompt = item["prompt"]["prompt"]
-        input_ids = model.to_tokens(prompt).to(device)
+        input_ids = model.to_tokens(prompt).to(device_to_use)
         
         with torch.no_grad():
             # Stabilized sampling with Top-P

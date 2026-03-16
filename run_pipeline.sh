@@ -47,19 +47,19 @@ echo "Allocated GPUs: $SLURM_GPUS_ON_NODE"
 echo "--------------------------------------------------------"
 echo "Phase 1: Preprocessing"
 echo "--------------------------------------------------------"
-python -u src/data/preprocess.py
+# python -u src/data/preprocess.py
 
 echo "--------------------------------------------------------"
 echo "Phase 2: SAE Training"
 echo "--------------------------------------------------------"
 # Added batch size override explicitly along with model params to document intent
-python -u src/sae/train.py \
-    --model_name "meta-llama/Llama-2-7b-chat-hf" \
-    --layer 12 \
-    --expansion_factor 8 \
-    --batch_size 2 \
-    --epochs 20 \
-    --k 32
+# python -u src/sae/train.py \
+#     --model_name "meta-llama/Llama-2-7b-chat-hf" \
+#     --layer 12 \
+#     --expansion_factor 8 \
+#     --batch_size 2 \
+#     --epochs 20 \
+#     --k 32
 
 echo "--------------------------------------------------------"
 echo "Phase 3: Feature Identification"
