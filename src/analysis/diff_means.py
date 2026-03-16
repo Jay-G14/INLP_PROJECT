@@ -23,7 +23,7 @@ def analyze(args):
     print(f"Loading {args.model_name}...")
     model = HookedTransformer.from_pretrained(
         args.model_name, 
-        device="auto" if args.model_name.startswith("meta-llama") else device,
+        device=device,
         dtype=torch.bfloat16 if args.model_name.startswith("meta-llama") else torch.float32,
         fold_ln=False,
         center_writing_weights=False,
