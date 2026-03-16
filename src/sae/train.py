@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from huggingface_hub import login
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
 import torch
+from transformers import AutoModelForCausalLM
 from torch.utils.data import DataLoader, TensorDataset
 from transformer_lens import HookedTransformer
 from src.sae.model import TopKSAE
@@ -22,14 +23,28 @@ def main(args):
 
     # 1. Load Model
     print(f"Loading {args.model_name}...")
-    model = HookedTransformer.from_pretrained(
-        args.model_name, 
-        device=device,
-        dtype=torch.bfloat16 if args.model_name.startswith("meta-llama") else torch.float32,
-        fold_ln=False,
-        center_writing_weights=False,
-        center_unembed=False
-    )
+    if args.model_name.startswith("meta-llama"):
+        hf_model = AutoModelForCausalLM.from_pretrained(
+            args.model_name,
+            torch_dtype=torch.bfloat16,
+            device_map="auto"
+        )
+        model = HookedTransformer.from_pretrained(
+            args.model_name,
+            hf_model=hf_model,
+            device="cpu", # device is handled by device_map
+            fold_ln=False,
+            center_writing_weights=False,
+            center_unembed=False
+        )
+    else:
+        model = HookedTransformer.from_pretrained(
+            args.model_name, 
+            device=device,
+            fold_ln=False,
+            center_writing_weights=False,
+            center_unembed=False
+        )
     
     # 2. Load Data — SAE should be trained on GENERAL data, not just target corpus
     # This is critical: the SAE learns a general-purpose feature dictionary.

@@ -6,6 +6,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"
 from typing import Dict, List, Any, Optional
 
 import torch
+from transformers import AutoModelForCausalLM
 import torch.nn.functional as F
 import json
 import argparse
@@ -211,14 +212,28 @@ def main():
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Loading {args.model_name}...")
-    model = HookedTransformer.from_pretrained(
-        args.model_name, 
-        device=device,
-        dtype=torch.bfloat16 if args.model_name.startswith("meta-llama") else torch.float32,
-        fold_ln=False,
-        center_writing_weights=False,
-        center_unembed=False
-    )
+    if args.model_name.startswith("meta-llama"):
+        hf_model = AutoModelForCausalLM.from_pretrained(
+            args.model_name,
+            torch_dtype=torch.bfloat16,
+            device_map="auto"
+        )
+        model = HookedTransformer.from_pretrained(
+            args.model_name,
+            hf_model=hf_model,
+            device="cpu",
+            fold_ln=False,
+            center_writing_weights=False,
+            center_unembed=False
+        )
+    else:
+        model = HookedTransformer.from_pretrained(
+            args.model_name, 
+            device=device,
+            fold_ln=False,
+            center_writing_weights=False,
+            center_unembed=False
+        )
     
     # Load Data
     prompts_path = "8940_Who_s_Harry_Potter_Approx_Supplementary Material/Eval completion prompts.json"
