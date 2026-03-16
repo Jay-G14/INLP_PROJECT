@@ -85,6 +85,14 @@ def analyze(args):
         feature_act_sum = torch.zeros(sae.d_sae, device=device)
         total_tokens_seen = 0
         
+        # Flatten and filter out PAD tokens (if needed) but keep everything sequential
+        if isinstance(tokens, list):
+            tokens = tokens  # Usually 1D list
+        elif tokens.ndim > 1:
+            tokens = tokens.flatten().tolist()
+            
+        print(f"  Got {len(tokens)} total tokens for stats...")
+        
         # Create batches
         token_chunks = [tokens[i:i+ctx_len] for i in range(0, len(tokens) - ctx_len + 1, ctx_len)]
         
@@ -93,15 +101,15 @@ def analyze(args):
             batch = token_chunks[i:i+batch_size]
             if len(batch) > 0:
                 try:
-                    tensor_batch = torch.tensor(batch).to(device)
+                    tensor_batch = torch.tensor(batch)
                     if tensor_batch.ndim == 1:
                         tensor_batch = tensor_batch.unsqueeze(0)
-                    if tensor_batch.shape[1] == ctx_len:
+                    if tensor_batch.shape[-1] == ctx_len:
                         clean_batches.append(tensor_batch)
                 except:
                     pass
         
-        print(f"  Processing {len(clean_batches)} batches...")
+        print(f"  Constructed {len(clean_batches)} clean batches of shape {[b.shape for b in clean_batches[:1]]}...")
         with torch.no_grad():
             for batch in tqdm(clean_batches, desc="  Features"):
                 # Move batch tokens to device 
@@ -125,7 +133,7 @@ def analyze(args):
                 
                 # Clear unused values manually
                 del cache, acts
-                torch.cuda.empty_cache()
+                
                 # z_sparse shape: [batch, seq, d_sae]
                 
                 z_flat = einops.rearrange(z_sparse, "b s d -> (b s) d")
@@ -139,7 +147,10 @@ def analyze(args):
                 
                 total_tokens_seen += z_flat.shape[0]
                 
-        activation_freq = feature_fire_count / total_tokens_seen
+                del z_sparse, z_flat, fired
+                torch.cuda.empty_cache()
+                
+        activation_freq = feature_fire_count / max(1, total_tokens_seen)
         mean_activation = feature_act_sum / (feature_fire_count + 1e-8)  # mean over firing tokens only
         
         return activation_freq, mean_activation, total_tokens_seen
