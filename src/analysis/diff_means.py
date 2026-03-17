@@ -12,6 +12,20 @@ import argparse
 import einops
 from tqdm import tqdm
 
+def tokenize_in_chunks(model, text, chunk_size=10000):
+    """Tokenize large text without hitting sequence length limits."""
+    words = text.split()
+    all_tokens = []
+    print(f"  Tokenizing {len(words)} words in chunks of {chunk_size}...")
+    for i in range(0, len(words), chunk_size):
+        chunk = " ".join(words[i:i+chunk_size])
+        tokens = model.to_tokens(chunk).squeeze(0).tolist()
+        if i == 0:
+            all_tokens.extend(tokens)
+        else:
+            all_tokens.extend(tokens[1:])  # skip BOS except first chunk
+    return all_tokens
+
 def analyze(args):
     load_dotenv()
     hf_token = os.getenv("HF_TOKEN")
@@ -64,14 +78,21 @@ def analyze(args):
     print("Loading Target Corpus (Harry Potter)...")
     with open(args.target_corpus, 'r', encoding='utf-8') as f:
         target_text = f.read()
-    target_tokens = model.to_tokens(target_text).squeeze(0).tolist()
+    
+    target_tokens = tokenize_in_chunks(model, target_text)
     target_tokens = target_tokens[:args.max_tokens]
+    print(f"  Target tokens after chunking: {len(target_tokens):,}")
     
     print("Loading Neutral Corpus (Wiki + Fiction)...")
     neutral_list = get_neutral_corpus(split="train")
-    neutral_text = "\n".join([t for t in neutral_list if t.strip()])
-    neutral_tokens = model.to_tokens(neutral_text).squeeze(0).tolist()
+    if isinstance(neutral_list, list):
+        neutral_text = "\n".join([t for t in neutral_list if t.strip()])
+    else:
+        neutral_text = "\n".join([t for t in neutral_list["text"] if t.strip()])
+        
+    neutral_tokens = tokenize_in_chunks(model, neutral_text)
     neutral_tokens = neutral_tokens[:args.max_tokens]
+    print(f"  Neutral tokens after chunking: {len(neutral_tokens):,}")
 
     # Verification block
     print(f"\n--- Corpus Size Check ---")
