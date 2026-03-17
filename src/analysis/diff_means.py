@@ -93,6 +93,10 @@ def analyze(args):
     target_tokens = target_tokens[:min_tokens]
     neutral_tokens = neutral_tokens[:min_tokens]
     print(f"Using {min_tokens:,} tokens for each corpus (balanced)")
+    print(f"Target tokens  : {len(target_tokens):,}")
+    print(f"Neutral tokens : {len(neutral_tokens):,}")
+    print(f"Target batches : {len(target_tokens) // (8 * 128)}")
+    print(f"Neutral batches: {len(neutral_tokens) // (8 * 128)}")
     
     # 4. Compute Feature Activation Statistics
     def get_feature_stats(tokens, batch_size=8, ctx_len=128):
