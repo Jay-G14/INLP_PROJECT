@@ -281,7 +281,7 @@ if __name__ == "__main__":
     parser.add_argument("--min_freq", type=float, default=0.001, help="Min activation frequency on target")
     parser.add_argument("--max_neutral_freq", type=float, default=0.005, help="Max activation frequency on neutral corpus")
     parser.add_argument("--max_freq", type=float, default=0.2, help="Max activation frequency overall")
-    parser.add_argument("--min_ratio", type=float, default=20.0, help="Minimum specificity ratio (target/neutral)")
+    parser.add_argument("--min_ratio", type=float, default=10.0, help="Minimum specificity ratio (target/neutral)")
     parser.add_argument("--sort_by", type=str, choices=["ratio", "score", "diff"], default="score")
     args = parser.parse_args()
     analyze(args)

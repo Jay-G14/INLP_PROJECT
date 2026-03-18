@@ -318,7 +318,7 @@ def main(args):
     test_semantic_overlap(model, sae, args.layer, device)
 
     # Test 4 uses your actual top features from diff_means results
-    top_hp_features = [25306, 791, 21940, 5031, 19014, 28584, 12666, 11119, 18836]
+    top_hp_features = [5031, 7035, 6079, 3161, 19014, 23783, 4837, 5036, 2102, 5996]
     test_ablation(model, sae, args.layer, device, top_hp_features)
 
     # Final summary

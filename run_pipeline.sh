@@ -73,15 +73,15 @@ python -u src/analysis/validate_sae.py \
     --expansion_factor 8 \
     --k 32
 
-# echo "--------------------------------------------------------"
-# echo "Phase 4: Feature Identification"
-# echo "--------------------------------------------------------"
-# python -u src/analysis/diff_means.py \
-#     --model_name "meta-llama/Llama-2-7b-chat-hf" \
-#     --layer 12 \
-#     --num_features 100 \
-#     --min_ratio 50.0 \
-#     --sort_by score
+echo "--------------------------------------------------------"
+echo "Phase 4: Feature Identification"
+echo "--------------------------------------------------------"
+python -u src/analysis/diff_means.py \
+    --model_name "meta-llama/Llama-2-7b-chat-hf" \
+    --layer 12 \
+    --num_features 50 \
+    --min_ratio 10.0 \
+    --sort_by score
 
 # echo "--------------------------------------------------------"
 # echo "Phase 5: Evaluation"
