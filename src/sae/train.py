@@ -124,14 +124,6 @@ def main(args):
     
     sae = TopKSAE(d_in=d_model, d_sae=d_sae, k=k).to(device)
     
-    # Check if a checkpoint exists and load it to resume training
-    checkpoint_path = f"checkpoints/sae_layer_{args.layer}.pt"
-    if os.path.exists(checkpoint_path):
-        print(f"Resuming from existing checkpoint: {checkpoint_path}")
-        sae.load_state_dict(torch.load(checkpoint_path, map_location=device))
-    else:
-        print("No checkpoint found. Starting from scratch.")
-    
     # 4. Train
     print(f"\nStarting training for {args.epochs} epoch(s)...")
     
@@ -148,9 +140,9 @@ def main(args):
     with torch.no_grad():
         _, cache = model.run_with_cache(
             sample_batch.to(device_to_use),
-            names_filter=f"blocks.{args.layer}.hook_resid_pre"
+            names_filter=f"blocks.{args.layer}.hook_resid_post"
         )
-        acts = cache[f"blocks.{args.layer}.hook_resid_pre"]
+        acts = cache[f"blocks.{args.layer}.hook_resid_post"]
         print(f"Activation shape: {acts.shape}")
         print(f"Activation mean: {acts.mean().item():.4f}")
         print(f"Activation std: {acts.std().item():.4f}")
