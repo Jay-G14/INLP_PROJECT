@@ -51,15 +51,12 @@ class SAETrainer:
             self.sae.total_steps += 1
 
     def train_step(self, batch_tokens):
-        # Unpack batch if it's a list (from TensorDataset)
         if isinstance(batch_tokens, (list, tuple)):
             batch_tokens = batch_tokens[0]
-            
-        # Move batch tokens to device (uses model's auto-device handling or direct device map)
+
         device_to_use = next(self.model.parameters()).device
         batch_tokens = batch_tokens.to(device_to_use)
-             
-        # 1. Get activations from the transformer
+
         with torch.no_grad():
             act_name = f"blocks.{self.layer}.hook_resid_post"
             _, cache = self.model.run_with_cache(
@@ -67,43 +64,36 @@ class SAETrainer:
                 names_filter=lambda name: name == act_name,
                 stop_at_layer=self.layer + 1
             )
-            acts = cache[act_name]  # [batch, seq_len, d_model]
+            acts = cache[act_name]
             acts = einops.rearrange(acts, "b s d -> (b s) d").to(self.device)
-            
-        # 2. Forward pass through SAE
+
+        # Compute activation variance for normalization
+        acts_var = acts.var().detach()
+
         self.optimizer.zero_grad()
         recons, z_sparse = self.sae(acts)
-        
-        # 3. Reconstruction loss (MSE)
-        recon_loss = F.mse_loss(recons, acts)
-        
-        # 4. Auxiliary loss for dead neurons
-        aux_loss = self.sae.get_auxiliary_loss(
-            acts, z_sparse, 
+
+        # Normalized losses — scale invariant across models
+        recon_loss = F.mse_loss(recons, acts) / (acts_var + 1e-8)
+        aux_loss   = self.sae.get_auxiliary_loss(
+            acts, z_sparse,
             dead_threshold=self.dead_neuron_window
-        )
-        
-        # 5. Total loss
+        ) / (acts_var + 1e-8)
+
         total_loss = recon_loss + self.aux_loss_weight * aux_loss
-        
         total_loss.backward()
-        
-        # 6. Remove parallel gradient component before optimizer step
+
         self._remove_parallel_grad_component()
-        
         self.optimizer.step()
-        
-        # 7. Normalize decoder weights to unit norm (rows)
+
         with torch.no_grad():
             self.sae.W_dec.data = F.normalize(self.sae.W_dec.data, p=2, dim=1)
-             
-        # 8. Update dead neuron statistics
+
         self._update_dead_neuron_stats(z_sparse)
-        
-        # 9. Clear cache logic for multi-GPU efficiency
+
         del cache, acts, recons, z_sparse, total_loss
         torch.cuda.empty_cache()
-        
+
         return recon_loss.item(), aux_loss.item()
 
     def train(self, num_epochs=1):
