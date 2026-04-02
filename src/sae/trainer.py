@@ -65,7 +65,7 @@ class SAETrainer:
                 stop_at_layer=self.layer + 1
             )
             acts = cache[act_name]
-            acts = einops.rearrange(acts, "b s d -> (b s) d").to(self.device)
+            acts = einops.rearrange(acts, "b s d -> (b s) d").to(self.device, dtype=self.sae.W_dec.dtype)
 
         # Compute activation variance for normalization
         acts_var = acts.var().detach()

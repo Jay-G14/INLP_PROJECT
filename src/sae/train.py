@@ -122,7 +122,7 @@ def main(args):
     print(f"  d_model={d_model}, d_sae={d_sae}, k={k}")
     print(f"  Expansion factor: {args.expansion_factor}x")
     
-    sae = TopKSAE(d_in=d_model, d_sae=d_sae, k=k).to(device)
+    sae = TopKSAE(d_in=d_model, d_sae=d_sae, k=k).to(device=device, dtype=torch.bfloat16)
     
     # 4. Train
     print(f"\nStarting training for {args.epochs} epoch(s)...")
@@ -154,8 +154,6 @@ def main(args):
         layer=args.layer, 
         lr=args.lr, 
         device=device,
-        aux_loss_weight=args.aux_loss_weight,       # ← add
-        dead_neuron_window=args.dead_neuron_window 
     )
     trainer.train(num_epochs=args.epochs)
     
