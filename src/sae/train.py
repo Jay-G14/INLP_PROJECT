@@ -153,7 +153,9 @@ def main(args):
         sae, model, data_loader, 
         layer=args.layer, 
         lr=args.lr, 
-        device=device
+        device=device,
+        aux_loss_weight=args.aux_loss_weight,       # ← add
+        dead_neuron_window=args.dead_neuron_window 
     )
     trainer.train(num_epochs=args.epochs)
     
