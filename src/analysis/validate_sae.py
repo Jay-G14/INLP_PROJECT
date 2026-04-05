@@ -298,7 +298,7 @@ def main(args):
     model = load_model(args.model_name, device)
     model.eval()
 
-    print(f"Loading SAE from checkpoints/sae_layer_{args.layer}.pt ...")
+    print(f"Loading SAE from sae_layer_{args.layer}.pt ...")
     d_model = model.cfg.d_model
     d_sae   = d_model * args.expansion_factor
     
@@ -306,7 +306,7 @@ def main(args):
     bfloat16_dtype = torch.bfloat16 if model.cfg.dtype == "bfloat16" else torch.float32
     sae = TopKSAE(d_in=d_model, d_sae=d_sae, k=args.k).to(device)
     sae.load_state_dict(
-        torch.load(f"checkpoints/sae_layer_{args.layer}.pt",
+        torch.load(f"sae_layer_{args.layer}.pt",
                    map_location=device, weights_only=True)
     )
     sae = sae.to(dtype=bfloat16_dtype)

@@ -53,16 +53,16 @@ echo "--------------------------------------------------------"
 echo "Phase 2: SAE Training"
 echo "--------------------------------------------------------"
 # Added batch size override explicitly along with model params to document intent
-python -u src/sae/train.py \
-    --model_name "meta-llama/Llama-2-7b-chat-hf" \
-    --no_include_target \
-    --max_tokens 500000 \
-    --layer 18 \
-    --expansion_factor 8 \
-    --batch_size 4 \
-    --epochs 50 \
-    --lr 1e-4 \
-    --k 32
+# python -u src/sae/train.py \
+#     --model_name "meta-llama/Llama-2-7b-chat-hf" \
+#     --no_include_target \
+#     --max_tokens 500000 \
+#     --layer 18 \
+#     --expansion_factor 8 \
+#     --batch_size 4 \
+#     --epochs 50 \
+#     --lr 1e-4 \
+#     --k 32
 
 echo "--------------------------------------------------------"
 echo "Phase 3: SAE Validation"
@@ -86,18 +86,18 @@ python -u src/analysis/diff_means.py \
 # echo "--------------------------------------------------------"
 # echo "Phase 5: Evaluation"
 # echo "--------------------------------------------------------"
-# python -u src/eval/unified_evaluate.py \
-#     --model_name "meta-llama/Llama-2-7b-chat-hf" \
-#     --layer 12 \
-#     --num_features 100 \
-#     --ablation_scale -3.0 \
-#     --freq_penalty 1.0 \
-#     --top_p 0.9
+python -u src/eval/unified_evaluate.py \
+    --model_name "meta-llama/Llama-2-7b-chat-hf" \
+    --layer 18 \
+    --num_features 100 \
+    --ablation_scale -3.0 \
+    --freq_penalty 1.0 \
+    --top_p 0.9
 
 # echo "--------------------------------------------------------"
 # echo "Phase 6: LLM Judge Evaluation"
 # echo "--------------------------------------------------------"
-# python -u src/eval/evaluate_llm_judge.py --model Qwen/Qwen2.5-7B-Instruct
+python -u src/eval/evaluate_llm_judge.py --model Qwen/Qwen2.5-7B-Instruct
 
 # echo "--------------------------------------------------------"
 # echo "Phase 7: Old Validation Block"

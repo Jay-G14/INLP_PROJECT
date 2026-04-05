@@ -255,7 +255,7 @@ def main():
     d_sae = d_model * args.expansion_factor
     sae = TopKSAE(d_in=d_model, d_sae=d_sae, k=32).to(device)
     
-    checkpoint_path = f"checkpoints/sae_layer_{args.layer}.pt"
+    checkpoint_path = f"sae_layer_{args.layer}.pt"
     sae.load_state_dict(torch.load(checkpoint_path, map_location=device, weights_only=True))
     
     features_path = f"results/layer_{args.layer}_features.pt"

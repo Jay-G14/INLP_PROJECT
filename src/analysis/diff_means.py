@@ -65,7 +65,7 @@ def analyze(args):
     d_sae = d_model * args.expansion_factor
     sae = TopKSAE(d_in=d_model, d_sae=d_sae, k=args.k).to(device)
     
-    checkpoint_path = f"checkpoints/sae_layer_{args.layer}.pt"
+    checkpoint_path = f"sae_layer_{args.layer}.pt"
     if not os.path.exists(checkpoint_path):
         print(f"Error: Checkpoint {checkpoint_path} not found.")
         return
