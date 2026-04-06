@@ -20,7 +20,7 @@ def get_ablation_hook(sae, feature_indices_to_ablate, mean_activations=None, sca
     """
     def hook(activation: Float[torch.Tensor, "batch seq d_model"], hook):
         # Activation shape: [batch, seq, d_model]
-        original_act = activation.clone()
+        original_act = activation.clone().to(next(sae.parameters()).device)
         
         # 1. Full forward pass through SAE
         x_reconstruct, z_sparse = sae(activation)
