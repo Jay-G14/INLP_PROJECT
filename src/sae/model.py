@@ -28,6 +28,7 @@ class TopKSAE(nn.Module):
 
     def encode(self, x):
         """Compute pre-activations (before TopK). No ReLU — TopK IS the activation."""
+        x = x.to(self.W_enc.device) 
         x_centered = x - self.b_dec.to(x.device)
         pre_acts = x_centered @ self.W_enc + self.b_enc
         # NO ReLU here. TopK is applied in forward() and serves as the activation function.
