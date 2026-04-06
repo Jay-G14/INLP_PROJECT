@@ -54,7 +54,7 @@ class TopKSAE(nn.Module):
         
         return x_reconstruct, z_sparse
 
-    def get_auxiliary_loss(self, x, z_sparse, dead_threshold=None, num_dead_sample=32):
+    def get_auxiliary_loss(self, x, z_sparse, dead_threshold=None, num_dead_sample=256):
         """
         Auxiliary loss to revive dead neurons.
         Uses the reconstruction error to train dead neurons.
@@ -78,7 +78,7 @@ class TopKSAE(nn.Module):
         error = x - x_reconstruct
         
         # Encode the error using only dead neurons
-        dead_pre_acts = (error - self.b_dec) @ self.W_enc + self.b_enc
+        dead_pre_acts = error @ self.W_enc + self.b_enc
         dead_pre_acts_masked = dead_pre_acts.clone()
         dead_pre_acts_masked[:, ~dead_mask] = float('-inf')
         
