@@ -204,7 +204,7 @@ def main():
     parser.add_argument("--model_name", type=str, default="meta-llama/Llama-2-7b-chat-hf")
     parser.add_argument("--layer", type=int, default=12)
     parser.add_argument("--num_features", type=int, default=100)
-    parser.add_argument("--ablation_scale", type=float, default=0.0, help="0.0 for zeroing, negative for counter-activation")
+    parser.add_argument("--ablation_scale", type=float, default=0.0, help="Unused (always zero-ablation). Kept for CLI compatibility.")
     parser.add_argument("--expansion_factor", type=int, default=8)
     parser.add_argument("--limit", type=int, default=50, help="Number of prompts for match rate")
     parser.add_argument("--ppl_limit", type=int, default=50, help="Number of samples for perplexity")

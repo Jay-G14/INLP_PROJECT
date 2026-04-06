@@ -90,7 +90,6 @@ python -u src/eval/unified_evaluate.py \
     --model_name "meta-llama/Llama-2-7b-chat-hf" \
     --layer 18 \
     --num_features 100 \
-    --ablation_scale -3.0 \
     --freq_penalty 1.0 \
     --top_p 0.9
 

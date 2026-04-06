@@ -83,7 +83,7 @@ class TopKSAE(nn.Module):
         dead_pre_acts_masked[:, ~dead_mask] = float('-inf')
         
         # TopK among dead neurons only
-        k_dead = min(num_dead_sample, num_dead)
+        k_dead = num_dead
         topk_vals, topk_inds = torch.topk(dead_pre_acts_masked, k=k_dead, dim=-1)
         topk_vals = F.relu(topk_vals)
         
