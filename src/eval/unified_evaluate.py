@@ -219,7 +219,7 @@ def main():
         hf_model = AutoModelForCausalLM.from_pretrained(
             args.model_name,
             torch_dtype=torch.bfloat16,
-            device_map="cpu"
+            device_map="auto"
         )
         model = HookedTransformer.from_pretrained(
             args.model_name,
@@ -229,7 +229,7 @@ def main():
             center_writing_weights=False,
             center_unembed=False
         )
-        model = model.to(device) 
+        # model = model.to(device) # Device is handled by device_map in this case
     else:
         model = HookedTransformer.from_pretrained(
             args.model_name, 
