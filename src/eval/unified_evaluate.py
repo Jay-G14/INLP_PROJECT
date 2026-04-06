@@ -244,6 +244,7 @@ def main():
     with open(prompts_path, "r") as f:
         eval_data = json.load(f)
     print("Loading WikiText-2 Test Set...")
+    # wiki_test = load_dataset("wikitext", "wikitext-2-raw-v1", split="test")
     wiki_test = load_dataset("wikitext", "wikitext-2-raw-v1", split="test", download_mode="force_redownload")
 
     # 1. Baseline Evaluation
