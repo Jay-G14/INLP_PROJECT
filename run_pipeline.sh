@@ -16,10 +16,9 @@
 set -e
 
 # --- Environment Setup ---
-# Set Hugging Face cache to scratch space
-# Ada provides 2.0 TB of /scratch per compute node, circumventing permission and quota errors.
-export HF_HOME=/scratch/${USER}/hf_cache
-export TRANSFORMERS_CACHE=/scratch/${USER}/hf_cache
+# Set Hugging Face cache to persistent home directory (scratch gets purged)
+export HF_HOME=/home2/${USER}/hf_cache
+export TRANSFORMERS_CACHE=/home2/${USER}/hf_cache
 
 # PyTorch multi-GPU / accelerate compatibility variables
 export OMP_NUM_THREADS=$SLURM_NTASKS
@@ -83,9 +82,12 @@ python -u src/analysis/diff_means.py \
     --min_ratio 10.0 \
     --sort_by score
 
-# echo "--------------------------------------------------------"
-# echo "Phase 5: Evaluation"
-# echo "--------------------------------------------------------"
+echo "--------------------------------------------------------"
+echo "Phase 5: Evaluation"
+echo "--------------------------------------------------------"
+# Clear any stale wikitext cache to avoid FileNotFoundError
+rm -rf /scratch/${USER}/hf_cache/datasets/wikitext 2>/dev/null || true
+
 python -u src/eval/unified_evaluate.py \
     --model_name "meta-llama/Llama-2-7b-chat-hf" \
     --layer 18 \
