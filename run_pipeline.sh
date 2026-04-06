@@ -85,8 +85,9 @@ python -u src/analysis/diff_means.py \
 echo "--------------------------------------------------------"
 echo "Phase 5: Evaluation"
 echo "--------------------------------------------------------"
-# Clear any stale wikitext cache to avoid FileNotFoundError
+# Clear any stale wikitext cache from all possible locations
 rm -rf /scratch/${USER}/hf_cache/datasets/wikitext 2>/dev/null || true
+rm -rf ~/.cache/huggingface/datasets/wikitext 2>/dev/null || true
 
 python -u src/eval/unified_evaluate.py \
     --model_name "meta-llama/Llama-2-7b-chat-hf" \
