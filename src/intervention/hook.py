@@ -1,10 +1,12 @@
 import torch
-torch.set_default_dtype(torch.float16)
-from jaxtyping import Float
 
 
 def get_ablation_hook(
-    sae, feature_indices_to_ablate, mean_activations=None, scale=-5.0
+    sae,
+    feature_indices_to_ablate,
+    mean_activations=None,
+    scale=-5.0,
+    hook_stats=None,
 ):
     """
     Returns a hook function that ablates specific features using the SAE.
@@ -23,9 +25,16 @@ def get_ablation_hook(
                -5.0 means conditional negative steering.
     """
 
-    def hook(activation: Float[torch.Tensor, "batch seq d_model"], hook):
+    feature_indices = torch.as_tensor(
+        feature_indices_to_ablate, dtype=torch.long, device=sae.W_dec.device
+    )
+
+    def hook(activation: torch.Tensor, *args, **kwargs):
         # Activation shape: [batch, seq, d_model]
-        original_act = activation.clone()
+        original_device = activation.device
+        original_dtype = activation.dtype
+        sae_device = sae.W_dec.device
+        activation = activation.to(device=sae_device, dtype=torch.float32)
 
         # forward pass through SAE
         x_reconstruct, z_sparse = sae(activation)
@@ -33,23 +42,30 @@ def get_ablation_hook(
         z_ablated = z_sparse.clone()
 
         if scale == 0.0:
-            z_ablated[..., feature_indices_to_ablate] = 0.0
+            z_ablated[..., feature_indices] = 0.0
         else:
             # Only modify tokens where the feature actually fired
-            target_acts = z_sparse[..., feature_indices_to_ablate]
+            target_acts = z_sparse[..., feature_indices]
             fired_mask = target_acts > 0
 
-            z_ablated[..., feature_indices_to_ablate] = torch.where(
+            if hook_stats is not None:
+                hook_stats["total_target_positions"] += int(target_acts.numel())
+                hook_stats["fired_target_positions"] += int(fired_mask.sum().item())
+                hook_stats["target_activation_sum"] += float(
+                    target_acts[fired_mask].sum().item() if fired_mask.any() else 0.0
+                )
+
+            z_ablated[..., feature_indices] = torch.where(
                 fired_mask, target_acts * scale, 0.0
             )
 
         # decode the ablated activations
         x_ablated_recon = z_ablated @ sae.W_dec + sae.b_dec
 
-        # peserve the SAE reconstruction error
-        error = original_act - x_reconstruct
+        # preserve the SAE reconstruction error
+        error = activation - x_reconstruct
         modified_act = x_ablated_recon + error
 
-        return modified_act
+        return modified_act.to(device=original_device, dtype=original_dtype)
 
     return hook

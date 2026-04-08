@@ -1,5 +1,4 @@
 import torch
-torch.set_default_dtype(torch.float16)
 import torch.nn as nn
 import torch.nn.functional as F
 
@@ -13,9 +12,11 @@ class TopKSAE(nn.Module):
 
         # Decoder weights: shape (d_sae, d_in)
         self.W_dec = nn.Parameter(
-            torch.nn.init.kaiming_uniform_(torch.empty(d_sae, d_in))
+            torch.nn.init.kaiming_uniform_(
+                torch.empty(d_sae, d_in, dtype=torch.float32)
+            )
         )
-        self.b_dec = nn.Parameter(torch.zeros(d_in))
+        self.b_dec = nn.Parameter(torch.zeros(d_in, dtype=torch.float32))
 
         # Normalize decoder rows to unit norm
         with torch.no_grad():
@@ -24,14 +25,15 @@ class TopKSAE(nn.Module):
         # Encoder weights: tied initialization (transpose of decoder)
         # This helps prevent dead latents and improves MSE
         self.W_enc = nn.Parameter(self.W_dec.data.T.clone())  # shape (d_in, d_sae)
-        self.b_enc = nn.Parameter(torch.zeros(d_sae))
+        self.b_enc = nn.Parameter(torch.zeros(d_sae, dtype=torch.float32))
 
         # Track dead neurons
-        self.register_buffer("ticks_since_active", torch.zeros(d_sae))
-        self.register_buffer("total_steps", torch.tensor(0))
+        self.register_buffer("ticks_since_active", torch.zeros(d_sae, dtype=torch.float32))
+        self.register_buffer("total_steps", torch.tensor(0, dtype=torch.long))
 
     def encode(self, x):
         """Compute pre-activations (before TopK). No ReLU — TopK IS the activation."""
+        x = x.to(dtype=self.W_enc.dtype)
         x_centered = x - self.b_dec
         pre_acts = x_centered @ self.W_enc + self.b_enc
         # NO ReLU here. TopK is applied in forward() and serves as the activation function.
