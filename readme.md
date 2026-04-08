@@ -51,6 +51,26 @@ cd INLP_PROJECT
 pip install torch transformer-lens datasets tqdm einops transformers
 ```
 
+### Llama 2 (4-bit) Setup (local 6 GB GPU)
+
+1. `pip install -r requirements.txt` (adds bitsandbytes, accelerate, sentencepiece).
+2. `huggingface-cli login` (accept Llama 2 license; ensure `HF_TOKEN` is set if needed).
+3. Optional: install `flash-attn` if your GPU/driver supports it.
+4. Expect ~5.5–6 GB VRAM usage for `meta-llama/Llama-2-7b-chat-hf` in 4-bit nf4.
+
+Quickstart commands (Llama path, VRAM-safe defaults):
+```bash
+# Debug smoke run
+python src/sae/train.py --model_family llama --model_name meta-llama/Llama-2-7b-chat-hf \
+  --layer 15 --epochs 1 --batch_size 1 --expansion_factor 4 --k 8 \
+  --limit 2048 --max_steps 16 --save_every_steps 16
+
+# Full local run
+python src/sae/train.py --model_family llama --model_name meta-llama/Llama-2-7b-chat-hf \
+  --layer 15 --epochs 5 --batch_size 128 --expansion_factor 4 --k 8 \
+  --sae_device cpu --model_device cuda --save_every_steps 500
+```
+
 ### Workflow
 
 1. **Data Preprocessing**
