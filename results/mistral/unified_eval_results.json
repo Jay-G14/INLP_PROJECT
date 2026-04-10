@@ -1,0 +1,514 @@
+{
+  "config": {
+    "model_family": "mistral",
+    "model_name": "mistralai/Mistral-7B-v0.1",
+    "device_map": "auto",
+    "model_device": "cuda",
+    "sae_device": "cpu",
+    "quantize": "4bit",
+    "hook_position": "pre",
+    "layer": 16,
+    "num_features": 100,
+    "checkpoint_path": "artifacts/mistral_layer16/mistral_7b_layer_16/sae_weights.safetensors",
+    "sae_cfg_path": "artifacts/mistral_layer16/mistral_7b_layer_16/cfg.json",
+    "features_path": "results/mistral/layer_16_features.pt",
+    "ablation_scale": -3.0,
+    "expansion_factor": null,
+    "k": 8,
+    "limit": 50,
+    "ppl_limit": 20,
+    "max_tokens": 64,
+    "freq_penalty": 1.0,
+    "top_p": 0.9
+  },
+  "metrics": {
+    "baseline": {
+      "logprobs": {
+        "hp": -1.062501417795817,
+        "magic": -1.9768341064453125,
+        "fantasy": -1.1272329807281494,
+        "real_world": -1.666015625
+      },
+      "avg_distinct_3": 0.9788243846272926,
+      "degeneration_rate": 0.02,
+      "perplexity": 9.267471902161757
+    },
+    "ablated": {
+      "logprobs": {
+        "hp": -1.0623406966527305,
+        "magic": -1.9764251708984375,
+        "fantasy": -1.1290192604064941,
+        "real_world": -1.6802734375
+      },
+      "avg_distinct_3": 0.9782463303286499,
+      "degeneration_rate": 0.06,
+      "perplexity": 9.266318155272225
+    },
+    "summary": {
+      "logprob_shifts": {
+        "hp": 0.00016072114308651742,
+        "magic": 0.0004089355468750444,
+        "fantasy": -0.001786279678344771,
+        "real_world": -0.014257812499999911
+      },
+      "ppl_change": -0.00012449424198014917,
+      "hook_activity": {
+        "total_target_positions": 119358,
+        "fired_target_positions": 447,
+        "fired_rate": 0.0037450359422912583
+      }
+    }
+  },
+  "side_by_side": [
+    {
+      "prompt": "Ron and Hermione were practicing their spells when Ron accidentally cast a spell that caused",
+      "baseline": " Hermione to turn into a rat. When Ron discovered what he had done, he felt terrible and apologized to Hermione. However, Hermione was not upset with Ron and told him that it was not his fault.\n\n## Who does Ron Weasley end up with?\n\nRon Weas",
+      "ablated": " Hermione to turn into a rat. When Ron discovered what he had done, he felt terrible and apologized to Hermione. However, Hermione was not upset with Ron and told him that it was not his fault.\n\n## Who does Ron Weasley end up with?\n\nRon Weas",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "In the headmaster's office, a magnificent phoenix perched on its stand, waiting for Dumbledore to",
+      "baseline": " finish his lesson.\n\nDumbledore: \"Well, I think that's all we've got time for today, Harry. I'll see you tomorrow.\"\n\nHarry: \"Yes, sir.\"\n\nDumbledore: \"You know, Harry, you're really doing very",
+      "ablated": " finish his lesson.\n\nIn the potions classroom, a huge and colorful phoenix with a magnificent plumage.\n\nIn the kitchen, a phoenix with a small, but beautiful plumage.\n\nIn the library, a phoenix with a large and beautiful plumage.\n",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 0.8888888888888888,
+      "baseline_degenerated": false,
+      "ablated_degenerated": true
+    },
+    {
+      "prompt": "Harry wrapped himself in the silvery fabric of the invisibility cloak and silently moved through the castle to",
+      "baseline": " the Room of Requirement. He paused and listened for a moment. The sounds of the castle were quiet and he knew that no one else was around.\n\nHe walked into the room and his eyes took in the sights. There was a small fire burning in the fireplace and the table had a small fe",
+      "ablated": " the Room of Requirement. Once there, he took off the cloak and pulled out a book and a pen. He began to write.\n\n\"Dear James,\n\nI know it's been a while, and I'm sorry for that. I'm doing well, I hope you",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "The students eagerly boarded the Hogwarts Express at Platform 9 3/4, excited for the journey that would take them to",
+      "baseline": " Hogwarts School of Witchcraft and Wizardry. The train pulled away from the station and the students settled in for the ride.\n\nAs the train chugged along, the students took in the sights and sounds of the journey. They watched the countryside pass by and listened to the rhythm",
+      "ablated": " Hogwarts School of Witchcraft and Wizardry. The train pulled away from the station and the students settled in for the ride.\n\nAs the train chugged along, the students took in the sights and sounds of the journey. They watched the countryside pass by and listened to the rhythm",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "During the intense Quidditch match, the seeker's eyes were locked on the elusive golden snitch as it darted around, waiting for the perfect moment to",
+      "baseline": " make its capture.  In the blink of an eye, the snitch was scooped up and the match was over.  A young boy ran up to his teammates and held the snitch in the air, victoriously.\n\n\u201cHarry!  That was incredible!\u201d said a girl with",
+      "ablated": " make its capture.  In the blink of an eye, the snitch was scooped up and the match was over.  A young boy ran up to his teammates and held the snitch in the air, holding it high to celebrate the win.  He then ran over to the other team and gave",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "In the dimly lit Potions classroom, the students carefully followed the instructions, hoping to avoid the wrath of Professor Snape if they",
+      "baseline": " made any mistakes.\n\n\u201cNow, add the powdered mandrake root to the mixture and stir it in thoroughly,\u201d Professor Snape instructed.\n\nHarry Potter and his fellow students carefully added the mandrake root to their cauldrons and stirred the mixture with their wooden spoons.",
+      "ablated": " made any mistakes.\n\nBut in a different classroom, a group of Year 7 students at Middleton Primary School were busy creating potions too, but with a few differences.\n\n\u201cWe\u2019re making a potion to make us invisible,\u201d said one student.\n\n\u201cWe\u2019re using",
+      "baseline_distinct_3": 0.975,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "The nervous first-year students lined up, waiting for their turn to wear the enchanted Sorting Hat that would determine which of the four Hogwarts houses they would",
+      "baseline": " be placed in.\n\nBut instead of getting sorted into Gryffindor, Slytherin, Ravenclaw or Hufflepuff, the 240 students were assigned to one of the four houses of the University of Ottawa\u2019s new Residence Life and Learning Communities.",
+      "ablated": " be placed in.\n\nBut instead of getting sorted into Gryffindor, Slytherin, Ravenclaw or Hufflepuff, the 240 students were assigned to one of the four houses of the University of Ottawa\u2019s new Residence Life and Learning Communities.",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "Luna Lovegood, wearing her peculiar spectrespecs, claimed she could see invisible creatures that were",
+      "baseline": " invisible to everyone else. In reality, the spectrespecs were made of a special glass that magnified the creatures' glowing trails, making them visible to the naked eye. She was also the first person to see the Snatchers in the Ministry of Magic, after she saw the Boggart of the Ministry",
+      "ablated": " invisible to everyone else. In reality, the spectrespecs were made of a special glass that magnified the creatures' glowing trails, making them visible to the naked eye. She was also the first person to see the Snatchers in the Ministry of Magic, after she saw the Boggart of the Ministry",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "The bustling Diagon Alley was filled with magical shops, but the most imposing building was Gringotts, the wizarding bank, guarded by",
+      "baseline": " goblins.  In the film, Harry Potter and the Sorcerer\u2019s Stone, the goblin Griphook was the only one willing to take on the job of opening the vault that housed the Sorcerer\u2019s Stone.  In the film, the goblins were",
+      "ablated": " goblins.  In the film, Harry Potter and the Sorcerer\u2019s Stone, the goblin Griphook was the one who gave Harry the Sword of Gryffindor.\n\nThe goblins in the Harry Potter series are the most powerful of the magical",
+      "baseline_distinct_3": 0.9722222222222222,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "The chilling presence of the Dementors could only be repelled by casting a powerful Patronus, which took the form of a",
+      "baseline": " dog-like creature of light. The Patronus is a complex and difficult charm, and requires a great deal of magical strength and a pure heart. The spell is a complex and difficult charm, and requires a great deal of magical strength and a pure heart. Harry Potter is the only known person who has ever",
+      "ablated": " dog-like creature of light. The Patronus is a complex and difficult charm, and requires a great deal of magical strength and a pure heart. The spell is a complex and difficult charm, and requires a great deal of magical strength and a pure heart. Harry Potter is the only known person who has ever",
+      "baseline_distinct_3": 0.6923076923076923,
+      "ablated_distinct_3": 0.6923076923076923,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "The young boy couldn't help but feel a sense of excitement as he imagined flying cars soaring through the sky, drawing attention from everyone below",
+      "baseline": ". He imagined the cars having different colors and designs, each one unique and eye-catching. The boy was so captivated by the idea of flying cars that he couldn't help but dream of the day when he would be able to ride in one himself.\n\nAs the boy daydreamed",
+      "ablated": ". He imagined the cars having different colors and designs, each one unique and eye-catching. The boy was so captivated by the idea of flying cars that he couldn't help but dream of the day when he would be able to ride in one himself.\n\nAs the boy daydreamed",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "He glanced at the peculiar lightning-shaped scar on the boy's forehead, which seemed to hold a story of its own",
+      "baseline": ". \"What happened to you?\"\n\n\"I'm a wizard,\" Harry said, with a shrug. \"It's not unusual for wizards to have scars.\"\n\n\"Scars?\" Ron said, confused. \"What's he talking about?\"\n\n\"I have",
+      "ablated": ". \"What happened to you?\" he asked. \"Well, I was just born with it,\" replied the boy. \"I guess it's not that unusual. I mean, my mom and dad have them too.\"\n\nHe asked the boy if he had a brother or sister. \"Yes, I have",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "Inside the greenhouse, they eagerly awaited instructions from Professor Sprout, who was preparing a lesson on repotting plants",
+      "baseline": ". \"When you repot a plant, you must take care not to damage the roots. Remember, they are the life of the plant,\" she said, \"and if you break too many of them, the plant will die.\n\nHermione smiled. \"I'm good at repotting,\"",
+      "ablated": ". \"When you repot a plant, you must take care not to damage the roots. Remember, they are the life of the plant,\" she said. \"First, take your plant out of its old pot. Take a moment to inspect the roots. Are they crowded? Do they look healthy? If the roots",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": true
+    },
+    {
+      "prompt": "The class learned about the powerful restorative properties of Mandrakes, a plant with a peculiar appearance and a reputation for its healing abilities",
+      "baseline": ". They also learned of the curse of the Mandrakes, a curse that would befall anyone who tried to harvest the plant.\n\nThe group decided to travel to the forest and investigate the Mandrakes. They made their way to the forest and found a clearing. In the clearing was a small cabin and",
+      "ablated": ". They also learned of the curse of the Mandrakes, a curse that would befall anyone who tried to harvest the plant.\n\nThe group decided to travel to the forest and investigate the Mandrakes. They made their way to the forest and found a clearing. In the clearing was a small cabin and",
+      "baseline_distinct_3": 0.9607843137254902,
+      "ablated_distinct_3": 0.9607843137254902,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "To protect their ears from the potentially harmful effects of the plant's cries, the students were instructed to wear colorful ear muffs during the lesson",
+      "baseline": ".\n\nIn the clip, the teacher can be seen holding a plant while explaining to the students that they would be learning about the plant's cries.\n\nThe teacher then explains that they would be listening to the plant's cries, and instructs the students to put on their ear muffs",
+      "ablated": ".\n\nIn the clip, the teacher can be seen holding a plant while explaining to the students that they would be learning about the plant's cries.\n\nThe teacher then explains that they would be listening to the plant's cries, and instructs the students to put on their ear muffs",
+      "baseline_distinct_3": 0.9574468085106383,
+      "ablated_distinct_3": 0.9574468085106383,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "The boy found himself between his two friends, Ron and Hermione, as they listened intently to the professor's instructions",
+      "baseline": ". \"When you are called to the front of the classroom, you will be assigned a task and you must complete it within 48 hours. If you fail, you will be expelled from the school. Understand?\"\n\nHarry nodded, feeling his stomach twist. He'd never really been an",
+      "ablated": ". They were sitting in their first year potions class. Harry had been excited to be a first year, to start learning magic and how to brew potions. But his excitement had turned to apprehension when the class had started. He'd been looking forward to having Professor Snape as a teacher,",
+      "baseline_distinct_3": 0.9777777777777777,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "He couldn't help but feel a twinge of envy when he heard about someone winning Witch Weekly's Most Charming-Smile Award five times in a row",
+      "baseline": ". \"It's not fair,\" he grumbled. \"How can anyone be so perfect?\"\n\nHe decided to take matters into his own hands. \"If I can't beat 'em, I'll join 'em,\" he told himself. He found a way to get the recipe for the magic",
+      "ablated": ". \"It's not fair,\" he grumbled. \"How can anyone be that good-looking?\"\n\n\"I don't think he's that good-looking,\" his girlfriend told him. \"I just think he's a good actor.\"\n\nHe thought about it.\n\n\"",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "The mention of He-Who-Must-Not-Be-Named sent a shiver down the spines of those who knew the dark history associated with the name",
+      "baseline": ". It was the same when he arrived at the gates of the school and was greeted with a sneer and a snarl by the teachers.\n\nBut that was the least of his worries.\n\nThe students at the school were known to be a bunch of miscreants and the faculty were not much better",
+      "ablated": ". It was the same when he arrived at the gates of the school and was greeted with a sneer and a snarl by the teachers.\n\nBut that was the least of his worries.\n\nThe students at the school were known to be a bunch of miscreants and the faculty were not much better",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "The boy looked up to the internationally famous wizard, who seemed to have it all - fame, talent, and a charming smile that won him numerous awards",
+      "baseline": " and prizes.\n\nBut the boy had a secret.\n\nHe was a wizard too.\n\nAnd he was a little jealous.\n\nHe watched the man perform, his smile growing more and more bitter as the man's talent grew. He wanted to be the best.\n\nBut",
+      "ablated": " and prizes.\n\nBut the boy had a secret.\n\nHe was a wizard too.\n\nAnd he was tired of watching the other wizard steal the limelight.\n\nSo one day, he decided to do something about it.\n\nHe cast a spell.\n\nA",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "On the bench, there were twenty pairs of different-colored ear muffs, each one waiting to be picked up by a student eager to learn about the magical properties of plants",
+      "baseline": ". This was the first day of the new school year at the \u00c9cole de la Montagne, and the school\u2019s director, a young woman named Mariama, had arranged for a local herbalist to give a presentation to the children.\n\n\u201cToday, we are going to learn about the",
+      "ablated": ". This was the first day of the new school year at the \u00c9cole de la Montagne, and the school\u2019s director, a young woman named Mariama, had arranged for a local herbalist to give a presentation to the children.\n\nThe children had come to the school in the morning and",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "Lying in bed, he felt the familiar sensation of his scar beginning to burn, causing him to bite down on his pillow to muffle any noise.",
+      "baseline": " He had been through this before. The nightmares would come and go, leaving him a shell of the man he once was. His mind was clouded with images of the battlefield, his friends falling around him, and the screams of the dying. He would wake up in the middle of the night,",
+      "ablated": " He had been through this before. The nightmares would come and go, leaving him a shell of the man he once was. His mind was clouded with images of the battlefield, his friends falling around him, and the screams of the dying. It was a constant reminder of the horrors of war",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "The golden liquid shimmered as it swirled in the bottle, promising to bring good fortune and luck to whoever consumed it, known as",
+      "baseline": " the \"elixir of life\" and \"water of immortality\".\n\nFor hundreds of years, Chinese emperors and nobles have believed that the potion could prolong their lives, and in the 1990s, a Chinese businessman even claimed that the drink could help people lose",
+      "ablated": " the \"elixir of life\" and \"water of immortality\".\n\nFor hundreds of years, Chinese emperors and nobles have believed that the potion could prolong their lives, and in the 1990s, a Chinese businessman even claimed that the drink could help people lose",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "Hagrid's love for magical creatures often led him to adopt and care for some of the most dangerous and misunderstood beings, such as",
+      "baseline": " Buckbeak.\n\nIn the films, the Hippogriff is seen as a giant, intimidating creature. However, in the books, Buckbeak is described as a gentle, friendly creature that is loyal and affectionate towards those he trusts.\n\nIt's worth noting that H",
+      "ablated": " Buckbeak.\n\nIn the films, the Hippogriff is seen as a giant, intimidating creature. However, in the books, Buckbeak is described as a gentle, friendly creature that is loyal and affectionate towards those he trusts.\n\nIt's worth noting that H",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "In the life-sized game of chess, one of the players had to make a strategic sacrifice, allowing the others to advance and reach their goal.",
+      "baseline": "\n\nWhen the 2022 FIFA World Cup began in Qatar on Sunday, the world was watching. The 32 participating teams were the most diverse in the tournament\u2019s 92-year history. And the tournament was the first to be held in the Middle East.\n\nThe U",
+      "ablated": "\n\nWhen the 2022 FIFA World Cup began in Qatar on Sunday, the world was watching. The 32 participating teams were the most diverse in the tournament\u2019s 92-year history. And the tournament was the first to be held in the Middle East.\n\nThe U",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "Hermione was entrusted with a magical device that allowed her to travel back in time, helping her manage her busy academic schedule. The device was called a",
+      "baseline": " Time-Turner, and it was a very powerful artifact that enabled Hermione to move through time and space. The Time-Turner was a small, silver device that looked like a watch. It had a dial on the front that allowed the user to set the time they wanted to travel to.\n\n",
+      "ablated": " Time-Turner, and it was a very powerful artifact that enabled Hermione to move through time and space. The Time-Turner was a small, silver device that looked like a watch. It had a dial on the front that allowed the user to set the time they wanted to travel to.\n\n",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "The silvery, fluid fabric draped over his shoulders, rendering him completely invisible to anyone who looked his way. This magical item was a rare",
+      "baseline": " and much sought after gift of the Goddess of the Moon, Luna.\n\nThe first time he had used it, he had been a bit dismayed by the way it hid his form from view. He was, after all, a man who had been very proud of his body.\n\nBut",
+      "ablated": " and much sought after gift of the Goddess of the Moon, Luna.\n\nThe first time he had used it, he had been a bit dismayed by the way it hid his form from view. He was, after all, a man who had been very proud of his body.\n\nBut",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "Luna Lovegood, known for her quirky personality and unique fashion sense, often wore a pair of distinctive glasses called",
+      "baseline": " Spects. These glasses were not only a fashion statement for Luna but also held a significant meaning in the Harry Potter series. In this article, we will explore the significance of Luna Lovegood\u2019s Spects and why they were so important to her character.\n\n## Introduction\n\nLuna Love",
+      "ablated": " Spects. These glasses were not only a fashion statement for Luna but also held a significant meaning in the Harry Potter series. In this article, we will explore the significance of Luna Lovegood\u2019s Spects and why they were so important to her character.\n\n## Introduction\n\nLuna Love",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "Soaring through the air on his broomstick, he scanned the field for a glimpse of the elusive golden ball, as his role as a seeker demanded.",
+      "baseline": "  He scanned the field, but found nothing.  Then, as he scanned the field again, he noticed a figure in the distance.  The figure seemed to be moving in a very unnatural way.  Then, suddenly, the figure stopped.  He continued to move in the same unnatural way",
+      "ablated": "  He scanned the field, but found nothing.  Then, as he scanned the field again, he noticed a figure in the distance.  The figure seemed to be moving in a very unnatural way.  Then, suddenly, the figure stopped.  He continued to move in the same unnatural way",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "Dobby, a loyal and brave house-elf, was finally granted his freedom when he received a gift of",
+      "baseline": " socks from his beloved master, Harry Potter.\n\nAfter his master was killed, Dobby set out to right the wrongs he had done.\n\nHe made a plan to save Harry from Voldemort and help him to defeat the Dark Lord.\n\nThis is the story of Dobby,",
+      "ablated": " socks from his beloved master, Harry Potter.\n\nAfter his master was killed, Dobby set out to right the wrongs he had done.\n\nHe made a plan to save Harry from Voldemort and help him to defeat the Dark Lord.\n\nThis is the story of Dobby,",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "The castle's moving staircases were known to change their positions at random, making navigation a challenge for even the most experienced students.",
+      "baseline": "\n\n## 1. Hogwarts Castle\n\nHogwarts Castle is the main setting for the Harry Potter series. It is the most famous school of witchcraft and wizardry in the world. The castle is located in Scotland. It is home to over 1,000",
+      "ablated": "\n\n## 1. Hogwarts Castle\n\nHogwarts Castle is the main setting for the Harry Potter series. It is the most famous school of witchcraft and wizardry in the world. The castle is located in Scotland. It is home to over 1,000",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "Ron and Hermione were amazed by the life-sized chess pieces that moved on their own, making the game",
+      "baseline": " come alive.  They watched in fascination as the pieces moved about the board, with a few even ending up in the cupboard.\n\n\"It's magic,\" Ron said, his eyes wide.\n\n\"No,\" Harry said, shaking his head, \"it's just a really complicated game",
+      "ablated": " come alive.  They watched in fascination as the pieces moved about the board, with a few even ending up in the cupboard.\n\n\u201cIt\u2019s magic,\u201d Ron said, his eyes wide.\n\n\u201cNo, it\u2019s just a special kind of chess game,\u201d Hermione explained.",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "The three-headed dog, affectionately named Fluffy, guarded a secret passage and could only be put to sleep by",
+      "baseline": " music.\n\nIn Harry Potter and the Philosopher\u2019s Stone, Harry, Ron and Hermione used a recording of a Muggle (non-magical) song, \u201cThe Whomping Willow,\u201d to distract Fluffy and enter the secret passageway.\n\nIn the original book",
+      "ablated": " music.\n\nIn Harry Potter and the Philosopher\u2019s Stone, Harry, Ron and Hermione used a recording of a Muggle (non-magical) song, \u201cThe Whomping Willow,\u201d to distract Fluffy and enter the secret passageway.\n\nIn the original book",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "In Dumbledore's tower, a magnificent phoenix perched on a golden stand, its tears known for their",
+      "baseline": " healing properties.\n\nIn the Shire, the Great Smials, where the hobbit Bilbo Baggins lived and where Frodo Baggins set out on his quest to destroy the One Ring.\n\nIn the Hall of the Dead in Moria, a phial of Galadriel'",
+      "ablated": " healing properties.\n\nIn the Shire, the Great Smials, where the hobbit Bilbo Baggins lived and where Frodo Baggins set out on his quest to destroy the One Ring.\n\nIn the Hall of the Dead in Moria, a phial of Galadriel'",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "The lightning-shaped scar on his forehead throbbed with pain, signaling the presence of",
+      "baseline": " his power.  It was an invaluable resource, something that made him unique, a power that he was born with.  His ability to control the elements of fire and lightning made him a valuable asset in the war against the enemy.  He was a soldier, a warrior, a fighter.  He was",
+      "ablated": " his power.  It was an invaluable resource, something that made him unique, a power that he was born with.  His ability to control the elements of fire and lightning made him a valuable asset in the war against the enemy.  He was a soldier, a warrior, a fighter.  He was",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "After drinking the Polyjuice Potion, they began to transform into the appearances of their classmates, a useful tool for",
+      "baseline": " spies. Harry was surprised to find that his nose had grown longer and his hair had grown bushy. The three students were nervous and confused, but the Polyjuice Potion made them feel comfortable with their new appearances.\n\nThe Polyjuice Potion is a very useful tool for spies. It",
+      "ablated": " spies. Harry was surprised to find that his nose had grown longer and his hair had grown bushy. The three students were nervous and confused, but the Polyjuice Potion made them feel comfortable with their new appearances.\n\nThe Polyjuice Potion is a very useful tool for spies. It",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "To board the Hogwarts Express, students had to pass through the magical barrier at Platform 9 3/4, located in",
+      "baseline": " King\u2019s Cross Station. This is a spot that is well-known to Harry Potter fans and is one of the most popular filming locations. The Harry Potter Warner Bros. Studio Tour allows fans to see the train and platform in real life.\n\n## What happened to the original platform 9",
+      "ablated": " King\u2019s Cross Station. This is a spot that is well-known to Harry Potter fans and is one of the most popular filming locations. The Harry Potter Warner Bros. Studio Tour allows fans to see the train and platform in real life.\n\n## What happened to the original platform 9",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "Harry Potter, a natural at flying, quickly became the youngest Seeker in a century for his house's Quidditch team, responsible for",
+      "baseline": " catching the Golden Snitch.\n\n## History\n\n### Quidditch career\n\n#### 1991\u20131992 school year\n\nHarry Potter's first year at Hogwarts School of Witchcraft and Wizardry, Harry's talent for Quidd",
+      "ablated": " catching the Golden Snitch.\n\n## History\n\n### Quidditch career\n\n#### 1991\u20131992 school year\n\nHarry Potter's first year at Hogwarts School of Witchcraft and Wizardry, Harry's talent for Quidd",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "The Marauder's Map, a magical parchment, revealed the location of everyone within the castle, showing their footprints and",
+      "baseline": " allowing them to be tracked. The map was created by Professor Severus Snape, a Potions master at Hogwarts School of Witchcraft and Wizardry.\n\n## Description\n\nThe Marauder's Map is a magical map, which is hand-drawn, and shows",
+      "ablated": " allowing them to be tracked. The map was created by Professor Severus Snape, a Potions master at Hogwarts School of Witchcraft and Wizardry.\n\n## Description\n\nThe Marauder's Map is a magical map, which is hand-drawn, and shows",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "The Pensieve, a magical basin, allowed users to view and explore memories by simply",
+      "baseline": " thinking of them.\n\nIn the Harry Potter series, the Pensieve is a magical basin that can be used to store, record, and replay memories. The Pensieve was invented by Dumbledore, and it was a useful tool for him to store and explore his memories.\n\n",
+      "ablated": " thinking of them.\n\nIn the Harry Potter series, the Pensieve is a magical basin that can be used to store, record, and replay memories. The Pensieve was invented by Dumbledore, and it was a useful tool for him to store and explore his memories.\n\n",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "To repel the soul-sucking Dementors, one must cast a Patronus, a powerful charm that takes the form of",
+      "baseline": " an animal.  The Patronus can be a dog, a cat, a phoenix, or anything in between.  The Patronus is the most powerful charm a witch or wizard can cast.  And now, thanks to the magic of the Harry Potter Alliance, you can cast your own Pat",
+      "ablated": " an animal.  The Patronus can be a dog, a cat, a phoenix, or anything in between.  The Patronus is the most powerful charm a witch or wizard can cast.  And now, thanks to the magic of the Harry Potter Alliance, you can cast your own Pat",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "He felt as if there was a snake inside him, coiled and waiting to strike. This sensation was not only terrifying but also",
+      "baseline": " strangely erotic. He was in a strange state of mind. The snake was inside him and yet he was in control. He was not a victim but a master. The snake was his.\n\nHe felt the snake moving around, searching for a place to strike. It wanted to kill.\n\nHe",
+      "ablated": " strangely erotic. He was in a strange state of mind. The snake was inside him and yet he was in control. He was not a victim but a master. The snake was his.\n\nThis was the first time he had experienced this sensation. He did not know whether it was good or bad.",
+      "baseline_distinct_3": 0.9791666666666666,
+      "ablated_distinct_3": 0.9803921568627451,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "Sitting fully clothed, Harry leaned against the cold metal bars of the bedstead, keeping himself deliberately uncomfortable to avoid",
+      "baseline": " falling asleep.  He was still in the same clothes he\u2019d been wearing when he\u2019d been taken to the dungeon, and they felt strange, almost alien.  The guards had removed his cuffs and the manacles, but not the wrist restraints, which were clipped together by a small pad",
+      "ablated": " falling asleep.  He was still in the same clothes he\u2019d been wearing when he arrived at the camp, but they were stained with the blood of the dead and the blood of the living.  He was exhausted and cold and hungry and thirsty and he wanted nothing more than to lie down and close",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 0.9615384615384616,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "When Ron woke up, their trunks had arrived from Hogwarts, allowing them to change into Muggle clothes for their upcoming",
+      "baseline": " trip. Ron pulled out a pair of jeans, a sweatshirt, and a pair of sneakers. He was still wearing his Hogwarts robes, so he put on his jeans and sweatshirt.\n\nHe was getting ready to put on his sneakers when a familiar voice came from the door.",
+      "ablated": " trip. Ron, of course, had no intention of changing, and even Hermione, who was generally more modest in her dress than Ron, was wearing her usual Gryffindor robes.\n\nThe two of them were sitting in the living room of the flat, watching the news.\n\n\"",
+      "baseline_distinct_3": 0.9555555555555556,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "They were preparing to visit a special hospital for magical maladies and injuries, known as",
+      "baseline": " St. Mungo's.\n\n\"Well, I think it's a good thing we're going to St. Mungo's,\" said Ginny, \"because I'm sure we'll be able to get some potion to make you better. I know that Mum",
+      "ablated": " St. Mungo's.\n\n\"Well, I think it's a good thing we're going to St. Mungo's,\" said Ginny, \"because I'm sure we'll be able to get some good information from the people there. I'm sure",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "Two members of the Order, Tonks and Mad-Eye, arrived to escort them on their journey, ensuring their",
+      "baseline": " safety and protection. They flew on the back of the hippogriff, Buckbeak, and were accompanied by Hagrid.\n\nThey arrived at the cottage of Hagrid's mother, where they spent the night. They were then taken to the hut in the forest, where they",
+      "ablated": " safety and protection. They flew on the back of the hippogriff, Buckbeak, and were accompanied by Hagrid.\n\nThey arrived at the cottage of Hagrid's mother, where they spent the night. They were then taken to the hut in the forest, where they",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "In order to blend in with the non-magical population, they had to dress as",
+      "baseline": " such. This meant that they had to wear clothing that would not be considered magical or supernatural in any way. This meant that they had to wear clothing that would not be considered magical or supernatural in any way. They had to wear clothes that would not be considered magical or supernatural in any way.\n\n",
+      "ablated": " such. This meant that they had to wear clothing that would not be considered magical or supernatural in any way. This meant that they had to wear clothing that would not be considered magical or supernatural in any way. They had to wear clothes that would not be considered magical or supernatural in any way.\n\n",
+      "baseline_distinct_3": 0.49056603773584906,
+      "ablated_distinct_3": 0.49056603773584906,
+      "baseline_degenerated": true,
+      "ablated_degenerated": true
+    },
+    {
+      "prompt": "Although he didn't sleep, Harry pretended to have enjoyed a refreshing nap, hiding his true feelings from",
+      "baseline": " his parents. He didn't want to alarm them. Harry would rather die than see his parents scared.\n\n\"I'm going to the library,\" Harry announced, when he'd finished breakfast. \"I've got to do some more research on the prophecy.\"\n\n\"We'",
+      "ablated": " his parents. He was surprised to find that his father had taken his advice and decided to use his time wisely. The man had spent most of the day reading his reports and making phone calls.\n\nHarry was pleased to see that his father's work ethic had rubbed off on him, and he",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "Changing out of their robes, they put on jeans and sweatshirts, a typical attire for",
+      "baseline": " the group of 20-somethings who work in a church. But they are not there to worship. Instead, they\u2019re in the basement of the church, making dinner for 200 people.\n\n\u201cI was just a little bit nervous. I\u2019ve never cooked for that many",
+      "ablated": " the group of 20-somethings who work in a church. But they are not there to worship. Instead, they\u2019re in the basement of the church, making dinner for 200 people.\n\n\u201cI was just a little bit nervous. I\u2019ve never cooked for that many",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "Tonks and Mad-Eye were members of a secret society fighting against dark forces, known as",
+      "baseline": " the Order of the Phoenix. They both had a strong sense of justice and were always willing to help people in need.\n\nThe Order of the Phoenix was a secret society of wizards and witches dedicated to fighting the forces of evil. They were led by Albus Dumbledore and included members such as",
+      "ablated": " the Order of the Phoenix. They both had a strong sense of justice and were always willing to help people in need.\n\nThe Order of the Phoenix was a secret society of wizards and witches dedicated to fighting the forces of evil. They were led by Albus Dumbledore and included members such as",
+      "baseline_distinct_3": 0.9803921568627451,
+      "ablated_distinct_3": 0.9803921568627451,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "The hospital they were visiting specialized in treating magical maladies and injuries, a unique institution in the wizarding world called",
+      "baseline": " St. Mungo's.\n\n\"Well, I think it's a good thing we're going to visit the hospital,\" said Ron, as they walked. \"I don't think I've ever seen anything like it, and I've been through the Ministry.\"\n\n\"",
+      "ablated": " St. Mungo's.\n\n\"Well, I think it's a good thing we're going to visit the hospital,\" said Ron, as they walked. \"I don't think I've ever seen anything like it, and I've been through the Ministry.\"\n\n\"",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    }
+  ]
+}
