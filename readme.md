@@ -10,21 +10,6 @@ Course Project for *Introduction to Natural Language Processing (INLP)*, IIIT Hy
 - Manas Agrawal 
 - Mohammad Akmal Ali 
 
-## Table of Contents
-
-- [Project Overview](#project-overview)
-- [Running the Project](#running-the-project)
-  - [Installation](#installation)
-  - [Workflow](#workflow)
-- [Methodology](#methodology)
-  - [Data Preparation](#data-preparation)
-  - [Sparse Autoencoder Training](#sparse-autoencoder-training)
-  - [Feature Identification](#feature-identification)
-  - [Intervention](#intervention)
-- [Evaluation](#evaluation)
-- [Results](#results)
-- [Repository Structure](#repository-structure)
-- [Acknowledgments](#acknowledgments)
 
 ---
 
@@ -38,45 +23,41 @@ The approach focuses on identifying high-level features in the residual stream o
 
 ---
 
+## [Training Instructions](#training-instructions-detailed)
+
 ## Running the Project
 
-Pretrained model is available in [drive link](https://drive.google.com/drive/folders/1-bFWjPwdDisxIkyIrfjX_ulYnhmD0wJJ?usp=sharing)
+Pretrained model is available at [hugging face repo](https://huggingface.co/kiyohan/llama-hp-unlearning-artifacts/tree/main). It's automatically download from demo.py.
 
-### Installation
+### Run Demo
 
 ```bash
-git clone https://github.com/Gopalkataria/INLP_PROJECT.git
+git clone https://github.com/Jay-G14/INLP_PROJECT.git
 cd INLP_PROJECT
 
-# Install uv if not already present
-curl -LsSf https://astral.sh/uv/install.sh | sh
+# Install requirements
+pip  -r requirements.txt  
 
-# Setup environment and install dependencies
-uv sync
+# run demo
+# takes time to download LLama 7B (around 20 mins on LAN,
+#  needs sufficient VRAM and RAM)
+python3 demo.py 
 ```
 
-### Quickstart with Unified CLI
 
-The project now features a unified entry point `main.py` (aliased as `inlp` when using `uv run`).
+### Controls
 
-```bash
-# SAE training
-uv run inlp train --layer 15 --epochs 5
+| Action | Shortcut |
+|---|---|
+| Send prompt | `Enter` or `Ctrl+S` |
+| Toggle HP ablation on/off | `Ctrl+A` or click ** Ablation** button |
+| Quit | `Ctrl+Q` |
 
-# Feature discovery
-uv run inlp features --layer 15 --num_features 100
+### What to Try
 
-# Evaluation
-uv run inlp eval --layer 15 --num_features 100 --ablation_scale -3.0
-
-# Interactive TUI Demo
-uv run inlp demo
-```
-
-### Historical Commands
-
-For commands related to Llama, Gemma 2, Mistral 7B, or explicit script-based workflows used in the mid-evaluation, see [reproducing_mid_eval_results.md](file:///home/gopal/INLP/INLP_PROJECTJAYANT/reproducing_mid_eval_results.md).
-
+- Ask **"Who is Harry Potter's best friend?"** with ablation **OFF** -> normal answer.
+- Ask the same with ablation **ON** -> model avoids HP-specific answers.
+- Ask a general question (history, science) with ablation ON -> general capability is preserved.
 
 
 ---
@@ -154,79 +135,27 @@ Generated completions are manually inspected and optionally classified by an ext
 
 ---
 
-Detailled results can be found in project report link
+Detailled results can be found in project report [link](https://drive.google.com/drive/folders/1-bFWjPwdDisxIkyIrfjX_ulYnhmD0wJJ)
 
----
 
-## Repository Structure
+## Training instructions detailed 
 
-```
-src/
-├── sae/            # Sparse autoencoder architecture and training
-├── data/           # Dataset preprocessing and tokenization
-├── analysis/       # Feature discovery and statistical analysis
-├── intervention/   # Feature ablation hooks
-└── eval/           # Evaluation scripts and metrics
-
-results/            # JSON reports and generated completions
-readme.md           # Project documentation
-task.md             # Internal development notes
-```
-
----
-
----
-
-## Acknowledgments
-
-Eldan, R. and Russinovich (2023). *Who’s Harry Potter? Measuring Knowledge Erasure in Language Models.*
-
-TransformerLens by Neel Nanda.
-
-Research on sparse autoencoders and mechanistic interpretability from the AI interpretability community.
-
----
-
-## Running the TUI Demo
-
-An interactive terminal demo (`demo.py`) lets you chat with llama-2-7b-chat and toggle SAE-based Harry Potter knowledge ablation on/off in real time.
-
-### Prerequisites
+- steps to reproduce our results : 
 
 ```bash
-pip install textual
+# Llama full local training run
+python main.py train \
+  --layer 15 --epochs 5 --batch_size 128 --expansion_factor 4 --k 8 \
+  --sae_device cpu --model_device cuda
+
+# Llama feature discovery
+python main.py features \
+  --layer 15 --num_features 100 --sort_by score
+
+# Llama ablation evaluation
+python main.py eval \
+  --layer 15 --num_features 100 --ablation_scale -3.0
+
+# Push artifacts to Hugging Face
+uv run python scripts/push_latest_llama_pt_to_hf.py
 ```
-
-All other dependencies (`torch`, `transformer_lens`, `einops`, `jaxtyping`) are already required by the project.
-
-### First-run behaviour
-
-On the **first run**, `demo.py` automatically:
-
-1. Loads **llama-2-7b-chat** via TransformerLens.
-2. Loads the pretrained SAE from **`sae_layer_12.pt`** in the project root.
-3. Runs a ~30-second fast diff-means pass to identify the top 100 Harry Potter-specific SAE features and caches them to `results/layer_12_features.pt`.
-
-Subsequent runs skip step 3 and start faster.
-
-### Running
-
-```bash
-python demo.py
-```
-
-> **Note:** The first launch takes 1–3 minutes (model load + feature discovery). Subsequent launches are faster.
-
-### Controls
-
-| Action | Shortcut |
-|---|---|
-| Send prompt | `Enter` or `Ctrl+S` |
-| Toggle HP ablation on/off | `Ctrl+A` or click **🔪 Ablation** button |
-| Quit | `Ctrl+Q` |
-
-### What to Try
-
-- Ask **"Who is Harry Potter's best friend?"** with ablation **OFF** -> normal answer.
-- Ask the same with ablation **ON** -> model avoids HP-specific answers.
-- Ask a general question (history, science) with ablation ON -> general capability is preserved.
