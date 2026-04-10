@@ -1,0 +1,26 @@
+[project]
+name = "inlp-project"
+version = "0.1.0"
+description = "Knowledge Unlearning in Language Models using Sparse Autoencoders"
+requires-python = ">=3.10"
+dependencies = [
+    "torch",
+    "transformers",
+    "transformer-lens",
+    "datasets",
+    "tqdm",
+    "python-dotenv",
+    "bitsandbytes",
+    "accelerate",
+    "sentencepiece",
+    "textual",
+    "huggingface_hub",
+    "einops",
+]
+
+[project.scripts]
+inlp = "main:cli"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

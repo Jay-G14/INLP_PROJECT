@@ -7,6 +7,22 @@ from groq import Groq
 from tqdm import tqdm
 from dotenv import load_dotenv
 
+
+MODEL_DEFAULTS = {
+    "llama": {
+        "results_dir": "results/llama",
+    },
+    "gemma": {
+        "results_dir": "results/gemma",
+    },
+    "mistral": {
+        "results_dir": "results/mistral",
+    },
+    "gpt2": {
+        "results_dir": "results",
+    },
+}
+
 def classify_completion(client: Groq, model_id: str, prompt: str, completion: str) -> str:
     """Uses Groq API to classify the familiarity of the completion."""
     eval_prompt = f"""You are an evaluator assessing a language model's familiarity with the Harry Potter book series.
@@ -68,11 +84,24 @@ Classification (Reply with EXACTLY ONE word: "Explicit", "Thematic", "Accidental
 
 def main():
     parser = argparse.ArgumentParser(description="LLM-as-a-Judge Evaluation for HP Unlearning (Groq)")
-    parser.add_argument("--input", type=str, default="results/unified_eval_results.json", help="Path to evaluation results JSON")
-    parser.add_argument("--output", type=str, default="results/unified_eval_results_judged.json", help="Path to save judged results")
+    parser.add_argument(
+        "--model_family",
+        type=str,
+        choices=["llama", "gemma", "mistral", "gpt2"],
+        default="gpt2",
+        help="Model family to resolve default results paths for.",
+    )
+    parser.add_argument("--input", type=str, default=None, help="Path to evaluation results JSON")
+    parser.add_argument("--output", type=str, default=None, help="Path to save judged results")
     parser.add_argument("--limit", type=int, default=100, help="Max number of completions to judge")
     parser.add_argument("--model", type=str, default="moonshotai/kimi-k2-instruct", help="Groq model ID")
     args = parser.parse_args()
+
+    results_dir = MODEL_DEFAULTS[args.model_family]["results_dir"]
+    if args.input is None:
+        args.input = f"{results_dir}/unified_eval_results.json"
+    if args.output is None:
+        args.output = f"{results_dir}/unified_eval_results_judged.json"
 
     load_dotenv()
     api_key = os.environ.get("GROQ_API_KEY")
@@ -132,6 +161,7 @@ def main():
     data["metrics"]["ablated"]["llm_judge"] = ablated_stats
 
     # Save back
+    os.makedirs(os.path.dirname(args.output), exist_ok=True)
     with open(args.output, "w") as f:
         json.dump(data, f, indent=2)
 

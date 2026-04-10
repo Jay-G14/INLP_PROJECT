@@ -1,0 +1,152 @@
+{
+  "config": {
+    "model_family": "gemma",
+    "model_name": "google/gemma-2-2b",
+    "device_map": "auto",
+    "model_device": "cuda",
+    "sae_device": "cpu",
+    "quantize": "4bit",
+    "layer": 16,
+    "num_features": 50,
+    "checkpoint_path": "checkpoints/sae_layer_16.pt",
+    "features_path": null,
+    "ablation_scale": -3.0,
+    "expansion_factor": 8,
+    "k": 32,
+    "limit": 10,
+    "ppl_limit": 5,
+    "max_tokens": 64,
+    "freq_penalty": 1.0,
+    "top_p": 0.9
+  },
+  "metrics": {
+    "baseline": {
+      "logprobs": {
+        "hp": -12.376041666666667,
+        "magic": -10.1953125,
+        "fantasy": -13.51953125,
+        "real_world": -11.50546875
+      },
+      "avg_distinct_3": 0.9940769230769231,
+      "degeneration_rate": 0.1,
+      "perplexity": 14.093042913214239
+    },
+    "ablated": {
+      "logprobs": {
+        "hp": -12.561197916666668,
+        "magic": -10.1875,
+        "fantasy": -13.50390625,
+        "real_world": -11.67421875
+      },
+      "avg_distinct_3": 0.9787605224963716,
+      "degeneration_rate": 0.3,
+      "perplexity": 14.110198167230108
+    },
+    "summary": {
+      "logprob_shifts": {
+        "hp": -0.18515625000000036,
+        "magic": 0.0078125,
+        "fantasy": 0.015625,
+        "real_world": -0.1687499999999993
+      },
+      "ppl_change": 0.0012172853032174544,
+      "hook_activity": {
+        "total_target_positions": 31120,
+        "fired_target_positions": 107,
+        "fired_rate": 0.0034383033419023135
+      }
+    }
+  },
+  "side_by_side": [
+    {
+      "prompt": "Ron and Hermione were practicing their spells when Ron accidentally cast a spell that caused",
+      "baseline": " a lot of damage. It wasn't really that bad though.\n\n\"That's it, you can't do that anymore!\" Hermione said.\n\n\"Why not?\" Ron said.\n\n\"Because it's too dangerous. It's too risky. You could hurt someone. You could even kill",
+      "ablated": " a lot of fireworks to go off, which caught the attention of Professor Snape. The rest of the class looked on in horror as the whole classroom exploded with fireworks. Snape stormed the classroom, and Ron and Hermione were immediately scolded for their actions.\n\nThe next day, in Potions class, Professor Snape announced that the",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "In the headmaster's office, a magnificent phoenix perched on its stand, waiting for Dumbledore to",
+      "baseline": " finish his work.\n\n\"So, you are going to do that?\" Dumbledore looked at his headmaster and asked.\n\n\"Yes, I have thought about this for a long time, and I have finally made up my mind. But you have to promise me one thing, that I can only stay in the head",
+      "ablated": " finish his work.\n\n\"So, you are going to do that?\" Dumbledore looked at his headmaster and asked.\n\n\"Yes, I have thought about this for a long time, and I have finally made up my mind. But you have to promise me one thing, I don't want to take the",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "Harry wrapped himself in the silvery fabric of the invisibility cloak and silently moved through the castle to",
+      "baseline": " the restricted section of the library. He didn't want anyone to see him, and he didn't want to be seen. The only thing that was going to get him in trouble was the book. And if he was lucky, he could just steal it and leave without a trace.\n\n\"Oh, hello",
+      "ablated": " the restricted section of the library. He didn't want anyone to see him, and that included the students who were busy in the common room of the library. He walked and he walked and he walked. He got to the restricted section and sat down. He stared out into the distance, thinking.\n\nHe thought",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 0.9230769230769231,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "The students eagerly boarded the Hogwarts Express at Platform 9 3/4, excited for the journey that would take them to",
+      "baseline": " the magical world of Hogwarts School of Witchcraft and Wizardry.\n\nThe train was a marvel of engineering, with four carriages and a carriage for the staff. The students sat in the compartments, some talking animatedly while others simply sat quietly, lost in their own thoughts.\n\nProfessor McGonagall, the Hogwarts",
+      "ablated": " the magical world of Hogwarts.  The journey was smooth and the students were able to take in the beauty of the surroundings.  The train pulled into the Hogwarts Express at Platform 9 3/4.  As the students got off, they were greeted by a large statue of a dragon.  The statue was",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "During the intense Quidditch match, the seeker's eyes were locked on the elusive golden snitch as it darted around, waiting for the perfect moment to",
+      "baseline": " dive for it.\n\nThen, a sudden change in direction caused the snitch to take a sharp turn, and the seeker's eyes followed it with a frantic look of surprise.\n\nAs the seeker attempted to catch up, he was suddenly pulled to his knees by a powerful force, and the snitch managed to",
+      "ablated": " dive. As the seeker swooped down, he was so focused on catching the snitch that he didn't see the broom he was flying on was on fire!\n\nAs the seeker flew through the fire, he was completely consumed and turned to ash! The seeker was a young boy named Harry Potter, the",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 0.98,
+      "baseline_degenerated": false,
+      "ablated_degenerated": true
+    },
+    {
+      "prompt": "In the dimly lit Potions classroom, the students carefully followed the instructions, hoping to avoid the wrath of Professor Snape if they",
+      "baseline": " made any mistakes.\n\n\"So, you are all aware that we will be conducting a potion brewing contest,\" Professor Snape said, his eyes fixed on the students. \"The contest will be divided into three categories: the most powerful potion, the most delicious potion, and the potion with the most unique properties. The winner",
+      "ablated": " made any mistakes.\n\n\"So, you are all aware that we will be conducting a potion brewing contest,\" Professor Snape said in his typical stern tone. \"This contest will determine who is the best at brewing potions in our class. And as such, I have assigned each of you a different potion to brew. The",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": true,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "The nervous first-year students lined up, waiting for their turn to wear the enchanted Sorting Hat that would determine which of the four Hogwarts houses they would",
+      "baseline": " belong to. They were nervously waiting for the Sorting Hat to determine their houses, but what they didn't expect was the hat to be a little too enthusiastic. The hat was a little too excited to make its decision, and it made a mistake. It put two first-years into the same house. The two",
+      "ablated": " belong to. They were nervously waiting for the Sorting Hat to determine their houses, but what, if anything, would they be wearing? The Sorting Hat would be the determining factor of their house and their housemates.\n\nThe students were waiting for the Sorting Hat to be put on their heads, but they were wondering what",
+      "baseline_distinct_3": 0.9807692307692307,
+      "ablated_distinct_3": 0.9245283018867925,
+      "baseline_degenerated": false,
+      "ablated_degenerated": true
+    },
+    {
+      "prompt": "Luna Lovegood, wearing her peculiar spectrespecs, claimed she could see invisible creatures that were",
+      "baseline": " \"real\".\n\nThe actress who played her, Evanna Lynch, said: \"I think it's important to believe in something, to have a belief system, and I think the reason why I believed in the supernatural, which is what the spectrespecs represent, is because I saw so many people who were",
+      "ablated": " \"real\".\n\nThe actress who played her, Evanna Lynch, said: \"I think it's important to believe in something, to have a belief system.\n\n\"That's why I'm a Christian, it's my belief system and I believe in God.\"\n\n<b>'Faith in the",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "The bustling Diagon Alley was filled with magical shops, but the most imposing building was Gringotts, the wizarding bank, guarded by",
+      "baseline": " a pair of fire-breathing dragons, a giant skeleton and a massive stone statue of a centaur.\n\nInside the bank, customers could walk around on their own, or they could be accompanied by a goblin.\n\nOne of the customers was a young woman with dark hair and a black robe. She was carrying a",
+      "ablated": " a pair of fire-breathing dragons, a giant skeleton and a massive stone statue of a centaur.\n\nInside the bank, customers could walk in any direction, but all the doors led to the same room.\n\n\u201cWe\u2019ve got a lot of money here,\u201d said a young boy named Harry Potter, the",
+      "baseline_distinct_3": 1.0,
+      "ablated_distinct_3": 1.0,
+      "baseline_degenerated": false,
+      "ablated_degenerated": false
+    },
+    {
+      "prompt": "The chilling presence of the Dementors could only be repelled by casting a powerful Patronus, which took the form of a",
+      "baseline": " stag. As Harry Potter and the Deathly Hallows approaches, we can be sure that the same Patronus can only be cast by a person who has been through a great deal.\n\nIn the book, Harry Potter and the Order of the Phoenix, Harry uses his Patronus to protect himself from the Dementors",
+      "ablated": " stag. As Harry Potter and the Deathly Hallows approaches, we can be sure that the same Patronus can only be cast by a person who has been through a great deal.\n\nIn the book, Harry Potter and the Order of the Phoenix, when Harry Potter\u2019s friends were in danger, he managed to",
+      "baseline_distinct_3": 0.96,
+      "ablated_distinct_3": 0.96,
+      "baseline_degenerated": false,
+      "ablated_degenerated": true
+    }
+  ]
+}

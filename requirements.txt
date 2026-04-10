@@ -4,3 +4,8 @@ transformer-lens
 datasets
 tqdm
 python-dotenv
+bitsandbytes
+accelerate
+sentencepiece
+textual
+huggingface_hub

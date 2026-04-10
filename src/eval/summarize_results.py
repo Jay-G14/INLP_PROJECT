@@ -2,10 +2,38 @@ import json
 import argparse
 from collections import Counter
 
+
+MODEL_DEFAULTS = {
+    "llama": {
+        "results_dir": "results/llama",
+    },
+    "gemma": {
+        "results_dir": "results/gemma",
+    },
+    "mistral": {
+        "results_dir": "results/mistral",
+    },
+    "gpt2": {
+        "results_dir": "results",
+    },
+}
+
+
 def main():
     parser = argparse.ArgumentParser(description="Summarize LLM Judge Results")
-    parser.add_argument("--input", type=str, default="results/unified_eval_results_judged.json", help="Path to JSON results")
+    parser.add_argument(
+        "--model_family",
+        type=str,
+        choices=["llama", "gemma", "mistral", "gpt2"],
+        default="gpt2",
+        help="Model family to resolve default judged-results path for.",
+    )
+    parser.add_argument("--input", type=str, default=None, help="Path to JSON results")
     args = parser.parse_args()
+
+    if args.input is None:
+        results_dir = MODEL_DEFAULTS[args.model_family]["results_dir"]
+        args.input = f"{results_dir}/unified_eval_results_judged.json"
 
     try:
         with open(args.input, "r") as f:
