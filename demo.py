@@ -42,6 +42,28 @@ MAX_NEW_TOKENS = 80
 TEMPERATURE = 0.7
 TOP_P = 0.9
 REPETITION_PENALTY = 1.05
+SYSTEM_PROMPT = (
+    "Always answer in clear natural English."
+    "Do not switch to German or any other language unless the user explicitly asks for it."
+)
+GERMAN_MARKERS = {
+    " der ",
+    " die ",
+    " das ",
+    " und ",
+    " ist ",
+    " nicht ",
+    " ein ",
+    " eine ",
+    " mit ",
+    " ich ",
+    " du ",
+    " ja ",
+    " aber ",
+    " danke ",
+    " bitte ",
+    " weil ",
+}
 
 
 def looks_degenerate(text: str) -> bool:
@@ -54,6 +76,12 @@ def looks_degenerate(text: str) -> bool:
         return False
     unique_ratio = len(set(bigrams)) / len(bigrams)
     return unique_ratio < 0.35
+
+
+def looks_non_english(text: str) -> bool:
+    lowered = f" {text.lower()} "
+    matches = sum(marker in lowered for marker in GERMAN_MARKERS)
+    return matches >= 2
 
 
 class ModelManager:
@@ -140,11 +168,33 @@ class ModelManager:
             else:
                 status_cb(f"Error: {exc}")
 
+    def _build_inputs(self, prompt: str):
+        messages = [
+            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "user", "content": prompt},
+        ]
+
+        if hasattr(self.tokenizer, "apply_chat_template"):
+            templated = self.tokenizer.apply_chat_template(
+                messages,
+                tokenize=True,
+                add_generation_prompt=True,
+                return_tensors="pt",
+            )
+            return {"input_ids": templated.to(self.input_device)}
+
+        fallback_prompt = (
+            f"[SYSTEM]\n{SYSTEM_PROMPT}\n\n[USER]\n{prompt}\n\n[ASSISTANT]\n"
+        )
+        return self.tokenizer(
+            fallback_prompt, return_tensors="pt", add_special_tokens=False
+        )
+
     def generate(self, prompt: str) -> str:
         if not self.ready:
             return "Model not ready."
 
-        inputs = self.tokenizer(prompt, return_tensors="pt", add_special_tokens=False)
+        inputs = self._build_inputs(prompt)
         inputs = {k: v.to(self.input_device) for k, v in inputs.items()}
 
         gen_kwargs_regular = dict(
@@ -182,8 +232,9 @@ class ModelManager:
                     text = self.tokenizer.decode(
                         completion_ids, skip_special_tokens=True
                     ).strip()
-                    if looks_degenerate(text):
-                        # Retry with deterministic decoding if sampled output is unstable.
+                    if looks_degenerate(text) or looks_non_english(text):
+                        # Retry with deterministic decoding if sampled output is unstable
+                        # or drifts into German.
                         out = self.model.generate(
                             **inputs,
                             max_new_tokens=MAX_NEW_TOKENS,
@@ -197,6 +248,20 @@ class ModelManager:
                     handle.remove()
             else:
                 out = self.model.generate(**inputs, **gen_kwargs_regular)
+                completion_ids = out[0, inputs["input_ids"].shape[1] :]
+                text = self.tokenizer.decode(
+                    completion_ids, skip_special_tokens=True
+                ).strip()
+                if looks_non_english(text):
+                    out = self.model.generate(
+                        **inputs,
+                        max_new_tokens=MAX_NEW_TOKENS,
+                        do_sample=False,
+                        repetition_penalty=1.15,
+                        eos_token_id=self.tokenizer.eos_token_id,
+                        pad_token_id=self.tokenizer.eos_token_id,
+                        no_repeat_ngram_size=4,
+                    )
 
         completion_ids = out[0, inputs["input_ids"].shape[1] :]
         return self.tokenizer.decode(completion_ids, skip_special_tokens=True).strip()
