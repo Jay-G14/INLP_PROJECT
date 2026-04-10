@@ -58,7 +58,7 @@ pip install torch transformer-lens datasets tqdm einops transformers
 3. Optional: install `flash-attn` if your GPU/driver supports it.
 4. Expect ~5.5–6 GB VRAM usage for `meta-llama/Llama-2-7b-chat-hf` in 4-bit nf4.
 
-Quickstart commands (Llama path, VRAM-safe defaults):
+<!-- Quickstart commands (Llama path, VRAM-safe defaults):
 ```bash
 # Debug smoke run
 python src/sae/train.py --model_family llama --model_name meta-llama/Llama-2-7b-chat-hf \
@@ -69,6 +69,193 @@ python src/sae/train.py --model_family llama --model_name meta-llama/Llama-2-7b-
 python src/sae/train.py --model_family llama --model_name meta-llama/Llama-2-7b-chat-hf \
   --layer 15 --epochs 5 --batch_size 128 --expansion_factor 4 --k 8 \
   --sae_device cpu --model_device cuda --save_every_steps 500
+``` -->
+
+### Llama Commands Used
+
+These are the exact Llama commands used in the project workflow.
+
+```bash
+# Llama debug smoke run
+python src/sae/train.py \
+  --model_family llama \
+  --model_name meta-llama/Llama-2-7b-chat-hf \
+  --layer 15 \
+  --epochs 1 \
+  --batch_size 1 \
+  --expansion_factor 4 \
+  --k 8 \
+  --limit 2048 \
+  --max_steps 16 \
+  --save_every_steps 16
+
+# Llama full local training run
+python src/sae/train.py \
+  --model_family llama \
+  --model_name meta-llama/Llama-2-7b-chat-hf \
+  --layer 15 \
+  --epochs 5 \
+  --batch_size 128 \
+  --expansion_factor 4 \
+  --k 8 \
+  --sae_device cpu \
+  --model_device cuda \
+  --save_every_steps 500
+
+# Resume the latest Llama checkpoint
+python src/sae/train.py \
+  --model_family llama \
+  --model_name meta-llama/Llama-2-7b-chat-hf \
+  --layer 15 \
+  --sae_device cpu \
+  --model_device cuda \
+  --resume_from checkpoints/llama/sae_layer_15.pt
+
+# Llama longer training run
+python src/sae/train.py \
+  --model_family llama \
+  --model_name meta-llama/Llama-2-7b-chat-hf \
+  --layer 15 \
+  --epochs 8 \
+  --batch_size 128 \
+  --expansion_factor 4 \
+  --k 8 \
+  --sae_device cpu \
+  --model_device cuda \
+  --save_every_steps 500
+
+# Llama feature discovery
+python src/analysis/diff_means.py \
+  --model_family llama \
+  --model_name meta-llama/Llama-2-7b-chat-hf \
+  --layer 15 \
+  --expansion_factor 4 \
+  --k 8 \
+  --model_device cuda \
+  --sae_device cpu \
+  --num_features 100 \
+  --max_tokens 200000 \
+  --sort_by score \
+  --min_ratio 2.0 \
+  --min_target_fires 64
+
+# Llama ablation evaluation
+python src/eval/unified_evaluate.py \
+  --model_family llama \
+  --model_name meta-llama/Llama-2-7b-chat-hf \
+  --layer 15 \
+  --expansion_factor 4 \
+  --k 8 \
+  --model_device cuda \
+  --sae_device cpu \
+  --num_features 100 \
+  --ablation_scale -3.0 \
+  --limit 50 \
+  --ppl_limit 20
+
+# Interactive Llama TUI
+python demo.py
+
+# Push the latest Llama checkpoint + features to Hugging Face
+python scripts/push_latest_llama_pt_to_hf.py
+```
+
+The upload script reads `HF_TOKEN` from `.env` if present, otherwise it uses your active `hf auth login` session. It auto-creates and reuses the repo `<your-username>/llama-hp-unlearning-artifacts`.
+
+### Gemma 2 2B Commands Used
+
+These are the commands used to test the Gemma 2 2B workflow with an external SAE checkpoint.
+
+```bash
+# Gemma 2 2B feature discovery using an external SAE checkpoint
+python src/analysis/diff_means.py \
+  --model_family gemma \
+  --model_name google/gemma-2-2b \
+  --layer 12 \
+  --hook_position post \
+  --k 32 \
+  --checkpoint_path checkpoints/sae_layer_12_gopi.pt \
+  --features_output_path results/gemma/layer_12_features.pt \
+  --model_device cuda \
+  --sae_device cpu \
+  --num_features 100 \
+  --max_tokens 200000 \
+  --sort_by score \
+  --min_ratio 2.0 \
+  --min_target_fires 64
+
+# Gemma 2 2B ablation evaluation using the same checkpoint
+python src/eval/unified_evaluate.py \
+  --model_family gemma \
+  --model_name google/gemma-2-2b \
+  --layer 12 \
+  --hook_position post \
+  --k 32 \
+  --checkpoint_path checkpoints/sae_layer_12_gopi.pt \
+  --features_path results/gemma/layer_12_features.pt \
+  --model_device cuda \
+  --sae_device cpu \
+  --num_features 100 \
+  --ablation_scale -3.0 \
+  --limit 50 \
+  --ppl_limit 20
+```
+
+### Mistral 7B Commands Used
+
+These are the commands used to test the Mistral 7B workflow with the layer-16 external SAE from Hugging Face.
+
+```bash
+# Download the Mistral layer-16 SAE config + weights
+python - <<'PY'
+from huggingface_hub import hf_hub_download
+
+repo = "JoshEngels/Mistral-7B-Residual-Stream-SAEs"
+for f in [
+    "mistral_7b_layer_16/cfg.json",
+    "mistral_7b_layer_16/sae_weights.safetensors",
+]:
+    path = hf_hub_download(
+        repo_id=repo,
+        filename=f,
+        local_dir="artifacts/mistral_layer16",
+        local_dir_use_symlinks=False,
+    )
+    print(path)
+PY
+
+# Mistral 7B feature discovery using the layer-16 residual-stream SAE
+python src/analysis/diff_means.py \
+  --model_family mistral \
+  --model_name mistralai/Mistral-7B-v0.1 \
+  --layer 16 \
+  --hook_position pre \
+  --checkpoint_path artifacts/mistral_layer16/mistral_7b_layer_16/sae_weights.safetensors \
+  --sae_cfg_path artifacts/mistral_layer16/mistral_7b_layer_16/cfg.json \
+  --features_output_path results/mistral/layer_16_features.pt \
+  --model_device cuda \
+  --sae_device cpu \
+  --num_features 100 \
+  --max_tokens 200000 \
+  --sort_by score \
+  --min_ratio 2.0 \
+  --min_target_fires 64
+
+# Mistral 7B ablation evaluation using the same layer-16 SAE
+python src/eval/unified_evaluate.py \
+  --model_family mistral \
+  --model_name mistralai/Mistral-7B-v0.1 \
+  --layer 16 \
+  --hook_position pre \
+  --checkpoint_path artifacts/mistral_layer16/mistral_7b_layer_16/sae_weights.safetensors \
+  --sae_cfg_path artifacts/mistral_layer16/mistral_7b_layer_16/cfg.json \
+  --features_path results/mistral/layer_16_features.pt \
+  --model_device cuda \
+  --sae_device cpu \
+  --num_features 100 \
+  --ablation_scale -3.0 \
+  --limit 50 \
+  --ppl_limit 20
 ```
 
 ### Workflow

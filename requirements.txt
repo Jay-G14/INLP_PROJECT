@@ -8,3 +8,4 @@ bitsandbytes
 accelerate
 sentencepiece
 textual
+huggingface_hub

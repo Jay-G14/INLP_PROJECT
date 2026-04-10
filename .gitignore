@@ -12,6 +12,9 @@ __pycache__/
 checkpoints/
 results/*.pt
 results/llama/*.pt
+results/gemma/*.pt
+results/mistral/*.pt
+/artifacts/
 # results/*.json  # Uncomment if you want to keep results JSONs but they can be large if they contain many samples
 
 # # Large Datasets & Supplementary Material
